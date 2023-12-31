@@ -1,0 +1,116 @@
+.Page-Title{
+    position: relative;
+}
+.page-title-background {
+    display: grid;
+    width: 100vw;
+    height: 280px;
+    background-image: url(https://source.unsplash.com/1540x300/?computer);
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(40%) contrast(70%);
+    align-items: center;
+}
+.page-title-contant-container{
+    width: 100vw;
+    height: 270px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+}
+.page-title-contant {
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between !important;
+}
+
+.page-title h3 {
+    font-size: 30px;
+    font-weight: 700;
+    color: white !important;
+}
+.page-title-path{
+    display: flex;
+    gap: 10px;
+}
+.page-title-path h5{
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 700;
+}
+.page-title-path h4{
+    font-size: 19px;
+    line-height: 30px;
+    font-weight: 700;
+    color: white;
+}
+.page-title-path-defalut{
+    color: white;
+}
+.page-title-page-path{
+    color: #F15E00;
+}
+
+
+@media (min-width: 0px) and (max-width: 600px) {
+
+    .page-title-background {
+        display: grid;
+        width: 100vw;
+        height: 220px;
+        background-image: url(https://source.unsplash.com/1540x300/?computer);
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: brightness(30%) contrast(70%);
+        align-items: center;
+    }
+    .page-title-contant-container{
+        width: 100vw;
+        height: 220px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 0;
+    }
+    .page-title-contant {
+        width: 1200px;
+        margin: 0 auto;
+        position: absolute;
+        left: 20px;
+        display: flex;
+        gap: 15px;
+        flex-direction: column;
+        justify-content: space-between !important;
+    }
+    
+    .page-title h3 {
+        font-size: 26px;
+        font-weight: 700;
+        color: white !important;
+    }
+    .page-title-path{
+        display: flex;
+        gap: 10px;
+    }
+    .page-title-path h5{
+        font-size: 14px;
+        line-height: 30px;
+        font-weight: 700;
+    }
+    .page-title-path h4{
+        font-size: 19px;
+        line-height: 30px;
+        font-weight: 700;
+        color: white;
+    }
+    .page-title-path-defalut{
+        color: white;
+    }
+    .page-title-page-path{
+        color: #F15E00;
+    }
+    
+}

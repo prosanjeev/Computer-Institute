@@ -1,0 +1,116 @@
+.top-container {
+  width: 100vw;
+  background-color: #b80505;
+  font-size: 14px;
+}
+.top-container-contant{
+  max-width: 1200px;
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  margin: 0 auto;
+}
+.top-container-buttons {
+  margin: auto;
+  display: flex;
+  gap: 10px ;
+}
+.top-container-buttons button{
+  border: none;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 6px 8px;
+  background-color: yellow;
+  cursor: pointer;
+  &:hover{
+    background-color: #fff4a3f7;
+  }
+}
+.top-container-number{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: white;
+}
+
+.top-container-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+.top-container-icons .icon {
+  display: flex;
+  gap: 10px;
+  color: white;
+  border-left: 1px solid rgb(255, 255, 255);
+  font-size: 13px;
+  padding:0 15px;
+}
+.top-container-img{
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+  height: 90px;
+}
+
+@media (min-width: 0px) and (max-width: 600px) {
+
+  .top-container-contant{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    height: 170px;
+    margin: 0 auto;
+  }
+  .top-container-buttons {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px ;
+    margin: 10px 10px;
+  }
+  .top-container-buttons button{
+    border: none;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 6px 8px;
+    background-color: yellow;
+    cursor: pointer;
+  }
+  .top-container-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  .top-container-number{
+    display: flex;
+    gap: 10px;
+    color: white;
+    font-size: 13px;
+  }
+  .top-container-icons .icon {
+    display: flex;
+    gap: 10px;
+    color: white;
+    border-left: 1px solid rgb(255, 255, 255);
+    font-size: 13px;
+    padding:0 10px;
+  }
+  .top-container-img{
+    margin: 10px auto 10px auto;
+    height: 26px;
+  }
+
+
+}
+

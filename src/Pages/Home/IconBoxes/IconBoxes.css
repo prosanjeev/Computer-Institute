@@ -1,0 +1,6 @@
+.iconbox-list{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px auto;
+}
