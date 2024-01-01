@@ -4,12 +4,15 @@ import ImageBoxes from "../../components/PagesComponents/ImageBoxes/ImageBoxes";
 import EventBox from "./EventBoxes/EventBox";
 import HeadingWithHr from "../../components/PagesComponents/HeadingWithHr/HeadingWithHr";
 import IconBoxes from "./IconBoxes/IconBoxes";
+import HomePageImageSlider from "../../components/PagesComponents/HomePageImageSlider";
 
 const Home = () => {
   return (
     <>
-
-      <MySimpleImageSlider/>
+      <div className="home-imageSlider-and-aboutbox">
+      {/* <MySimpleImageSlider/> */}
+      </div>
+      <HomePageImageSlider/>
       <AboutBox />
       <EventBox />
       <HeadingWithHr heading="Our Programmes"/>
