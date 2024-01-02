@@ -1,6 +1,3 @@
-// MySimpleImageSlider.js
-
-import React from 'react';
 import SimpleImageSlider from 'react-simple-image-slider';
 
 const images = [
@@ -10,16 +7,15 @@ const images = [
 ];
 
 const MySimpleImageSlider = () => {
-  const isMobile = window.innerWidth <= 768;
-
   return (
-    <div className='home-image-slider'>
-      <SimpleImageSlider 
-        width="100vw"
-        height={isMobile ? '30%' : '70%'} // Adjust the percentages as needed
-        images={images}
-        showBullets={true}
-        showNavs={true}
+    <div>
+      <SimpleImageSlider
+       width="100vw"
+       height={504}  // Default height for non-mobile devices
+       images={images}
+       showBullets={true}
+       showNavs={true}
+     
       />
     </div>
   );

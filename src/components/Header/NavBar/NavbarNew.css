@@ -6,7 +6,7 @@ body {
   .Header-main{
     width: 100vw;
     background-color: #034C7F;
-    position: relative;
+    height: 60%;
   }
   ul {
     list-style-type: none;
@@ -20,17 +20,17 @@ body {
   }  
   .nav-menu {
     margin: 0 auto ;
-    width: 75%;
+    width: 90%;
     display: flex;
-    justify-content: left;
+    justify-content: center;
   }
   nav ul.navigation-menu {
     display: flex;
     background-color: #034C7F;
     color: white;
-    height: 29px;
-    width: 90%;
-    box-shadow: 1px 1px 10px 3px rgba(0, 0, 0, 0.1);
+    height: 40px;
+    width: 1200px;
+    box-shadow: 1px 1px 10px 3px rgba(0, 0, 0, 0.1); 
   }
   nav ul.navigation-menu li {
     flex: 1;
@@ -56,7 +56,7 @@ body {
   }
   nav ul.navigation-menu li ul li {
     height: 50px;
-    width: 135px;
+    width: 150px;
     text-align: center;
     line-height: 50px;
     cursor: pointer;
@@ -120,13 +120,13 @@ body {
     animation-fill-mode: forwards;
   }
 
-  .btn-outer {
+  /* .btn-outer {
     position: absolute;
     right: 40px;
     top: 0px;
     width: 220px;
-}
-  .quote-btn {
+} */
+  /* .quote-btn {
     position: relative;
     display: block;
     line-height: 29px;
@@ -138,7 +138,7 @@ body {
     background: #fa7b1d;
     text-transform: uppercase;
     z-index: 1;
-}
+} */
   @keyframes menu-1 {
     0% {
       transform: translateY(20px) rotateY(90deg);

@@ -65,9 +65,9 @@ function NAvBarNew() {
     </ul>
   </nav>
 
-  <div class="btn-outer">
+  {/* <div class="btn-outer">
     <a Link to="#" class="quote-btn"><span >Apply Franchise</span> </a>
-    </div>
+    </div> */}
 </header>
   )
 }

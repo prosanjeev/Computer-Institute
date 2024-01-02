@@ -3,8 +3,36 @@ import { Link } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 import { IoCallOutline } from "react-icons/io5";
 import { MdMailOutline } from "react-icons/md";
+import { Box, HStack } from "@chakra-ui/react";
 
 const DownFooter = () => {
+    const useFulLink = [
+      {
+        text: "Home",
+        link: "/",
+      },
+      {
+        text: "About Us",
+        link: "/about-company",
+      },
+      {
+        text: "Contact Us",
+        link: "/contact-us",
+      },
+      {
+        text: "Student Login",
+        link: "/",
+      },
+      {
+        text: "Student Verification",
+        link: "/student-verification",
+      },
+      {
+        text: "Certificate Verification",
+        link: "/certificate-verification",
+      },
+    ]
+
   return (
     <div className="footer-box">  
       <div className="footer-contantant">
@@ -26,20 +54,17 @@ const DownFooter = () => {
               </div> 
           </div>
         </div>
-        <div className="useful">
+        <Box className="useful" >
           <div className="footer-title"> USEFUL_LINKS </div>
           <hr className="footer-hr-line" />
-          <div className="usefull-list">
+          <Box className="usefull-list">
             <ul>
-              <li><IoIosArrowForward />  <Link to="/">Home</Link>                                            </li>
-              <li><IoIosArrowForward />  <Link to="/about-company">About Us</Link>                           </li>
-              <li><IoIosArrowForward />  <Link to="/contact-us">Contact Us</Link>                            </li>
-              <li><IoIosArrowForward />  <Link to="/student-login">Student Login</Link>                      </li>
-              <li><IoIosArrowForward />  <Link to="/student-verification">Student Verification</Link>        </li>
-              <li><IoIosArrowForward />  <Link to="/certificate-verification">Certificate Verification</Link> </li>
+              {useFulLink.map((list)=>(
+                <li key={list.text}> <HStack>  <IoIosArrowForward />  <Link to={list.link}> {list.text} </Link> </HStack> </li>
+              ))}
             </ul>
-          </div>
-        </div>
+          </Box>
+        </Box>
         <div className="query">
           <div className="footer-title"> QUERY US </div>
           <hr className="footer-hr-line" />
