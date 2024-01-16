@@ -1,3 +1,3 @@
 # Computer-Institute-App
 
-check demo- mohallaacademy.com
+Check demo- mohallaacademy.com
