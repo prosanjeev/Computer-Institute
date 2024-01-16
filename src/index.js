@@ -24,11 +24,14 @@ import Videos from './Pages/Gallary/Videos';
 import ContactUs from './Pages/Contact/ContactUs';
 import FindBranch from './Pages/Contact/FindBranch';
 import OurTeam from './Pages/Contact/OurTeam';
+import {theme} from './theme'
+import Dashboard from './AdminPanel/pages/Dashboard/Dashboard';
 
 
 
 const router = createBrowserRouter(
     createRoutesFromElements(
+      <>
       <Route path='/' element={<MainLayout/>}>
         <Route path='' element={<Home/>}   />
         <Route path='about-company' element={<AboutCompany/>}   />
@@ -56,16 +59,18 @@ const router = createBrowserRouter(
         <Route path='contact-us' element={<ContactUs/>}   />
         <Route path='find-branch' element={<FindBranch/>}   />
         <Route path='our-team' element={<OurTeam/>}   />
-
-
       </Route>
+
+
+        <Route path='dashboard' element={<Dashboard/>}   />
+        </>
     )
 )
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <ChakraProvider>
+  <ChakraProvider theme={theme}>
       <RouterProvider router={router} />
     </ChakraProvider>
   </React.StrictMode>

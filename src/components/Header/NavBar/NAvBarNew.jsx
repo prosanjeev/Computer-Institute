@@ -8,7 +8,7 @@ function NAvBarNew() {
     <header className='Header-main'>
   <nav className='nav-menu'>
     <ul className="navigation-menu">
-      <li><Link to="/">Home</Link></li> 
+      <li><Link to="/">HOME</Link></li> 
       <li><Link to="#">ABOUT US<IoIosArrowDown /></Link>
         <ul>
           <li><Link to="/about-company">About M-TECH</Link>  </li>
@@ -42,7 +42,7 @@ function NAvBarNew() {
         <li><Link to="/center-verification">Center Verification</Link>  </li>
         </ul>
       </li>
-      <li><Link to="#">Gallary<IoIosArrowDown /></Link>
+      <li><Link to="#">GALLARY<IoIosArrowDown /></Link>
         <ul>
         <li><Link to="/Photos">Photos</Link>  </li>
         <li><Link to="/videos">Videos</Link>  </li>
@@ -50,7 +50,7 @@ function NAvBarNew() {
       </li>
       <li><Link to="#">LOGIN<IoIosArrowDown /></Link>
         <ul>
-        <li><Link to="/about-company">Admin Login</Link>  </li>
+        <li><Link to="/dashboard">Admin Login</Link>  </li>
         <li><Link to="/chairman-message">Franchise Login</Link>  </li>
         <li><Link to="/chairman-message">Employee Login</Link>  </li>
         </ul>

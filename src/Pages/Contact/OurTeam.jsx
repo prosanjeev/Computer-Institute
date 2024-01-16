@@ -1,5 +1,4 @@
 import { Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
-import MySimpleImageSlider from "../../components/PagesComponents/ImageSlider/MySimpleImageSlider";
 import PageTitle from "../../components/PagesComponents/PageTitleSection/PageTitle";
 import { wrap } from "framer-motion";
 

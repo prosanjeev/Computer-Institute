@@ -1,17 +1,15 @@
-import AboutBox from "../../components/PagesComponents/AboutBox/AboutBox";
-import MySimpleImageSlider from "../../components/PagesComponents/ImageSlider/MySimpleImageSlider";
-import ImageBoxes from "../../components/PagesComponents/ImageBoxes/ImageBoxes";
-import EventBox from "./EventBoxes/EventBox";
+import AboutBox from "./Components/AboutBox/AboutBox";
+import MySimpleImageSlider from "./Components/ImageSlider/MySimpleImageSlider";
+import ImageBoxes from "./Components/ImageBoxes/ImageBoxes";
+import EventBox from "./Components/EventBoxes/EventBox";
 import HeadingWithHr from "../../components/PagesComponents/HeadingWithHr/HeadingWithHr";
-import IconBoxes from "./IconBoxes/IconBoxes";
+import IconBoxes from "./Components/IconBoxes/IconBoxes";
 
 
 const Home = () => {
   return (
     <>
-      <div className="home-imageSlider-and-aboutbox">
       <MySimpleImageSlider/>
-      </div>
       <AboutBox />
       <EventBox />
       <HeadingWithHr heading="Our Programmes"/>
