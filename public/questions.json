@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "text": "What does CPU stand for?",
+    "options": [
+      { "id": "a", "text": "Central Process Unit", "isCorrect": true },
+      { "id": "b", "text": "Computer Personal Unit", "isCorrect": false },
+      { "id": "c", "text": "Central Processor Unit", "isCorrect": false },
+      { "id": "d", "text": "Central Peripheral Unit", "isCorrect": false }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "What is the purpose of RAM in a computer?",
+    "options": [
+      { "id": "a", "text": "Read-Only Memory", "isCorrect": false },
+      { "id": "b", "text": "Random Access Memory", "isCorrect": true },
+      { "id": "c", "text": "Read Access Memory", "isCorrect": false },
+      { "id": "d", "text": "Rapid Access Memory", "isCorrect": false }
+    ]
+  },
+  {
+    "id": 3,
+    "text": "Which programming language is known for its simplicity and readability?",
+    "options": [
+      { "id": "a", "text": "Java", "isCorrect": false },
+      { "id": "b", "text": "Python", "isCorrect": true },
+      { "id": "c", "text": "C++", "isCorrect": false },
+      { "id": "d", "text": "JavaScript", "isCorrect": false }
+    ]
+  },
+  {
+    "id": 4,
+    "text": "What is the purpose of an operating system?",
+    "options": [
+      { "id": "a", "text": "Manage hardware resources", "isCorrect": true },
+      { "id": "b", "text": "Create graphics for applications", "isCorrect": false },
+      { "id": "c", "text": "Run web servers", "isCorrect": false },
+      { "id": "d", "text": "Design user interfaces", "isCorrect": false }
+    ]
+  },
+  {
+    "id": 5,
+    "text": "Which data type is used to store whole numbers in programming?",
+    "options": [
+      { "id": "a", "text": "Float", "isCorrect": false },
+      { "id": "b", "text": "String", "isCorrect": false },
+      { "id": "c", "text": "Integer", "isCorrect": true },
+      { "id": "d", "text": "Boolean", "isCorrect": false }
+    ]
+  },
+  {
+    "id": 6,
+    "text": "What is the main function of a GPU?",
+    "options": [
+      { "id": "a", "text": "Manage storage devices", "isCorrect": false },
+      { "id": "b", "text": "Process graphics and images", "isCorrect": true },
+      { "id": "c", "text": "Run virtual machines", "isCorrect": false },
+      { "id": "d", "text": "Control network connections", "isCorrect": false }
+    ]
+  },
+  {
+    "id": 7,
+    "text": "Which command is used to print 'Hello, World!' in Python?",
+    "options": [
+      { "id": "a", "text": "printMessage('Hello, World!')", "isCorrect": false },
+      { "id": "b", "text": "displayText('Hello, World!')", "isCorrect": false },
+      { "id": "c", "text": "echo 'Hello, World!'", "isCorrect": false },
+      { "id": "d", "text": "print('Hello, World!')", "isCorrect": true }
+    ]
+  },
+  {
+    "id": 8,
+    "text": "What is the purpose of a firewall in computer networks?",
+    "options": [
+      { "id": "a", "text": "Enhance internet speed", "isCorrect": false },
+      { "id": "b", "text": "Prevent unauthorized access", "isCorrect": true },
+      { "id": "c", "text": "Manage email accounts", "isCorrect": false },
+      { "id": "d", "text": "Create virtual private networks", "isCorrect": false }
+    ]
+  },
+  {
+    "id": 9,
+    "text": "Which HTML tag is used for creating hyperlinks?",
+    "options": [
+      { "id": "a", "text": "<link>", "isCorrect": false },
+      { "id": "b", "text": "<a>", "isCorrect": true },
+      { "id": "c", "text": "<hype>", "isCorrect": false },
+      { "id": "d", "text": "<url>", "isCorrect": false }
+    ]
+  },
+  {
+    "id": 10,
+    "text": "What is the purpose of the SQL SELECT statement?",
+    "options": [
+      { "id": "a", "text": "<link>", "isCorrect": false },
+      { "id": "b", "text": "<a>", "isCorrect": true },
+      { "id": "c", "text": "<hype>", "isCorrect": false },
+      { "id": "d", "text": "<url>", "isCorrect": false }
+    ]
+  }
+]

@@ -1,22 +1,17 @@
 import { Box, HStack, Heading, Icon, Stack, Text } from "@chakra-ui/react";
 import { RxDashboard } from "react-icons/rx";
-import { BsArrowDownUp } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
-import { IoIosGitBranch } from "react-icons/io";
 import { CiWallet } from "react-icons/ci";
 import { PiStudent } from "react-icons/pi";
 import { SiCoursera } from "react-icons/si";
 import { TbReportSearch } from "react-icons/tb";
-import { FaUserTie } from "react-icons/fa";
 import { GrCloudComputer } from "react-icons/gr";
 import { CgWebsite } from "react-icons/cg";
-
 import { BiSupport } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
-const Sidenav = () => {
-  const location = useLocation();
 
-  console.log(location);
+const StudentSidenav = () => {
+  const location = useLocation();
 
   const isActiveLink = (link) => {
     return location.pathname === link;
@@ -26,31 +21,27 @@ const Sidenav = () => {
     {
       icon: RxDashboard,
       text: "Dashboard",
-      link: "/dashboard",
+      link: "/student-dashboard",
     },
     {
       icon: FaRegUser,
       text: "Profile",
       link: "/transactions",
     },
-    {
-      icon: IoIosGitBranch,
-      text: "Manage Branch",
-      link: "/transactions",
-    },
+    
     {
       icon: CiWallet,
-      text: "Branch Wallet",
+      text: "E Books",
       link: "/transactions",
     },
     {
       icon: PiStudent,
-      text: "Student",
-      link: "/transactions",
+      text: "Practice Test",
+      link: "/practice-test",
     },
     {
       icon: SiCoursera,
-      text: "Courses",
+      text: "Main Test",
       link: "/transactions",
     },
     {
@@ -59,20 +50,21 @@ const Sidenav = () => {
       link: "/transactions",
     },
     {
-      icon: FaUserTie,
-      text: "Staff",
-      link: "/transactions",
-    },
-    {
       icon: GrCloudComputer,
       text: "Online Exam",
       link: "/transactions",
     },
     {
-      icon: CgWebsite,
-      text: "Manage Website",
+      icon: GrCloudComputer,
+      text: "Icard",
       link: "/transactions",
     },
+    {
+      icon: CgWebsite,
+      text: "Notice",
+      link: "/transactions",
+    },
+   
   ];
 
   return (
@@ -106,7 +98,7 @@ const Sidenav = () => {
                   bg: "#F3F3F7",
                   color: "#171717",
                 }}
-                color="#797E82"
+                // color="#797E82"
               >
                 <Icon boxSize={4} as={nav.icon} />
                 <Text fontSize="16px" fontWeight="500">
@@ -142,4 +134,4 @@ const Sidenav = () => {
   );
 };
 
-export default Sidenav;
+export default StudentSidenav;

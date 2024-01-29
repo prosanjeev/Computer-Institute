@@ -1,10 +1,9 @@
 import { Box, Container, Flex, useDisclosure } from "@chakra-ui/react";
-import React from "react";
-import Sidenav from "./Sidenav";
-import TopNav from "./TopNav";
-import SideDrawer from "./SideDrawer";
+import SideDrawer from "../../AdminPanel/components/SideDrawer";
+import TopNav from "../../AdminPanel/components/TopNav";
+import FranchiseSidenav from "./StudentSidenav";
 
-const DashboardLayout = ({ title, children }) => {
+const StudentDashboardLayout = ({ title, children }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
@@ -15,7 +14,8 @@ const DashboardLayout = ({ title, children }) => {
           lg: "flex",
         }}
       >
-        <Sidenav />
+       {/* dfdsf */}
+       <FranchiseSidenav/>
       </Box>
       <SideDrawer isOpen={isOpen} onClose={onClose} />
       <Box flexGrow={1}>
@@ -34,4 +34,4 @@ const DashboardLayout = ({ title, children }) => {
   );
 };
 
-export default DashboardLayout;
+export default StudentDashboardLayout;

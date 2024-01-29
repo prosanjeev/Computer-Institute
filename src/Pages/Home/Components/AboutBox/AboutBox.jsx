@@ -4,7 +4,7 @@ import { Divider, HStack, Img, Stack, Text } from "@chakra-ui/react";
 
 const AboutBox = () => {
   return (
-    <HStack m="40px auto" w="80%" gap={5} >
+    <HStack m="40px auto" w="80%" gap={5} flexWrap={{base:'wrap', lg:'nowrap'}} >
         <Stack  >
             <Text fontSize="28px" fontWeight="700" color="#444444">WELCOME TO M-TECH COMPUTER ACADEMY PVT. LTD.</Text>
             <Divider width="60px" h="3px" bgColor="#ff6c00" borderRadius="100px 0 100px 0" my={5} />

@@ -2,7 +2,7 @@ import React from "react";
 import ImageBox from "./components/ImageBox";
 import { Flex } from "@chakra-ui/react";
 
-function ImageBoxes() {
+function ImageBoxGrid() {
   let ImageBoxes = [
     {
       id: 1,
@@ -47,4 +47,4 @@ function ImageBoxes() {
   );
 }
 
-export default ImageBoxes;
+export default ImageBoxGrid;

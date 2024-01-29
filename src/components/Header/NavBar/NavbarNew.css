@@ -1,39 +1,4 @@
-
-body {
-    margin: 0;
-    font-family: sans-serif;
-    font-size: 11px;
-  }
-  .Header-main{
-    width: 100vw;
-    background-color: #034C7F;
-    height: 70%;
-  }
-  ul {
-    list-style-type: none;
-    padding: 0;
-    z-index: 1;
-  }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-  }  
-  .nav-menu {
-    margin: 0 auto ;
-    width: 90%;
-    display: flex;
-    justify-content: center;
-  }
-  nav ul.navigation-menu {
-    display: flex;
-    background-color: #034C7F;
-    color: white;
-    height: 55px;
-    width: 1200px;
-    box-shadow: 1px 1px 10px 3px rgba(0, 0, 0, 0.1); 
-  }
-  nav ul.navigation-menu li {
+    nav ul.navigation-menu li {
     flex: 1;
     font-size: 16px;
   }
@@ -121,25 +86,7 @@ body {
     animation-fill-mode: forwards;
   }
 
-  /* .btn-outer {
-    position: absolute;
-    right: 40px;
-    top: 0px;
-    width: 220px;
-} */
-  /* .quote-btn {
-    position: relative;
-    display: block;
-    line-height: 29px;
-    text-align: center;
-    padding: 11px 10px;
-    font-weight: 700;
-    font-size: 13px;
-    color: #fff;
-    background: #fa7b1d;
-    text-transform: uppercase;
-    z-index: 1;
-} */
+  
   @keyframes menu-1 {
     0% {
       transform: translateY(20px) rotateY(90deg);

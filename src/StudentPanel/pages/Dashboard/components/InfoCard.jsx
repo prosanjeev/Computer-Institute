@@ -1,6 +1,5 @@
-import { Box, HStack, Icon, Stack, Tag, Text } from "@chakra-ui/react";
+import { HStack, Icon, Stack,Text } from "@chakra-ui/react";
 import { BiSolidInstitution } from "react-icons/bi";
-import { Link } from "react-router-dom";
 import { CustomCard } from "../../../../AdminPanel/chakra/CustomCard";
 
 const InfoCard = ({ imgUrl, text, tagText, inverted }) => {

@@ -1,10 +1,8 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import DashboardLayout from "../../components/DashboardLayout";
-import PortfolioSection from "./components/PortfolioSection";
-import PriceSection from "./components/PriceSection";
+import DashboardLayout from "../../components/StudentDashboardLayout";
 import InfoCard from "./components/InfoCard";
 
-const Dashboard = ({}) => {
+const StudentDashboard = () => {
   return (
     <DashboardLayout title="Dashboard">
       <Grid
@@ -20,13 +18,11 @@ const Dashboard = ({}) => {
             xl: 1,
           }}
         >
-          <InfoCard/>
+          <InfoCard />
         </GridItem>
-        
-       
       </Grid>
     </DashboardLayout>
   );
 };
 
-export default Dashboard;
+export default StudentDashboard;

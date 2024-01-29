@@ -1,75 +1,161 @@
-import React from 'react'
-import './NavbarNew.css'
+import React, { useState } from 'react';
+import './NavbarNew.css';
 import { Link } from 'react-router-dom';
 import { IoIosArrowDown } from "react-icons/io";
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, IconButton } from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
+
+const menuItems = [
+  { label: 'HOME', link: '/' },
+  {
+    label: 'ABOUT US', link: '#', subMenu: [
+      { label: 'About M-TECH', link: '/about-company' },
+      { label: 'Chairman Message', link: '/chairman-message' },
+      { label: 'Our Vision & Mission', link: '/our-vision-and-mission' },
+      { label: 'Our Goal', link: '/our-goal' }
+    ]
+  },
+  {
+    label: 'COURSES', link: '#', subMenu: [
+      { label: 'BASIC COURSES', link: '/basic-courses' },
+      { label: 'Diploma Course', link: '/diploma-courses' },
+      { label: 'Language Course', link: '/language-courses' },
+      { label: 'Professional Courses', link: '/professional-courses' }
+    ]
+  },
+  {
+    label: 'STUDENT ZONE', link: '#', subMenu: [
+      { label: 'Student Registration', link: '/student-registration' },
+      { label: 'Student Verification', link: '/student-verification' },
+      { label: 'Student Login', link: '/student-login' },
+      { label: 'Admit Card', link: '/admit-card' },
+      { label: 'Certificate Verification', link: '/certificate-verification' }
+    ]
+  },
+  {
+    label: 'FRANCHISE', link: '#', subMenu: [
+      { label: 'Apply Online', link: '/franchise-enquiry' },
+      { label: 'Franchise Login', link: '/franchise-dashboard' },
+      { label: 'Center Verification', link: '/center-verification' }
+    ]
+  },
+  {
+    label: 'GALLARY', link: '#', subMenu: [
+      { label: 'Photos', link: '/Photos' },
+      { label: 'Videos', link: '/videos' }
+    ]
+  },
+  {
+    label: 'LOGIN', link: '#', subMenu: [
+      { label: 'Admin Login', link: '/dashboard' },
+      { label: 'Franchise Login', link: '/franchise-dashboard' },
+      { label: 'Employee Login', link: '/chairman-message' }
+    ]
+  },
+  {
+    label: 'CONTACT', link: '#', subMenu: [
+      { label: 'Contact Us', link: '/contact-us' },
+      { label: 'Find Branch', link: '/find-branch' },
+      { label: 'Our Team', link: '/our-team' }
+    ]
+  }
+];
 
 function NAvBarNew() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [openSubMenu, setOpenSubMenu] = useState(null);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleSubMenuToggle = (label) => {
+    setOpenSubMenu(openSubMenu === label ? null : label);
+  };
+
   return (
-    <header className='Header-main'>
-  <nav className='nav-menu'>
-    <ul className="navigation-menu">
-      <li><Link to="/">HOME</Link></li> 
-      <li><Link to="#">ABOUT US<IoIosArrowDown /></Link>
-        <ul>
-          <li><Link to="/about-company">About M-TECH</Link>  </li>
-          <li><Link to="/chairman-message">Chairman Message</Link>  </li>
-          <li><Link to="/our-vision-and-mission">Our Vision & Mission</Link>  </li>
-          <li><Link to="/our-goal">Our Goal</Link>  </li>
-        </ul>
-      </li>
-      <li><Link to="#">COURSES<IoIosArrowDown /></Link>
-      <ul>
-          <li><Link to="/basic-courses">BASIC COURSES</Link>  </li>
-          <li><Link to="/diploma-courses">Diploma Course</Link>  </li>
-          <li><Link to="/language-courses">Language Course</Link>  </li>
-          <li><Link to="/professional-courses">Professional Courses</Link>  </li>
-        </ul>
-      </li>
+    <Box minW='100vw' bgColor=' #034C7F'>
+      <Flex as='nav' 
+      align='center'
+      mx='auto' w= {{ base: '90%', md: '80%' }}
+      h= {{ base: '55px', md: '80%' }}
+      justify={{ base: 'end', md: 'none' }}
+      boxShadow="1px 1px 10px 3px rgba(0, 0, 0, 0.1)"
+      >
+        <Box as='ul' className="navigation-menu" 
+        color='white'
+        display={{ base: 'none', md: 'flex' }}
+        w='1200px'
+        h='50px'
+        listStyleType='none'
+        zIndex={1}
+        >
+          {menuItems.map((menuItem, index) => (
+            <Box as='li' key={index}>
+              <Link to={menuItem.link}>
+                {menuItem.label}
+                {menuItem.subMenu && <IoIosArrowDown />}
+              </Link>
+              {menuItem.subMenu && (
+                <ul>
+                  {menuItem.subMenu.map((subMenuItem, subIndex) => (
+                    <li key={subIndex}>
+                      <Link to={subMenuItem.link}>{subMenuItem.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Box>
+          ))}
+        </Box>
+        <IconButton
+            icon={<HamburgerIcon />}
+            aria-label="Open Menu"
+            display={{ md: 'none' }}
+            onClick={handleToggle}
+          />
+      </Flex>
 
-      
-      <li><Link to="#">STUDENT ZONE<IoIosArrowDown /></Link>
-        <ul>
-          <li><Link to="/student-registration">Student Registration</Link>  </li>
-          <li><Link to="/student-verification">Student Verification</Link>  </li>
-          <li><Link to="/student-login">Student Login</Link>  </li>
-          <li><Link to="/admit-card">Admit Card</Link>  </li>
-          <li><Link to="/certificate-verification">Certificate Verification</Link>  </li>
-        </ul>
-      </li>
-      <li><Link to="#">FRANCHISE<IoIosArrowDown /></Link>
-        <ul>
-        <li><Link to="/franchise-enquiry">Apply Online</Link>  </li>
-        <li><Link to="/center-verification">Center Verification</Link>  </li>
-        </ul>
-      </li>
-      <li><Link to="#">GALLARY<IoIosArrowDown /></Link>
-        <ul>
-        <li><Link to="/Photos">Photos</Link>  </li>
-        <li><Link to="/videos">Videos</Link>  </li>
-        </ul>
-      </li>
-      <li><Link to="#">LOGIN<IoIosArrowDown /></Link>
-        <ul>
-        <li><Link to="/dashboard">Admin Login</Link>  </li>
-        <li><Link to="/chairman-message">Franchise Login</Link>  </li>
-        <li><Link to="/chairman-message">Employee Login</Link>  </li>
-        </ul>
-      </li>           
-      <li><Link to="#">CONTACT<IoIosArrowDown /></Link>
-        <ul>
-        <li><Link to="/contact-us">Contact Us</Link>  </li>
-        <li><Link to="/find-branch">Find Branch</Link>  </li>
-        <li><Link to="/our-team">Our Team</Link>  </li>
-        </ul>
-      </li>           
-    </ul>
-  </nav>
-
-  {/* <div class="btn-outer">
-    <a Link to="#" class="quote-btn"><span >Apply Franchise</span> </a>
-    </div> */}
-</header>
-  )
+      <Drawer isOpen={isOpen} placement="left" onClose={handleToggle}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>M-Tech Computer Institute</DrawerHeader>
+          <DrawerBody>
+            {menuItems.map((list) => (
+              <React.Fragment key={list.label}>
+                <Button
+                  colorScheme="teal"
+                  mb={2}
+                  w="100%"
+                  key={list.label}
+                  onClick={() => handleSubMenuToggle(list.label)}
+                >
+                  {list.label}
+                  {list.subMenu && <IoIosArrowDown />}
+                </Button>
+                {list.subMenu && openSubMenu === list.label && (
+                  <Box ml={4}>
+                    {list.subMenu.map((subMenuItem) => (
+                      <Button
+                        colorScheme="gray"
+                        mb={2}
+                        w="100%"
+                        key={subMenuItem.label}
+                        onClick={() => console.log(subMenuItem.link)}
+                      >
+                        {subMenuItem.label }
+                      </Button>
+                    ))}
+                  </Box>
+                )}
+              </React.Fragment>
+            ))}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </Box>
+  );
 }
 
-export default NAvBarNew
+export default NAvBarNew;

@@ -26,6 +26,9 @@ import FindBranch from './Pages/Contact/FindBranch';
 import OurTeam from './Pages/Contact/OurTeam';
 import {theme} from './theme'
 import Dashboard from './AdminPanel/pages/Dashboard/Dashboard';
+import FranchiseDashboard from './FranchisePanel/pages/Dashboard/FranchiseDashboard';
+import StudentDashboard from './StudentPanel/pages/Dashboard/StudentDashboard';
+import PracticeTest from './StudentPanel/pages/PracticeTest/PracticeTest';
 
 
 
@@ -63,6 +66,9 @@ const router = createBrowserRouter(
 
 
         <Route path='dashboard' element={<Dashboard/>}   />
+        <Route path='franchise-dashboard' element={<FranchiseDashboard/>}   />
+        <Route path='student-dashboard' element={<StudentDashboard/>}   />
+        <Route path='practice-test' element={<PracticeTest/>}   />
         </>
     )
 )
