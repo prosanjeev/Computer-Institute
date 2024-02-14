@@ -50,24 +50,36 @@ const PracticeTest = () => {
   const handleNextQuestion = () => {
     if (selectedOption !== null) {
       const currentQuestion = questions[currentQuestionIndex];
-      const selectedOptionObj = currentQuestion.options.find(
-        (option) => option.id === selectedOption
-      );
-
+      const updatedOptions = currentQuestion.options.map(option => {
+        if (option.id === selectedOption) {
+          return { ...option, isSelected: true };
+        } else {
+          return { ...option, isSelected: false };
+        }
+      });
+  
+      const selectedOptionObj = updatedOptions.find(option => option.id === selectedOption);
+  
       if (selectedOptionObj && selectedOptionObj.isCorrect) {
-        setScore((prevScore) => prevScore + 1);
+        setScore(prevScore => prevScore + 1);
       }
-
-      setAnsweredQuestions((prev) => [...prev, currentQuestionIndex]); // Mark question as answered
-
+  
+      setAnsweredQuestions(prev => [...prev, currentQuestionIndex]); // Mark question as answered
+      setQuestions(prevQuestions => {
+        const updatedQuestions = [...prevQuestions];
+        updatedQuestions[currentQuestionIndex] = { ...currentQuestion, options: updatedOptions };
+        return updatedQuestions;
+      });
+  
       if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        setCurrentQuestionIndex(prevIndex => prevIndex + 1);
         setSelectedOption(null); // Reset selected option for the new question
       }
     } else {
       alert("Please select an option before proceeding.");
     }
   };
+  
 
   const isQuestionAnswered = (index) => answeredQuestions.includes(index);
 
@@ -81,7 +93,7 @@ const PracticeTest = () => {
       <StudentDashboardLayout title="Final Score">
         <CSSReset />
         <Container maxW="container.sm" centerContent>
-          <FinalScore score={score} />
+          <FinalScore score={score} questions={questions} answeredQuestions={answeredQuestions} />
         </Container>
       </StudentDashboardLayout>
     );
@@ -91,10 +103,11 @@ const PracticeTest = () => {
   return (
     <StudentDashboardLayout title="Practice Test">
       <CSSReset />
-      <Container maxW="container.sm" centerContent>
+      <Container maxW="container.sm"  leftContent>
         <Question
           key={`question-${currentQuestionIndex}`}
           question={questions[currentQuestionIndex]}
+          serialNumber={currentQuestionIndex + 1}
         />
         <Options
           key={`options-${currentQuestionIndex}`}

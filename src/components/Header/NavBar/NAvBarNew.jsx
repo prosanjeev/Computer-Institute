@@ -27,7 +27,7 @@ const menuItems = [
     label: 'STUDENT ZONE', link: '#', subMenu: [
       { label: 'Student Registration', link: '/student-registration' },
       { label: 'Student Verification', link: '/student-verification' },
-      { label: 'Student Login', link: '/student-login' },
+      { label: 'Student Login', link: 'student-dashboard' },
       { label: 'Admit Card', link: '/admit-card' },
       { label: 'Certificate Verification', link: '/certificate-verification' }
     ]
@@ -137,15 +137,16 @@ function NAvBarNew() {
                 {list.subMenu && openSubMenu === list.label && (
                   <Box ml={4}>
                     {list.subMenu.map((subMenuItem) => (
+                     <Link to={subMenuItem.link} key={subMenuItem.label}>
                       <Button
                         colorScheme="gray"
                         mb={2}
-                        w="100%"
-                        key={subMenuItem.label}
+                        w="100%"                        
                         onClick={() => console.log(subMenuItem.link)}
                       >
                         {subMenuItem.label }
                       </Button>
+                     </Link>
                     ))}
                   </Box>
                 )}

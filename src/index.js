@@ -29,6 +29,7 @@ import Dashboard from './AdminPanel/pages/Dashboard/Dashboard';
 import FranchiseDashboard from './FranchisePanel/pages/Dashboard/FranchiseDashboard';
 import StudentDashboard from './StudentPanel/pages/Dashboard/StudentDashboard';
 import PracticeTest from './StudentPanel/pages/PracticeTest/PracticeTest';
+import Support from './AdminPanel/pages/Support/Support';
 
 
 
@@ -64,8 +65,10 @@ const router = createBrowserRouter(
         <Route path='our-team' element={<OurTeam/>}   />
       </Route>
 
-
+{/* AdminPanel */}
         <Route path='dashboard' element={<Dashboard/>}   />
+        <Route path='support' element= {<Support/>}  />
+        
         <Route path='franchise-dashboard' element={<FranchiseDashboard/>}   />
         <Route path='student-dashboard' element={<StudentDashboard/>}   />
         <Route path='practice-test' element={<PracticeTest/>}   />

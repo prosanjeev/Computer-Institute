@@ -1,14 +1,3 @@
-.heading-fullbox{
-    width: 100vw;
-}
-.heading-box{
-    width: 80vw;
-    margin: 60px auto 10px auto;
-    text-align: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-}
 .heading-hr-line{
     width: 6%;
     height: 4px;
@@ -25,18 +14,6 @@
     border: none;
     border-radius: 50px ;
     margin: 20px 0;
-}
-.heading-box h2{
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 48px;
-    color: #444444;    ;
-}
-.section-text{
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 26px;
-    color: #777777;  
 }
 
 

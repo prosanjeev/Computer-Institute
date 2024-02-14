@@ -16,11 +16,11 @@ const Support = () => {
           text=" Have a question or just want to know more? Feel free to reach out to
           us."
         />
-        <SupportCard
+        {/* <SupportCard
           icon={AiTwotoneMessage}
           leftComponent={
             <InfoCard
-              inverted={true}
+              inverted={true}  
               tagText="Contact"
               imgUrl="/grid_bg.svg"
               text="Learn more about our real estate, mortgage, and  corporate account services"
@@ -28,7 +28,7 @@ const Support = () => {
           }
           title="Live Chat"
           text=" Don’t have time to wait for the answer? Chat with us now."
-        />
+        /> */}
       </Stack>
     </DashboardLayout>
   );

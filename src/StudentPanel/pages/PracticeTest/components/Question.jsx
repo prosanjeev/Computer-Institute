@@ -1,11 +1,11 @@
-// src/Question.js
+import { Text } from '@chakra-ui/react';
 import React from 'react';
 
-const Question = ({ question }) => {
+const Question = ({ question, serialNumber }) => {
   return (
-    <div>
-      <h2>{question.text}</h2>
-    </div>
+    <>
+      <Text fontSize='20px' mb={2}>Question {serialNumber}: {question.text}</Text>
+    </>
   );
 };
 

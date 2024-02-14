@@ -70,7 +70,7 @@ const Dashboard = () => {
             xl: 4,
           }}
         >
-          <SimpleGrid columns={4} px={7} columnGap={4} rowGap={4}>
+          <SimpleGrid columns={{base:1, md:4}} px={7} columnGap={4} rowGap={4}>
             {infoCards.map((card) => (
               <InfoCard key={card.name} name={card.name} info={card.info}>
                 {" "}
