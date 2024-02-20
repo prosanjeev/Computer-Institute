@@ -37,7 +37,7 @@ function ImageBoxGrid() {
   ];
 
   return (
-    <Flex flexWrap="wrap" w="80%" mx="auto" >
+    <Flex flexWrap="wrap" w="80%" mx="auto" gap={12} >
       {ImageBoxes.map((imagebox) => {
         return (
           <ImageBox name={imagebox.name} url={imagebox.url} key={imagebox.id} />

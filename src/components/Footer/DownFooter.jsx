@@ -1,89 +1,103 @@
 import "./DownFooter.css";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoCallOutline } from "react-icons/io5";
 import { MdMailOutline } from "react-icons/md";
-import { Box, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Flex,
+  HStack,
+  Heading,
+  Icon,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import QueryForm from "./components/QueryForm";
 
 const DownFooter = () => {
-    const useFulLink = [
-      {
-        text: "Home",
-        link: "/",
-      },
-      {
-        text: "About Us",
-        link: "/about-company",
-      },
-      {
-        text: "Contact Us",
-        link: "/contact-us",
-      },
-      {
-        text: "Student Login",
-        link: "/",
-      },
-      {
-        text: "Student Verification",
-        link: "/student-verification",
-      },
-      {
-        text: "Certificate Verification",
-        link: "/certificate-verification",
-      },
-    ]
+  const useFulLink = [
+    {
+      text: "Home",
+      link: "/",
+    },
+    {
+      text: "About Us",
+      link: "/about-company",
+    },
+    {
+      text: "Contact Us",
+      link: "/contact-us",
+    },
+    {
+      text: "Student Login",
+      link: "/",
+    },
+    {
+      text: "Student Verification",
+      link: "/student-verification",
+    },
+    {
+      text: "Certificate Verification",
+      link: "/certificate-verification",
+    },
+  ];
 
   return (
-    <div className="footer-box">  
-      <div className="footer-contantant">
-
-        <div className="footer-contact-box">
-          <div className="footer-title"> CONTACT US </div>
-          <hr className="footer-hr-line" />
-          <div className="footer-about">
+    <Box as="footer"  bgColor='#B80505' w='100%' >
+      <Flex    
+        direction={{ base: "column", md: "row" }}
+        className="footer-contantant" gap={4}
+      >
+        <Box flex="1" mr={{ base: 0, md: 4 }} mb={{ base: 4, md: 0 }}>
+          <Heading as="h3" size="md" className="footer-title">
+            CONTACT US
+          </Heading>
+          <Divider className="footer-hr-line" w={12} />
+          <Text className="footer-about" color='#CCC9AC'>
             M-TECH COMPUTER ACADEMY PVT. LTD., 56/6/510A Unity City Chaurah,
             Bahadurpur Rd, Kalyanpur (West), Patna, Bihar 876543
-          </div>
-          <div className="contactus-list">
-            <div className="contactus-icon-list">
-              <IoCallOutline />  9876543210
-              </div> 
-            <div className="contactus-icon-list">
-              <MdMailOutline />  
-              Contact@domain.com
-              </div> 
-          </div>
-        </div>
-        <Box className="useful" >
-          <div className="footer-title"> USEFUL_LINKS </div>
-          <hr className="footer-hr-line" />
-          <Box className="usefull-list">
-            <ul>
-              {useFulLink.map((list)=>(
-                <li key={list.text}> <HStack>  <IoIosArrowForward />  <Link to={list.link}> {list.text} </Link> </HStack> </li>
-              ))}
-            </ul>
-          </Box>
+          </Text>
+          <VStack align="start" mt={2}>
+            <Flex align="center">
+              <IoCallOutline />
+              <Text color='#CCC9AC' ml={2}>9876543210</Text>
+            </Flex>
+            <Flex align="center">
+              <MdMailOutline />
+              <Text color='#CCC9AC' ml={2}>Contact@domain.com</Text>
+            </Flex>
+          </VStack>
         </Box>
-        <div className="query">
-          <div className="footer-title"> QUERY US </div>
-          <hr className="footer-hr-line" />
-
-          <form className="footer-form">
-            <input  type="text" placeholder="Your Name" />
-            <input type="text" placeholder="Your Mobile No."/>
-            <input type="text" placeholder="Your Email" />
-            <button> SUBSCRIBE</button>
-          </form>
-        </div>
-      </div>
-
-      <div className="copyright-contant">
-          M-TECH COMPUTER ACADEMY PVT. LTD. © 2023 |{" "}
-          <a href="#">Privacy Policy</a>
-        </div>
-
-      </div>    
+        <Box flex="1" mr={{ base: 0, md: 4 }} mb={{ base: 4, md: 0 }}>
+          <Heading as="h3" size="md" className="footer-title">
+            USEFUL LINKS
+          </Heading>
+          <Divider className="footer-hr-line" w={12} />
+          <VStack align="start" mt={2}>
+            {useFulLink.map((list) => (
+              <Link  key={list.text} to={list.link}>
+               <HStack color='#CCC9AC'> 
+                <Icon as={IoIosArrowForward} />
+                <Text>  {list.text}</Text>
+              </HStack>
+              </Link>
+            ))}
+          </VStack>
+        </Box>
+        <Box flex="1">
+          <Heading as="h3" size="md" className="footer-title">
+            QUERY US
+          </Heading>
+          <Divider className="footer-hr-line" w={12} />
+          <QueryForm/>
+        </Box>
+      </Flex>
+      <Text textAlign="center" className="copyright-contant">
+        M-TECH COMPUTER ACADEMY PVT. LTD. © 2023 |{" "}
+        <Link to='#'>Privacy Policy</Link>
+      </Text>
+    </Box>
   );
 };
 

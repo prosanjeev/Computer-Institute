@@ -1,11 +1,7 @@
-.footer-box{
-    width: 100vw;
-    height: auto;
-    background-color: #B80505;
-}
+
 .footer-contantant{
     width: 80%;
-    padding: 40px 0;
+    padding: 40px 0 40px 30px;
     margin: 0px auto;
     color: white;
     display: flex;
@@ -55,30 +51,10 @@
     font-size: 18px;
     font-weight: 700;
     line-height: 29px;
+    
 }
 
-.footer-form{
-    width: 100%;
-}
-.footer-form input{
-    width: 100%;
-    padding: 10px;
-    border: none;
-    margin: 10px 0;
-}
-.footer-form button{
-    padding: 10px 25px;
-    background-color: rgba(241, 119, 32, 0.823);
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-weight: 600;
 
-    &:hover{
-        background-color: #FF6C00;
-    border-radius: 10px;
-    }
-}
 
 .copyright-contant{
     width: 80%;
@@ -133,24 +109,7 @@
         line-height: 29px;
     }
     
-    .footer-form{
-        width: 100%;
-    }
-    .footer-form input{
-        width: 100%;
-        padding: 10px;
-        border: none;
-        margin: 10px 0;
-    }
-    .footer-form button{
-        padding: 10px 25px;
-        background-color: rgba(241, 119, 32, 0.823);
-        border: none;
-        &:hover{
-            background-color: #FF6C00;
-        border-radius: 10px;
-        }
-    }
+   
     
     .copyright-contant{
         width: 80%;

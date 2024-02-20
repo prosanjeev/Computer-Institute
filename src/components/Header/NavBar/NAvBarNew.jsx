@@ -85,7 +85,7 @@ function NAvBarNew() {
         <Box as='ul' className="navigation-menu" 
         color='white'
         display={{ base: 'none', md: 'flex' }}
-        w='1200px'
+        w='100%'
         h='50px'
         listStyleType='none'
         zIndex={1}
