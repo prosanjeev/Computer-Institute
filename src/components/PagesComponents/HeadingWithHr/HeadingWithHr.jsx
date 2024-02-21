@@ -15,7 +15,7 @@ const HeadingWithHr = (props) => {
         </Text>
         <div className="heading-hr-line" />
         {/* <Box as="div" w="6%" h='4px' color="#FF6C00" /> */}
-        <Text  fontWeight="700" color='#777777'>{props.text}</Text>
+        <Text textAlign='center' fontSize='18px' fontWeight="500" color='#777777'>{props.text}</Text>
       </Stack>
     </Box>
   );

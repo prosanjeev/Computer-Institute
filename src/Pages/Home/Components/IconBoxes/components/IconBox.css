@@ -1,5 +1,7 @@
 .icon-box-1{
     border: 2px solid #ECECEC;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
     margin: 50px auto;
     text-align: center;
     position: relative;
@@ -14,6 +16,7 @@
     margin: -30px auto auto auto;
     border-radius: 100px;
     background-color: rgb(195, 195, 245);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 /* Solid border */
 .iconbox-hr {

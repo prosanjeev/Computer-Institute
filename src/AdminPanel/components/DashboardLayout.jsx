@@ -25,7 +25,7 @@ const DashboardLayout = ({ title, children }) => {
           overflowY="auto"
           h="calc(100vh - 88px)"
           mt="6"
-          maxW="70rem"
+          maxW="100rem"
         >
           {children}
         </Container>

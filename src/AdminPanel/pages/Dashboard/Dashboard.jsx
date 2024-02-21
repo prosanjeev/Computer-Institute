@@ -1,4 +1,4 @@
-import { Grid, GridItem, SimpleGrid } from "@chakra-ui/react";
+import { Box, Grid, GridItem, SimpleGrid } from "@chakra-ui/react";
 import DashboardLayout from "../../components/DashboardLayout";
 import InfoCard from "./components/InfoCard";
 
@@ -57,6 +57,7 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout title="Dashboard">
+      <Box w='80%' mx='auto' mt={5}>
       <Grid
         gridTemplateColumns={{
           base: "repeat(1, 1fr)",
@@ -79,6 +80,7 @@ const Dashboard = () => {
           </SimpleGrid>
         </GridItem>
       </Grid>
+      </Box>
     </DashboardLayout>
   );
 };
