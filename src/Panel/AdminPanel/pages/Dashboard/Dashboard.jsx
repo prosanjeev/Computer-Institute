@@ -1,12 +1,12 @@
 import { Box, Grid, GridItem, SimpleGrid } from "@chakra-ui/react";
-import DashboardLayout from "../../components/FranchiseDashboardLayout";
+import DashboardLayout from "../../components/DashboardLayout";
 import InfoCard from "./components/InfoCard";
-import { franchisedashboardData } from "./components/data";
+import { dashboardData } from "./data";
 
-const FranchiseDashboard = ({}) => {
+const Dashboard = () => {
   return (
     <DashboardLayout title="Dashboard">
-       <Box w="80%" mx="auto" mt={5}>
+      <Box w="80%" mx="auto" mt={5}>
         <Grid
           gridTemplateColumns={{
             base: "repeat(1, 1fr)",
@@ -26,7 +26,7 @@ const FranchiseDashboard = ({}) => {
               columnGap={4}
               rowGap={5}
             >
-              {franchisedashboardData.map((card) => (
+              {dashboardData.map((card) => (
                 <InfoCard
                   key={card.name}
                   name={card.name}
@@ -42,4 +42,4 @@ const FranchiseDashboard = ({}) => {
   );
 };
 
-export default FranchiseDashboard;
+export default Dashboard;

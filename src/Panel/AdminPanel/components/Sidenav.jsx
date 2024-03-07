@@ -1,124 +1,33 @@
 import { Box, HStack, Heading, Icon, Stack, Text } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
-import { RxDashboard } from "react-icons/rx";
-import { FaRegUser } from "react-icons/fa";
-import { IoIosGitBranch, IoMdNotificationsOutline } from "react-icons/io";
-import { CiWallet } from "react-icons/ci";
-import { PiStudent } from "react-icons/pi";
-import { SiCoursera } from "react-icons/si";
-import { TbReportSearch } from "react-icons/tb";
-import { FaUserTie } from "react-icons/fa";
-import { GrCloudComputer } from "react-icons/gr";
-import { CgWebsite } from "react-icons/cg";
 import { BiSupport } from "react-icons/bi";
-import { MdOutlineNotificationsActive } from "react-icons/md";
-import { VscCommentUnresolved } from "react-icons/vsc";
 import { ChevronDownIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import { useState } from "react";
+import { navLinks } from "./navList/navLinks";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 const Sidenav = () => {
   const location = useLocation();
 
   const [activeMenu, setActiveMenu] = useState(null);
+  const [activeSubmenu, setActiveSubmenu] = useState(null);
 
   const handleMenuClick = (index) => {
     setActiveMenu(activeMenu === index ? null : index);
+    setActiveSubmenu(null);
+  };
+
+  const handleSubmenuClick = (index) => {
+    setActiveSubmenu(activeSubmenu === index ? null : index);
   };
 
   const isActiveLink = (link) => {
     return location.pathname === link;
   };
 
-  const navLinks = [
-    {
-      icon: RxDashboard,
-      text: "Dashboard",
-      link: "/dashboard",
-    },
-    {
-      icon: FaRegUser,
-      text: "Profile",
-      link: "/transactions",
-    },
-    {
-      icon: IoIosGitBranch,
-      text: "Manage Branch",
-      link: "/transactions",
-    },
-    {
-      icon: CiWallet,
-      text: "Branch Wallet",
-      link: "/transactions",
-    },
-    {
-      icon: PiStudent,
-      text: "Student",
-      link: "#",
-      submenu: [
-        {
-          text: "Add Student",
-          link: "/student/add",
-        },
-        {
-          text: "View Students",
-          link: "/student/view",
-        },
-        {
-          text: "View Students List",
-          link: "/student",
-        },
-      ],
-    },
-    {
-      icon: SiCoursera,
-      text: "Courses",
-      link: "/transactions",
-      submenu: [
-        {
-          text: "Add Course",
-          link: "/student/add",
-        },
-        {
-          text: "View Course",
-          link: "/student/view",
-        },
-      ],
-    },
-    {
-      icon: TbReportSearch,
-      text: "Report",
-      link: "/transactions",
-    },
-    {
-      icon: FaUserTie,
-      text: "Staff",
-      link: "/transactions",
-    },
-    {
-      icon: GrCloudComputer,
-      text: "Online Exam",
-      link: "/transactions",
-    },
-    {
-      icon: CgWebsite,
-      text: "Manage Website",
-      link: "/transactions",
-    },
-    {
-      icon: VscCommentUnresolved ,
-      text: "Manage Queries",
-      link: "/transactions",
-    },
-    {
-      icon: MdOutlineNotificationsActive,
-      text: "Send Notification ",
-      link: "/transactions",
-    },
-  ];
-
   return (
     <Stack
-      bg="white"
+      bg="#00073D"
       justify="space-between"
       boxShadow={{
         base: "none",
@@ -131,7 +40,13 @@ const Sidenav = () => {
       h="100vh"
     >
       <Box>
-        <Heading textAlign="center" fontSize="20px" as="h1" pt="3.5rem">
+        <Heading
+          textAlign="center"
+          fontSize="20px"
+          as="h1"
+          pt="3.5rem"
+          color="orange"
+        >
           @M-Tech Computer
         </Heading>
         <Box mt="6" mx="3">
@@ -150,11 +65,10 @@ const Sidenav = () => {
                       bg: "#F3F3F7",
                       color: "#171717",
                     }}
-                    color="#797E82"
                     cursor="pointer"
                   >
                     <Icon boxSize={4} as={nav.icon} />
-                    <Text fontSize="16px" fontWeight="500">
+                    <Text fontSize="18px" fontWeight="500">
                       {nav.text}
                     </Text>
                     {activeMenu === index ? (
@@ -165,11 +79,20 @@ const Sidenav = () => {
                   </HStack>
                   {activeMenu === index && (
                     <Stack ml="4">
-                      {nav.submenu.map((item) => (
+                      {nav.submenu.map((item, subIndex) => (
                         <Link to={item.link} key={item.text}>
                           <HStack
-                            bg={isActiveLink(item.link) ? "#F3F3F7" : "transparent"}
-                            color={isActiveLink(item.link) ? "#1A202C" : "#797E82"}
+                            onClick={() => handleSubmenuClick(subIndex)}
+                            bg={
+                              isActiveLink(item.link)
+                                ? "#F3F3F7"
+                                : "transparent"
+                            }
+                            color={
+                              isActiveLink(item.link)
+                                ? "#1A202C"
+                                : "#797E82"
+                            }
                             borderRadius="10px"
                             py="3"
                             px="8"
@@ -177,8 +100,11 @@ const Sidenav = () => {
                               bg: "#F3F3F7",
                               color: "#171717",
                             }}
-                            color="#797E82"
                           >
+                            <Icon
+                              boxSize={4}
+                              as={item.icon ? item.icon : MdKeyboardArrowRight}
+                            />
                             <Text fontSize="16px" fontWeight="500">
                               {item.text}
                             </Text>
@@ -200,7 +126,6 @@ const Sidenav = () => {
                       bg: "#F3F3F7",
                       color: "#171717",
                     }}
-                    color="#797E82"
                   >
                     <Icon boxSize={4} as={nav.icon} />
                     <Text fontSize="16px" fontWeight="500">

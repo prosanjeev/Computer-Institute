@@ -26,7 +26,7 @@ import FindBranch from './Pages/Contact/FindBranch';
 import OurTeam from './Pages/Contact/OurTeam';
 import { theme } from './theme'
 import Dashboard from './AdminPanel/pages/Dashboard/Dashboard';
-import FranchiseDashboard from './FranchisePanel/pages/Dashboard/FranchiseDashboard';
+// import FranchiseDashboard from './FranchisePanel/pages/Dashboard/FranchiseDashboard';
 import StudentDashboard from './StudentPanel/pages/Dashboard/StudentDashboard';
 import PracticeTest from './StudentPanel/pages/PracticeTest/PracticeTest';
 import Support from './AdminPanel/pages/Support/Support';
@@ -34,48 +34,48 @@ import App from './App';
 
 
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-      <Route path='/' element={<MainLayout />}>
-        <Route path='' element={<Home />} />
-        <Route path='about-company' element={<AboutCompany />} />
-        <Route path='chairman-message' element={<ChairmanMessage />} />
-        <Route path='our-vision-and-mission' element={<OurVisionAndMission />} />
-        <Route path='our-goal' element={<OurGoal />} />
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     <>
+//       <Route path='/' element={<MainLayout />}>
+//         <Route path='' element={<Home />} />
+//         <Route path='about-company' element={<AboutCompany />} />
+//         <Route path='chairman-message' element={<ChairmanMessage />} />
+//         <Route path='our-vision-and-mission' element={<OurVisionAndMission />} />
+//         <Route path='our-goal' element={<OurGoal />} />
 
-        <Route path='basic-courses' element={<BasicCourses />} />
-        <Route path='diploma-courses' element={<DiplomaCourses />} />
-        <Route path='language-courses' element={<LanguageCourses />} />
-        <Route path='professional-courses' element={<ProfessionalCourses />} />
+//         <Route path='basic-courses' element={<BasicCourses />} />
+//         <Route path='diploma-courses' element={<DiplomaCourses />} />
+//         <Route path='language-courses' element={<LanguageCourses />} />
+//         <Route path='professional-courses' element={<ProfessionalCourses />} />
 
-        <Route path='student-registration' element={<StudentRegistration />} />
-        <Route path='student-verification' element={<StudentVerification />} />
-        <Route path='student-login' element={<StudentLogin />} />
-        <Route path='admit-card' element={<AdmitCard />} />
-        <Route path='certificate-verification' element={<CertificateVerification />} />
+//         <Route path='student-registration' element={<StudentRegistration />} />
+//         <Route path='student-verification' element={<StudentVerification />} />
+//         <Route path='student-login' element={<StudentLogin />} />
+//         <Route path='admit-card' element={<AdmitCard />} />
+//         <Route path='certificate-verification' element={<CertificateVerification />} />
 
-        <Route path='franchise-enquiry' element={<ApplyOnline />} />
-        <Route path='center-verification' element={<CenterVerification />} />
+//         <Route path='franchise-enquiry' element={<ApplyOnline />} />
+//         <Route path='center-verification' element={<CenterVerification />} />
 
-        <Route path='photos' element={<Photos />} />
-        <Route path='videos' element={<Videos />} />
+//         <Route path='photos' element={<Photos />} />
+//         <Route path='videos' element={<Videos />} />
 
-        <Route path='contact-us' element={<ContactUs />} />
-        <Route path='find-branch' element={<FindBranch />} />
-        <Route path='our-team' element={<OurTeam />} />
-      </Route>
+//         <Route path='contact-us' element={<ContactUs />} />
+//         <Route path='find-branch' element={<FindBranch />} />
+//         <Route path='our-team' element={<OurTeam />} />
+//       </Route>
 
-      {/* AdminPanel */}
-      <Route path='dashboard' element={<Dashboard />} />
-      <Route path='support' element={<Support />} />
+//       {/* AdminPanel */}
+//       <Route path='dashboard' element={<Dashboard />} />
+//       <Route path='support' element={<Support />} />
 
-      <Route path='franchise-dashboard' element={<FranchiseDashboard />} />
-      <Route path='student-dashboard' element={<StudentDashboard />} />
-      <Route path='practice-test' element={<PracticeTest />} />
-    </>
-  )
-)
+//       <Route path='franchise-dashboard' element={<FranchiseDashboard />} />
+//       <Route path='student-dashboard' element={<StudentDashboard />} />
+//       <Route path='practice-test' element={<PracticeTest />} />
+//     </>
+//   )
+// )
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

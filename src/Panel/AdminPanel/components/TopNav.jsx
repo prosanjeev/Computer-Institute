@@ -1,8 +1,5 @@
 import {
   Box,
-  Button,
-  Container,
-  Flex,
   HStack,
   Heading,
   Icon,
@@ -14,25 +11,27 @@ import {
 import { FaBars, FaUserTie } from "react-icons/fa";
 const TopNav = ({ title, onOpen }) => {
   return (
-    <Box px="4" bg="#389AF0">
-      <HStack maxW="70rem" h="16" justify="space-between" mx="auto">
+    <Box px="4" bg="#2A3542" >
+      <HStack maxW="80rem" h="16" justify="space-between" mx="auto">
         <Icon
           as={FaBars}
+          color='white'
+          boxSize={8}
           onClick={onOpen}
           display={{
             base: "block",
             lg: "none",
           }}
         />
-        <Heading fontWeight="medium" fontSize="28px">
+        <Heading fontWeight="medium" fontSize="28px" color='white'>
           {title}
         </Heading>
 
         <Menu>
-          <MenuButton>
-            <Icon as={FaUserTie} fontSize="24px" />
+          <MenuButton >
+            <Icon as={FaUserTie} fontSize="24px" color='white'/>
           </MenuButton>
-          <MenuList>
+          <MenuList border='1px solid #d4cfcf'>
             <MenuItem>Logout</MenuItem>
             <MenuItem>Support</MenuItem>
           </MenuList>

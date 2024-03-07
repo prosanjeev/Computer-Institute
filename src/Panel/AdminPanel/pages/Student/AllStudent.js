@@ -1,6 +1,6 @@
 import React from 'react'
 import DashboardLayout from '../../components/DashboardLayout'
-import { Box, Button, Flex, Icon, Image, Switch, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Grid, Icon, Image, Switch, Text, useBreakpointValue } from '@chakra-ui/react'
 import { FaEdit, FaRegEdit } from "react-icons/fa";
 
 
@@ -123,44 +123,65 @@ const AllStudent = () => {
       const handleStatusChange = (studentId, newStatus) => {
         // Implement your logic to update the status of the student with ID studentId to newStatus
       };
+      const isDesktop = useBreakpointValue({ base: false, md: true });
+
   return (
-    <DashboardLayout title="Student List"  >
-    <Flex  direction="column" alignItems="center" mx={2} >
-      <Flex w="90%"  bg="gray.200" fontWeight="bold" py={2} mb={2} >
-        <Box w="10%" pl={3}>Date</Box>
-        <Box w="7%">Photo</Box>
-        <Box w="12%">Enr No.</Box>
-        <Box w="16%">Name</Box>
-        <Box w="16%">Father's Name</Box>
-        <Box w="12%">Center</Box>
-        <Box w="12%">Course</Box>
-        <Box w="5%">Status</Box>
-        <Box w="5%">Details</Box>
-        <Box w="5%">Delete</Box>
-      </Flex>
-      {students.map((student) => (
-        <Flex key={student.id} w="90%" borderBottom="1px solid" borderColor="gray.200" py={2} mb={2} alignItems="center">
-          <Box w="10%" pl={2}>{student.date}</Box>
-          <Box w="7%"><Image src={student.photo} alt={student.name} w="50px" h="50px" /></Box>
-          <Box w="12%">{student.enrollmentNo}</Box>
-          <Box w="16%">{student.name}</Box>
-          <Box w="16%">{student.fathersName}</Box>
-          <Box w="12%">{student.center}</Box>
-          <Box w="12%">{student.course}</Box>
-          <Box w="6%"><Switch
-            isChecked={student.status === 'Active'}
-            onChange={(e) =>
-              handleStatusChange(student.id, e.target.checked ? 'Active' : 'Inactive')
-            }
-            colorScheme={student.status === 'Active' ? 'green' : 'red'}
-          /></Box>
-          {/* <Box w="5%"><Button size="sm" colorScheme="blue">Details</Button></Box> */}
-          <Box w="4%"><Icon as={FaRegEdit} size="sm" colorScheme="blue" /> </Box>
-          <Box w="5%"><Button size="sm" colorScheme="red">Delete</Button></Box>
-        </Flex>
-      ))}
-    </Flex>
-  </DashboardLayout>
+    <DashboardLayout title="Student List">
+            <Flex direction="column" alignItems="center" mx={2}>
+                <Grid
+                    w="90%"
+                    templateColumns={isDesktop ? "8% 6% 12% 16% 16% 12% 12% 4% 4% 5%" : "1fr"}
+                    gap={2}
+                    bg="gray.200"
+                    fontWeight="bold"
+                    py={2}
+                    pl='1%'
+                    mb={2}
+                >
+                    <Box>Date</Box>
+                    <Box>Photo</Box>
+                    <Box>Enr No.</Box>
+                    <Box>Name</Box>
+                    <Box>Father's Name</Box>
+                    <Box>Center</Box>
+                    <Box>Course</Box>
+                    <Box>Status</Box>
+                    <Box>Details</Box>
+                    <Box>Delete</Box>
+                </Grid>
+                {students.map((student) => (
+                    <Grid
+                        key={student.id}
+                        w="90%"
+                        templateColumns={isDesktop ? "8% 6% 12% 16% 16% 12% 12% 4% 4% 5%" : "1fr"}
+                        gap={2}
+                        borderBottom="1px solid"
+                        borderColor="gray.200"
+                        py={2}
+                        pl='1%'
+                        mb={2}
+                        alignItems="center"
+                    >
+                        <Box>{student.date}</Box>
+                        <Box><Image src={student.photo} alt={student.name} w="50px" h="50px" /></Box>
+                        <Box>{student.enrollmentNo}</Box>
+                        <Box>{student.name}</Box>
+                        <Box>{student.fathersName}</Box>
+                        <Box>{student.center}</Box>
+                        <Box>{student.course}</Box>
+                        <Box><Switch
+                            isChecked={student.status === 'Active'}
+                            onChange={(e) =>
+                                handleStatusChange(student.id, e.target.checked ? 'Active' : 'Inactive')
+                            }
+                            colorScheme={student.status === 'Active' ? 'green' : 'red'}
+                        /></Box>
+                        <Box><Icon as={FaRegEdit} size="sm" colorScheme="blue" /></Box>
+                        <Box><Button size="sm" colorScheme="red">Delete</Button></Box>
+                    </Grid>
+                ))}
+            </Flex>
+        </DashboardLayout>
   )
 }
 

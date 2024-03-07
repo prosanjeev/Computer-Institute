@@ -1,13 +1,15 @@
+import { Box } from "@chakra-ui/react";
 import PageTitle from "../../components/PagesComponents/PageTitleSection/PageTitle";
+import VerifivaticationForm from "../../components/PagesComponents/VerifivaticationForm";
 
 const StudentVerification = () => {
   return (
     <>
     <PageTitle pagetitle="STUDENT VERIFICATION" />
-    <div className=''>
+    <Box>
+      <VerifivaticationForm title='STUDENT VERIFICATION' label='Registration No' />
       
-      
-    </div>
+    </Box>
     </>
   )
 }

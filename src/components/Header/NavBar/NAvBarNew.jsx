@@ -27,7 +27,7 @@ const menuItems = [
     label: 'STUDENT ZONE', link: '#', subMenu: [
       { label: 'Student Registration', link: '/student-registration' },
       { label: 'Student Verification', link: '/student-verification' },
-      { label: 'Student Login', link: 'student-dashboard' },
+      { label: 'Student Login', link: 'student-login' },
       { label: 'Admit Card', link: '/admit-card' },
       { label: 'Certificate Verification', link: '/certificate-verification' }
     ]
@@ -47,8 +47,8 @@ const menuItems = [
   },
   {
     label: 'LOGIN', link: '#', subMenu: [
-      { label: 'Admin Login', link: '/dashboard' },
-      { label: 'Franchise Login', link: '/franchise-dashboard' },
+      { label: 'Admin Login', link: '/admin-login' },
+      { label: 'Franchise Login', link: '/franchise-login' },
       { label: 'Employee Login', link: '/chairman-message' }
     ]
   },

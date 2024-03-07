@@ -15,7 +15,7 @@
     line-height: 29px;
     font-weight: 700;
 }
-
+   
 .eventbox-contant {
     height: 450px;
     border: 4px solid #F5DEB3;
@@ -57,3 +57,4 @@
         transform: translateY(-100%); /* Move to the top of the container */
       }
     }
+

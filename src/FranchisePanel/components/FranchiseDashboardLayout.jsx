@@ -1,8 +1,7 @@
 import { Box, Container, Flex, useDisclosure } from "@chakra-ui/react";
-import Sidenav from "../../AdminPanel/components/Sidenav";
 import SideDrawer from "../../AdminPanel/components/SideDrawer";
-import TopNav from "../../AdminPanel/components/TopNav";
 import FranchiseSidenav from "./FranchiseSidenav";
+import FranchiseTopNav from "./FranchiseTopNav";
 
 const FranchiseDashboardLayout = ({ title, children }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -13,20 +12,19 @@ const FranchiseDashboardLayout = ({ title, children }) => {
         display={{
           base: "none",
           lg: "flex",
-        }}
+        }}  
       >
-       {/* dfdsf */}
        <FranchiseSidenav/>
       </Box>
       <SideDrawer isOpen={isOpen} onClose={onClose} />
       <Box flexGrow={1}>
-        <TopNav title={title} onOpen={onOpen} />
+        <FranchiseTopNav title={title} onOpen={onOpen} />
         <Container
           overflowX="hidden"
           overflowY="auto"
           h="calc(100vh - 88px)"
           mt="6"
-          maxW="70rem"
+          maxW="100rem"
         >
           {children}
         </Container>
