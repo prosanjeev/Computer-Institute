@@ -1,8 +1,8 @@
 import { keyframes } from "@emotion/react";
-import { Box, Container,  Text } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
 
 function BoxLayout(props) {
-  
+
   const scrollUp = keyframes`
     from {
       transform: translateY(100%);
@@ -16,7 +16,7 @@ function BoxLayout(props) {
     <Container w="375px" border="1px solid rgba(255, 255, 255, 0.711)" p={0}>
       <Box w="100%" bg="#034C7F" py="10px" color="white">
         <Text fontWeight="700" ml="10px" fontSize="18px">
-        {props.title}
+          {props.title}
         </Text>
       </Box>
 
@@ -24,11 +24,17 @@ function BoxLayout(props) {
         <Box
           position="absolute"
           animation={`${scrollUp} 15s linear infinite`}
+          css={{
+            '&:hover': {
+              animationPlayState: 'paused',
+              cursor: 'pointer',
+            }
+          }}
           width="100%"
           ml='-18px'
         >
           {props.component}
-        
+
         </Box>
       </Box>
     </Container>

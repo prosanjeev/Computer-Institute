@@ -22,23 +22,29 @@ import Videos from './Pages/Gallary/Videos';
 import ContactUs from './Pages/Contact/ContactUs';
 import FindBranch from './Pages/Contact/FindBranch';
 import OurTeam from './Pages/Contact/OurTeam';
-import Dashboard from './AdminPanel/pages/Dashboard/Dashboard';
-import FranchiseDashboard from './FranchisePanel/pages/Dashboard/FranchiseDashboard';
-import StudentDashboard from './StudentPanel/pages/Dashboard/StudentDashboard';
-import PracticeTest from './StudentPanel/pages/PracticeTest/PracticeTest';
-import Support from './AdminPanel/pages/Support/Support';
-import AllStudent from "./AdminPanel/pages/Student/AllStudent";
-import AdminDashBoardLayout from "./AdminPanel/AdminDashBoardLayout";
-import AllBranch from "./AdminPanel/pages/Branch/AllBranch";
-import AdminLogin from "./AdminPanel/pages/Auth/Login/Login";
-import FranchiseLogin from "./FranchisePanel/Auth/Login/Login";
-import StudentLogin from "./StudentPanel/Auth/Login/Login";
+import FranchiseDashboard from "./AFS Panel/FranchisePanel/pages/Dashboard/FranchiseDashboard";
+import AllBranch from "./AFS Panel/AdminPanel/pages/Branch/AllBranch";
+import Dashboard from "./AFS Panel/AdminPanel/pages/Dashboard/Dashboard";
+import AllStudent from "./AFS Panel/AdminPanel/pages/Student/AllStudent";
+import StudentDashboard from "./AFS Panel/StudentPanel/pages/Dashboard/StudentDashboard";
+import PracticeTest from "./AFS Panel/StudentPanel/pages/PracticeTest/PracticeTest";
+import StudentLogin from "./AFS Panel/StudentPanel/Auth/Login/Login";
+import WalletRechargeRequestForm from "./AFS Panel/FranchisePanel/pages/Wallate/WalletRechargeRequestForm ";
+import FranchiseProfilePage from "./AFS Panel/FranchisePanel/pages/Profile/FranchiseProfilePage";
+import CourseCategoryPage from "./AFS Panel/AdminPanel/pages/Course/CourseCategory";
+import Signup from "./AFS Panel/components/auth/Signup";
+import MyState from "./AFS Panel/components/context/data/myState";
+import AdminPrivateRoute from "./AFS Panel/components/privateRoute/AdminPrivateRoute";
+import FranchisePrivateRoute from "./AFS Panel/components/privateRoute/FranchisePrivateRoute";
+import FranchiseLogin from "./AFS Panel/FranchisePanel/Auth/Login/FranchiseLogin";
+import AdminLogin from "./AFS Panel/AdminPanel/Auth/Login/AdminLogin";
+import AddBranch from "./AFS Panel/AdminPanel/pages/Branch/AddBranch";
+import ForgotPassword from "./AFS Panel/components/adminAndCenterAuth/ForgotPassword/ForgotPassword";
 
 const App = () => {
 
-
     return (
-        <div>
+        <MyState>
             <Router>
                 <Routes>
                     <Route path='/' element={<MainLayout />}>
@@ -55,7 +61,7 @@ const App = () => {
 
                         <Route path='student-registration' element={<StudentRegistration />} />
                         <Route path='student-verification' element={<StudentVerification />} />
-                        <Route path='student-login' element={<StudentLogin/>} />
+                        <Route path='student-login' element={<StudentLogin />} />
                         <Route path='admit-card' element={<AdmitCard />} />
                         <Route path='certificate-verification' element={<CertificateVerification />} />
 
@@ -71,24 +77,38 @@ const App = () => {
                     </Route>
 
 
-                    <Route path='admin-login' element={<AdminLogin/>} />
-                    <Route path='dashboard' element={<Dashboard />} />
-                    <Route path='support' element={<Support />} />
-                    <Route path='student' element={<AllStudent/>} />
-                    <Route path='branch' element={<AllBranch/>} />
-                    
-                    <Route path="*" element={<> not found</>} />
+                    <Route path='admin-login' element={<AdminLogin />} />
+                    <Route element={<AdminPrivateRoute />}>
+                        <Route path='dashboard' element={<Dashboard />} />
+                        {/* <Route path='support' element={<Support />} /> */}
+                        <Route path='student' element={<AllStudent />} />
+                        <Route path='branch' element={<AllBranch />} />
+                        <Route path='course-category' element={<CourseCategoryPage />} />
+                    </Route>
 
                     <Route path='franchise-login' element={<FranchiseLogin/>} />
-                    <Route path='franchise-dashboard' element={<FranchiseDashboard />} />
+                    <Route element={<FranchisePrivateRoute />}>
+                        <Route path='franchise-dashboard' element={<FranchiseDashboard />} />
+                        <Route path='wallet-recharge' element={<WalletRechargeRequestForm />} />
+                        <Route path='franchise-profile' element={<FranchiseProfilePage />} />
+                    </Route>
 
                     <Route path='student-dashboard' element={<StudentDashboard />} />
                     {/* <Route path='student-dashboard' element={<StudentDashboard />} /> */}
                     <Route path='practice-test' element={<PracticeTest />} />
+
+                    <Route path="/signup*" element={<Signup />} />
+                    {/* <Route path="/login" element={<Login />} /> */}
+                    <Route path="*" element={<> not found</>} />
+                    <Route path="add-branch" element={<AddBranch/>} />
+                    
+                    {/* <Route path="succ" element={<PasswordResetDone/>} /> */}
+                    <Route path="forgot-password" element={<ForgotPassword/>} />
+                    
                 </Routes>
             </Router>
 
-        </div> 
+        </MyState>
     )
 }
 

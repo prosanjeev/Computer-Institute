@@ -5,7 +5,6 @@ import {
   Card,
   Center,
   Checkbox,
-  Container,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -16,23 +15,35 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import PageTitle from "../../components/PagesComponents/PageTitleSection/PageTitle";
-import { Field, Form, Formik,   } from "formik";
+import { Field, Form, Formik } from "formik";
 import { object, string, date, number } from "yup";
+import DashboardLayout from "../../components/DashboardLayout";
 
 const franchiseValidationSchema = object({
   centername: string().required("Center Name is Required"),
   directorname: string().required("Director Name is Required"),
   fathername: string().required("Father's Name is Required"),
   dob: date().required("Date of Birth is Required"),
-  primaryphone: number().required("Primary Phone is Required").test('len', 'Must be exactly 10 digits', val => val && val.toString().length === 10),
-  wathsappphone: number().required("Primary Phone is Required").test('len', 'Must be exactly 10 digits', val => val && val.toString().length === 10),
+  primaryphone: number()
+    .required("Primary Phone is Required")
+    .test(
+      "len",
+      "Must be exactly 10 digits",
+      (val) => val && val.toString().length === 10
+    ),
+  wathsappphone: number()
+    .required("Primary Phone is Required")
+    .test(
+      "len",
+      "Must be exactly 10 digits",
+      (val) => val && val.toString().length === 10
+    ),
   email: string().email().required("Email is Required"),
   state: string(),
   district: string(),
 });
 
-const ApplyOnline = () => {
+const AddBranch = () => {
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState(""); // To store the selected city
@@ -81,7 +92,7 @@ const ApplyOnline = () => {
     };
     return cityData[state] || [];
   }
-  const PersonalInformation=[
+  const PersonalInformation = [
     {
       label: "Center Name",
       name: "centername",
@@ -112,9 +123,8 @@ const ApplyOnline = () => {
       name: "email",
       type: "email",
     },
-    
-  ]
-  const CenterInformation=[
+  ];
+  const CenterInformation = [
     {
       label: "Police Station",
       name: "policestation",
@@ -144,11 +154,16 @@ const ApplyOnline = () => {
       label: "Wathsapp No.",
       name: "wathsappphone",
       type: "text",
-    },  
-  ]
-  const ListOfRequirements=[
+    },
+  ];
+  const ListOfRequirements = [
     {
-      label: "Director Photo",
+      label: "Center Logo",
+      name: "lastqualification",
+      type: "file",
+    },
+    {
+      label: "Center Director Photo",
       name: "directorphoto",
       type: "file",
     },
@@ -158,16 +173,11 @@ const ApplyOnline = () => {
       type: "file",
     },
     {
-      label: "Adhar Card",
+      label: "Center Director Adhar Card",
       name: "aadharcard",
       type: "file",
     },
-    {
-      label: "Last Qualification",
-      name: "lastqualification",
-      type: "file",
-    },  
-  ]
+  ];
 
   return (
     <>
@@ -175,9 +185,8 @@ const ApplyOnline = () => {
         @import
         url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap');
       </style>
-      <PageTitle pagetitle="FRANCHISE ENQUIRY" />
 
-      <Container>
+      <DashboardLayout title="Add Center">
         <Center>
           <Card
             my={6}
@@ -190,9 +199,16 @@ const ApplyOnline = () => {
             }}
             fontFamily="Philosopher"
           >
-           <Box bgColor="green" w="400px" p="12px 16px" borderRadius="0 50px 50px 0">
-           <Text  color="white"  textStyle="h1">Center Joining Form</Text>
-           </Box>
+            <Box
+              bgColor="green"
+              w="400px"
+              p="12px 16px"
+              borderRadius="0 50px 50px 0"
+            >
+              <Text color="white" textStyle="h1">
+                Center Joining Form
+              </Text>
+            </Box>
 
             <Formik
               initialValues={{
@@ -203,7 +219,7 @@ const ApplyOnline = () => {
                 primaryphone: "",
                 email: "",
                 state: "",
-                district: "", 
+                district: "",
               }}
               onSubmit={(values) => {
                 console.log(values);
@@ -224,24 +240,24 @@ const ApplyOnline = () => {
                       Personal Information
                     </Box>
                     <SimpleGrid columns={2} px={7} columnGap={4} rowGap={4}>
-                      {PersonalInformation.map((list)=>(                           
-                            <Field name={list.name}  >
-                         {({ field, meta }) => (
-                           <FormControl isInvalid={meta.error && meta.touched}  >
-                             <FormLabel htmlFor= {list.name}>
-                              {list.label}
-                             </FormLabel >
-                             <Input
-                               bgColor="black.5"
-                               name="centername"
-                               type={list.type}
-                               {...field}
-                             />
-                             <FormErrorMessage>{meta.error}</FormErrorMessage>
-                           </FormControl>
-                         )}
-                       </Field>                           
-                      ))}                                        
+                      {PersonalInformation.map((list) => (
+                        <Field name={list.name}>
+                          {({ field, meta }) => (
+                            <FormControl isInvalid={meta.error && meta.touched}>
+                              <FormLabel htmlFor={list.name}>
+                                {list.label}
+                              </FormLabel>
+                              <Input
+                                bgColor="black.5"
+                                name="centername"
+                                type={list.type}
+                                {...field}
+                              />
+                              <FormErrorMessage>{meta.error}</FormErrorMessage>
+                            </FormControl>
+                          )}
+                        </Field>
+                      ))}
                     </SimpleGrid>
                     <Box
                       as="div"
@@ -258,7 +274,8 @@ const ApplyOnline = () => {
                         {({ field, meta }) => (
                           <FormControl isInvalid={meta.error && meta.touched}>
                             <FormLabel htmlFor="state">State:</FormLabel>
-                            <Select  bgColor="black.5"
+                            <Select
+                              bgColor="black.5"
                               placeholder="Select option"
                               {...field}
                               value={selectedState}
@@ -300,102 +317,26 @@ const ApplyOnline = () => {
                       </Field>
                     </SimpleGrid>
                     <SimpleGrid columns={2} px={7} columnGap={4} rowGap={4}>
-                      {CenterInformation.map((list)=>(                          
-                            <Field name={list.name}  >
-                         {({ field, meta }) => (
-                           <FormControl isInvalid={meta.error && meta.touched}  >
-                             <FormLabel htmlFor= {list.name}>
-                              {list.label}
-                             </FormLabel >
-                             <Input
-                               bgColor="black.5"
-                               name={list.name}
-                               type={list.type}
-                               {...field}
-                             />
-                             <FormErrorMessage>{meta.error}</FormErrorMessage>
-                           </FormControl>
-                         )}
-                       </Field>                          
-                      ))}                                        
+                      {CenterInformation.map((list) => (
+                        <Field name={list.name}>
+                          {({ field, meta }) => (
+                            <FormControl isInvalid={meta.error && meta.touched}>
+                              <FormLabel htmlFor={list.name}>
+                                {list.label}
+                              </FormLabel>
+                              <Input
+                                bgColor="black.5"
+                                name={list.name}
+                                type={list.type}
+                                {...field}
+                              />
+                              <FormErrorMessage>{meta.error}</FormErrorMessage>
+                            </FormControl>
+                          )}
+                        </Field>
+                      ))}
                     </SimpleGrid>
-                    <Box
-                      as="div"
-                      py={3}
-                      px={4}
-                      textStyle="h4"
-                      color="white"
-                      bgColor="#62035F"
-                    >
-                      Residential Address
-                    </Box>
-                    <SimpleGrid columns={2} px={7} columnGap={4} rowGap={4}>
-                      <Field name="state">
-                        {({ field, meta }) => (
-                          <FormControl isInvalid={meta.error && meta.touched}>
-                            <FormLabel htmlFor="state">State:</FormLabel>
-                            <Select  bgColor="black.5"
-                              placeholder="Select option"
-                              {...field}
-                              value={selectedState}
-                              onChange={handleStateChange}
-                            >
-                              {states.map((state) => (
-                                <option key={state} value={state}>
-                                  {state}
-                                </option>
-                              ))}
-                            </Select>
-                            <FormErrorMessage>{meta.error}</FormErrorMessage>
-                          </FormControl>
-                        )}
-                      </Field>
 
-                      <Field name="district">
-                        {({ field, meta }) => (
-                          <FormControl isInvalid={meta.error && meta.touched}>
-                            <FormLabel htmlFor="district">District:</FormLabel>
-                            <Select
-                              bgColor="black.5"
-                              placeholder="Select option"
-                              {...field}
-                              value={selectedCity} // Use selectedCity instead of cities[0]
-                              disabled={cities.length === 0}
-                              onChange={handleCityChange}
-                            >
-                              <option value="">Select City</option>
-                              {cities.map((city) => (
-                                <option key={city} value={city}>
-                                  {city}
-                                </option>
-                              ))}
-                            </Select>
-                            <FormErrorMessage>{meta.error}</FormErrorMessage>
-                          </FormControl>
-                        )}
-                      </Field>
-                    </SimpleGrid>
-                    <SimpleGrid columns={2} px={7} columnGap={4} rowGap={4}>
-                      {CenterInformation.map((list)=>(                          
-                            <Field name={list.name}  >
-                         {({ field, meta }) => (
-                           <FormControl isInvalid={meta.error && meta.touched}  >
-                             <FormLabel htmlFor= {list.name}>
-                              {list.label}
-                             </FormLabel >
-                             <Input
-                               bgColor="black.5"
-                               name={list.name}
-                               type={list.type}
-                               {...field}
-                             />
-                             <FormErrorMessage>{meta.error}</FormErrorMessage>
-                           </FormControl>
-                         )}
-                       </Field>
-                      ))}                                        
-                    </SimpleGrid>
-        
                     <Box
                       as="div"
                       py={3}
@@ -405,44 +346,52 @@ const ApplyOnline = () => {
                       bgColor="#62035F"
                     >
                       List of Requirements
-                    </Box>                   
+                    </Box>
                     <SimpleGrid columns={2} px={7} columnGap={4} rowGap={4}>
-                    {ListOfRequirements.map((list)=>(                          
-                            <Field name={list.name}  key="list.name" >
-                         {({ field, meta }) => (
-                           <FormControl isInvalid={meta.error && meta.touched}  >
-                             <FormLabel htmlFor= {list.name}>
-                              {list.label}
-                             </FormLabel >
-                             <Input pt="5px"
-                               bgColor="black.5"
-                               name={list.name}
-                               type={list.type}
-                               {...field}
-                             />
-                             <FormErrorMessage>{meta.error}</FormErrorMessage>
-                           </FormControl>
-                         )}
-                       </Field>
-                          
-                      ))}        
+                      {ListOfRequirements.map((list) => (
+                        <Field name={list.name} key="list.name">
+                          {({ field, meta }) => (
+                            <FormControl isInvalid={meta.error && meta.touched}>
+                              <FormLabel htmlFor={list.name}>
+                                {list.label}
+                              </FormLabel>
+                              <Input
+                                pt="5px"
+                                bgColor="black.5"
+                                name={list.name}
+                                type={list.type}
+                                {...field}
+                              />
+                              <FormErrorMessage>{meta.error}</FormErrorMessage>
+                            </FormControl>
+                          )}
+                        </Field>
+                      ))}
                     </SimpleGrid>
-                                                              
+
                     <Checkbox defaultChecked px={6}>
                       I agree with{" "}
                       <Text as="span" color="p.purple">
                         Terms & Conditions.
                       </Text>
                     </Checkbox>
-                    <Button leftIcon={<MdKeyboardDoubleArrowRight />} m="10px 50px" size='md'  type="submit">Register Me</Button>
+                    <Button
+                      leftIcon={<MdKeyboardDoubleArrowRight />}
+                      m="10px 50px"
+                      size="md"
+                      type="submit"
+                    >
+                      Register Me
+                    </Button>
                   </Stack>
                 </Form>
               )}
             </Formik>
           </Card>
         </Center>
-      </Container>
+      </DashboardLayout>
     </>
   );
 };
-export default ApplyOnline;
+
+export default AddBranch;

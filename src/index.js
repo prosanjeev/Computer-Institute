@@ -1,36 +1,10 @@
 import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react'
 import ReactDOM from 'react-dom/client';
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import MainLayout from './MainLayout'
-import AboutCompany from './Pages/About/AboutCompany'
-import Home from './Pages/Home/Home'
-import ChairmanMessage from './Pages/About/ChairmanMessage';
-import OurVisionAndMission from './Pages/About/OurVisionAndMission';
-import OurGoal from './Pages/About/OurGoal';
-import BasicCourses from './Pages/Courses/BasicCourses';
-import DiplomaCourses from './Pages/Courses/DiplomaCourses';
-import LanguageCourses from './Pages/Courses/LanguageCourses';
-import ProfessionalCourses from './Pages/Courses/ProfessionalCourses';
-import StudentRegistration from './Pages/Student Zone/StudentRegistration';
-import StudentVerification from './Pages/Student Zone/StudentVerification';
-import StudentLogin from './Pages/Student Zone/StudentLogin';
-import AdmitCard from './Pages/Student Zone/AdmitCard';
-import CertificateVerification from './Pages/Student Zone/CertificateVerification';
-import ApplyOnline from './Pages/Franchise/ApplyOnline';
-import CenterVerification from './Pages/Franchise/CenterVerification';
-import Photos from './Pages/Gallary/Photos';
-import Videos from './Pages/Gallary/Videos';
-import ContactUs from './Pages/Contact/ContactUs';
-import FindBranch from './Pages/Contact/FindBranch';
-import OurTeam from './Pages/Contact/OurTeam';
 import { theme } from './theme'
-import Dashboard from './AdminPanel/pages/Dashboard/Dashboard';
-// import FranchiseDashboard from './FranchisePanel/pages/Dashboard/FranchiseDashboard';
-import StudentDashboard from './StudentPanel/pages/Dashboard/StudentDashboard';
-import PracticeTest from './StudentPanel/pages/PracticeTest/PracticeTest';
-import Support from './AdminPanel/pages/Support/Support';
 import App from './App';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 
 
@@ -82,7 +56,9 @@ root.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       {/* <RouterProvider router={router} /> */}
-      <App />
+      <Provider store={store}>
+    <App />
+  </Provider>,
     </ChakraProvider>
   </React.StrictMode>
 );

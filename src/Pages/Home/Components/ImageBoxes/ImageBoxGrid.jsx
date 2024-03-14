@@ -7,32 +7,32 @@ function ImageBoxGrid() {
     {
       id: 1,
       name: "BASIC COMPUTER COURSES",
-      url: "https://hypernetitsolutions.com/new/images/user/1650952150854.jpg",
+      url: "https://source.unsplash.com/300x300/?computer",
     },
     {
       id: 2,
       name: "CERTIFICATE COURSE",
-      url: "https://hypernetitsolutions.com/new/images/user/1650952242833.jpg",
+      url: "https://source.unsplash.com/300x300/?class",
     },
     {
-      id: 2,
+      id: 3,
       name: "DIPLOMA COURSE",
-      url: "https://hypernetitsolutions.com/new/images/user/1650952305695.jpg",
+      url: "https://source.unsplash.com/300x300/?diploma",
     },
     {
-      id: 2,
+      id: 4,
       name: "LANGUAGE COURSE",
-      url: "https://hypernetitsolutions.com/new/images/user/1650952345698.jpg ",
+      url: "https://source.unsplash.com/300x300/?programing ",
     },
     {
-      id: 2,
+      id: 5,
       name: "TYPING COURSE",
-      url: "https://hypernetitsolutions.com/new/images/user/1650952380660.png",
+      url: "https://source.unsplash.com/300x300/?typing",
     },
     {
-      id: 2,
+      id: 6,
       name: "PROFESSIONAL COURSES",
-      url: "https://hypernetitsolutions.com/new/images/user/1650952242833.jpg",
+      url: "https://source.unsplash.com/300x300/?professional",
     },
   ];
 
