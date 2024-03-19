@@ -57,7 +57,7 @@ import {
         }
         setLoading(false);
       } catch (error) {
-        toast.error("Signin Failed", {
+        toast.error(error, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: true,

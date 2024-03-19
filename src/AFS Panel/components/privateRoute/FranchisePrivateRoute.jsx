@@ -1,12 +1,14 @@
 // UserPrivateRoute.js
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
+import { selectIsLoggedIn } from "../../FranchisePanel/Auth/slice/authSlice";
 
 const FranchisePrivateRoute = () => {
-    if (localStorage.getItem("user")) {
-        return <Outlet />;
-      } else {
-        return <Navigate to="/login" />;
-      }
-}
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  // return isLoggedIn ? <Routes> <Route path='/dashboard' element={<Dashboard/>  } />   </Routes> : <Navigate to="/login" />  ;
+  
+   return isLoggedIn ? <Outlet/> : ( <Navigate to="/franchise-login" /> );
+};
 
 export default FranchisePrivateRoute;

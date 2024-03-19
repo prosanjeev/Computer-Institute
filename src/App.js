@@ -38,7 +38,7 @@ import AdminPrivateRoute from "./AFS Panel/components/privateRoute/AdminPrivateR
 import FranchisePrivateRoute from "./AFS Panel/components/privateRoute/FranchisePrivateRoute";
 import FranchiseLogin from "./AFS Panel/FranchisePanel/Auth/Login/FranchiseLogin";
 import AdminLogin from "./AFS Panel/AdminPanel/Auth/Login/AdminLogin";
-import AddBranch from "./AFS Panel/AdminPanel/pages/Branch/AddBranch";
+import AddBranch from "./AFS Panel/AdminPanel/pages/Branch/addBranch/AddBranch";
 import ForgotPassword from "./AFS Panel/components/adminAndCenterAuth/ForgotPassword/ForgotPassword";
 
 const App = () => {

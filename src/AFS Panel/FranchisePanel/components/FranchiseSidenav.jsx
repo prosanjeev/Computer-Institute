@@ -1,25 +1,19 @@
 import { Box, HStack, Heading, Icon, Stack, Text } from "@chakra-ui/react";
-import { RxDashboard } from "react-icons/rx";
-import { FaRegUser } from "react-icons/fa";
-import { CiWallet } from "react-icons/ci";
-import { PiStudent } from "react-icons/pi";
-import { SiCoursera } from "react-icons/si";
-import { TbReportSearch } from "react-icons/tb";
-import { FaUserTie } from "react-icons/fa";
-import { GrCloudComputer } from "react-icons/gr";
-import { CgWebsite } from "react-icons/cg";
 import { BiSupport } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { navLinks } from "./navList/navLinks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDownIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 
 const FranchiseSidenav = () => {
   const location = useLocation();
-
+  const dispatch = useDispatch();
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
+  
+
 
   const handleMenuClick = (index) => {
     setActiveMenu(activeMenu === index ? null : index);
@@ -56,7 +50,8 @@ const FranchiseSidenav = () => {
           pt="3.5rem"
           color="orange"
         >
-          @M-Tech Computer
+          
+          {/* @M-Tech Computer */}
         </Heading>
         <Box mt="6" mx="3">
           {navLinks.map((nav, index) => (

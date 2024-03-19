@@ -27,7 +27,7 @@ const ForgotPassword = () => {
     try {
       await sendPasswordResetEmail(auth, email);
       alert("Check your email for the password reset link.");
-      navigate("/franchise-login");
+      navigate("/admin-login");
     } catch (error) {
       alert(error.message);
     } finally {
