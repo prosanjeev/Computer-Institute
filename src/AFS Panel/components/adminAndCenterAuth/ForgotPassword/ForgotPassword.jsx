@@ -17,7 +17,7 @@ import { Formik, Form, Field } from "formik";
 import { object, string } from "yup";
 import { FaArrowLeft } from "react-icons/fa";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../../../../firebase/FirebaseConfig";
+import { auth } from "../../../firebase/FirebaseConfig";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();

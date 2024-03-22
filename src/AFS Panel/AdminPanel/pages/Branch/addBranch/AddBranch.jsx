@@ -20,10 +20,11 @@ import { object, string, number } from "yup";
 import DashboardLayout from "../../../components/DashboardLayout";
 import { collection, addDoc, updateDoc, getDoc, doc, setDoc, where, query, getDocs } from "firebase/firestore";
 import data from "../../../../../components/state-wise-cities-data/data";
-import { fireDB } from "../../../../../firebase/FirebaseConfig";
+import { fireDB, storage } from "../../../../firebase/FirebaseConfig";
 import { PersonalInformation, UserCradesial } from "./data/data";
-import TitleBox from "./components/TitleBox";
+import TitleBox from "../../../../components/components/TitleBox";
 import { toast } from "react-toastify";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const franchiseValidationSchema = object({
   centername: string().required("Center Name is Required"),
@@ -52,6 +53,8 @@ const AddBranch = () => {
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
+  const [logoFile, setLogoFile] = useState(null); // State to hold logo file
+  const [signFile, setSignFile] = useState(null); // State to hold signature file
   // const [centerId, setCenterId] = useState(""); // State to hold the centerId
 
 
@@ -119,6 +122,16 @@ const AddBranch = () => {
       name: "wathsappphone",
       type: "text",
     },
+    {
+      label: "Center Logo",
+      name: "logo",
+      type: "file",
+    },
+    {
+      label: "Center Director Signature",
+      name: "signature",
+      type: "file",
+    },
   ];
 
   const onSubmit = async (values) => {
@@ -147,8 +160,28 @@ const AddBranch = () => {
   
       // Update the centerId in Firestore
       await updateDoc(docRef, { value: currentCenterId + 1 });
+
+      // Upload logo file to Firebase Storage
+      let logoUrl = '';
+      if (logoFile) {
+        const logoRef =  ref(storage, `franchise/${values.centername}-${logoFile.name}/logo`);
+        await uploadBytes(logoRef, logoFile);
+        // Get download URL
+         logoUrl = await getDownloadURL(logoRef);
+      }
+
+      // Upload signature file to Firebase Storage
+      let signUrl = '';
+      if (signFile) {
+        const signatureRef = ref(storage, `franchise/${values.centername}-${signFile.name}/signature`);
+        // await signRef.put(signFile);
+        // signUrl = await signRef.getDownloadURL();
+        await uploadBytes(signatureRef, signFile);
+         signUrl = await getDownloadURL(signatureRef);
+      }
       const franchiseDocRef = await addDoc(collection(fireDB, "franchiseData"), {
         centerId: nextCenterId, // Use the new centerId
+        createdAt: new Date().toISOString(),
         centername: values.centername,
         directorname: values.directorname,
         gender: values.gender,
@@ -162,6 +195,8 @@ const AddBranch = () => {
         centerplace: values.centerplace,
         username: values.username,
         password: values.password,
+        logoUrl: logoUrl, // Add logo URL to Firestore
+        signUrl: signUrl, // Add signature URL to Firestore
       });
       toast.success("New Center Added ", franchiseDocRef.id);
     } catch (e) {
@@ -207,8 +242,7 @@ const AddBranch = () => {
                 primaryphone: "",
                 email: "",
                 selectId: "",
-                documentId: "",
-                centerid: '' ,
+                documentId: "",               
                 centername: "",
                 officephone: "",
                 policestation: "",
@@ -294,14 +328,30 @@ const AddBranch = () => {
                                   ))}
                                 </Select>
                               ) : (
+                                <>
+                                  {list.name === 'logo' ? (
+                                    <input
+                                      type="file"
+                                      accept="image/*" // Accept only image files
+                                      onChange={(e) => setLogoFile(e.target.files[0])} // Update logo file state
+                                    />
+                                  ) : list.name === 'signature' ? (
+                                    <input
+                                      type="file"
+                                      accept="image/*" // Accept only image files
+                                      onChange={(e) => setSignFile(e.target.files[0])} // Update signature file state
+                                    />
+                                  ): (
                                 <Input
                                   bgColor="black.5"
-                                  name="centername"
+                                  name={list.name}
                                   type={list.type}
                                   readOnly={list.readOnly} // Add the readOnly attribute here
                                   {...field}
                                 />
                               )}
+                               </>
+                               )}
                               <FormErrorMessage>{meta.error}</FormErrorMessage>
                             </FormControl>
                           )}

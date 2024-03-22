@@ -19,7 +19,7 @@ import {
   import { toast } from "react-toastify";
   import { signInWithEmailAndPassword } from "firebase/auth";
   // import MyContext from "../../../../components/context/data/myContext";
-  import { auth } from "../../../firebase/FirebaseConfig";
+  import { auth } from "../../firebase/FirebaseConfig";
   // import Loader from "../../../../components/loader/Loader";
   import { Formik, Form, Field } from "formik";
   

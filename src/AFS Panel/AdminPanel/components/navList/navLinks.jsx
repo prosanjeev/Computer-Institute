@@ -30,7 +30,7 @@ export const navLinks = [
         {
             icon: IoIosGitBranch,
           text: "Add Center",
-          link: "/student/add",
+          link: "/student",
         },
         {
           text: "View Center List",
@@ -104,7 +104,7 @@ export const navLinks = [
     {
       icon: VscCommentUnresolved ,
       text: "Manage Queries",
-      link: "/transactions",
+      link: "/contact-us-query",
     },
     {
       icon: MdOutlineNotificationsActive,

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, fireDB, storage } from "../../../firebase/FirebaseConfig";
+import { auth, fireDB, storage } from "../../firebase/FirebaseConfig";
 import { toast } from "react-toastify";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import Loader from "../loader/Loader";

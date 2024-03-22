@@ -13,7 +13,7 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import { fireDB } from "../../../../firebase/FirebaseConfig";
+import { fireDB } from "../../../firebase/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 

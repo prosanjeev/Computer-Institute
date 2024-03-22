@@ -16,11 +16,11 @@ import {
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { object, string } from "yup";
-import { fireDB } from "../../../../firebase/FirebaseConfig";
+import { fireDB } from "../../../firebase/FirebaseConfig";
 import { Formik, Form, Field } from "formik";
 import { useDispatch } from "react-redux";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { login } from "../slice/authSlice";
+import { login } from "../../../redux/slice/franchise/authSlice";
 import { toast } from "react-toastify";
 
 const loginValidationSchema = object({
@@ -30,7 +30,7 @@ const loginValidationSchema = object({
     .required("Password is required"),
 });
 
-const FranchiseLogin = ({ title }) => {
+const FranchiseLogin = ( ) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -41,11 +41,17 @@ const FranchiseLogin = ({ title }) => {
       const q = query(ref, where("username", "==", initialValues.username), where("password", "==", initialValues.password));
       const querySnapshot = await getDocs(q);
       if (querySnapshot.size === 1) {
-        toast.success("success")
-        dispatch(login());
-        localStorage.setItem("isLoggedIn", "true");
+       // console.log("Document Snapshot:", querySnapshot.docs[0].data());
+
+        console.log("show",querySnapshot)
+        // const centerId = querySnapshot.docs[0].data().centerId;
+        const userId = querySnapshot.docs[0].id; // Assuming the userId is the Firestore document ID
+        // console.log("uid", userId)
+        dispatch(login({ userId }));
         navigate('/franchise-dashboard')
-        console.log("Login successful!");
+        localStorage.setItem("isLoggedIn", "true");
+        toast.success("Login successful!")
+        // console.log("Login successful!");
       } else {
         console.log("Login failed: User not found or incorrect password.");
       }

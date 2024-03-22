@@ -40,6 +40,13 @@ import FranchiseLogin from "./AFS Panel/FranchisePanel/Auth/Login/FranchiseLogin
 import AdminLogin from "./AFS Panel/AdminPanel/Auth/Login/AdminLogin";
 import AddBranch from "./AFS Panel/AdminPanel/pages/Branch/addBranch/AddBranch";
 import ForgotPassword from "./AFS Panel/components/adminAndCenterAuth/ForgotPassword/ForgotPassword";
+import UpdateBranch from "./AFS Panel/AdminPanel/pages/Branch/UpdateBranch";
+import BranchPage from "./AFS Panel/AdminPanel/pages/Branch/Branch";
+import ContactUsQuery from "./AFS Panel/AdminPanel/pages/Query/ContactUsQuery";
+import FranchiseCertificate from "./AFS Panel/FranchisePanel/pages/FranchiseCertificate/FranchiseCertificate";
+import AddStudentPage from "./AFS Panel/FranchisePanel/pages/Student/AddStudentPage";
+import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/StudentListPage";
+// import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/AllStudents";
 
 const App = () => {
 
@@ -84,13 +91,17 @@ const App = () => {
                         <Route path='student' element={<AllStudent />} />
                         <Route path='branch' element={<AllBranch />} />
                         <Route path='course-category' element={<CourseCategoryPage />} />
+                        <Route path='contact-us-query' element={<ContactUsQuery />} />
                     </Route>
 
-                    <Route path='franchise-login' element={<FranchiseLogin/>} />
+                    <Route path='franchise-login' element={<FranchiseLogin />} />
                     <Route element={<FranchisePrivateRoute />}>
                         <Route path='franchise-dashboard' element={<FranchiseDashboard />} />
                         <Route path='wallet-recharge' element={<WalletRechargeRequestForm />} />
                         <Route path='franchise-profile' element={<FranchiseProfilePage />} />
+                        <Route path="authorisation-certificate" element={<FranchiseCertificate />} />
+                        <Route path="add-student" element={<AddStudentPage />} />
+                        <Route path="students-list" element={<StudentListPage />} />
                     </Route>
 
                     <Route path='student-dashboard' element={<StudentDashboard />} />
@@ -100,11 +111,13 @@ const App = () => {
                     <Route path="/signup*" element={<Signup />} />
                     {/* <Route path="/login" element={<Login />} /> */}
                     <Route path="*" element={<> not found</>} />
-                    <Route path="add-branch" element={<AddBranch/>} />
-                    
+                    <Route path="add-branch" element={<AddBranch />} />
+                    <Route path="update-branch" element={<UpdateBranch />} />
+                    <Route path="branchpage" element={<BranchPage />} />
+
                     {/* <Route path="succ" element={<PasswordResetDone/>} /> */}
-                    <Route path="forgot-password" element={<ForgotPassword/>} />
-                    
+                    <Route path="forgot-password" element={<ForgotPassword />} />
+
                 </Routes>
             </Router>
 

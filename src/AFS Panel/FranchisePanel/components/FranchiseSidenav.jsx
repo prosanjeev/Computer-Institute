@@ -1,19 +1,15 @@
-import { Box, HStack, Heading, Icon, Stack, Text } from "@chakra-ui/react";
+import { Box, HStack, Heading, Icon, Img, Stack, Text } from "@chakra-ui/react";
 import { BiSupport } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { navLinks } from "./navList/navLinks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChevronDownIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
 
-const FranchiseSidenav = () => {
+const FranchiseSidenav = ({ branchData }) => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
-  
-
 
   const handleMenuClick = (index) => {
     setActiveMenu(activeMenu === index ? null : index);
@@ -43,17 +39,35 @@ const FranchiseSidenav = () => {
       h="100vh"
     >
       <Box>
-        <Heading
-          textAlign="center"
-          fontSize="20px"
-          as="h1"
-          pt="3.5rem"
-          color="orange"
-        >
-          
-          {/* @M-Tech Computer */}
-        </Heading>
-        <Box mt="6" mx="3">
+        <Box w="100%" borderBottom="1px solid gray" mt={4}>
+          {branchData ? (
+            <ul>
+              {branchData.logoUrl ? (
+                <Img
+                  src={branchData.logoUrl}
+                  alt="Center Logo"
+                  h="100px"
+                  pb={4}
+                  style={{ margin: "auto" }}
+                /> // Center the logo horizontally
+              ) : (
+                <Heading
+                  textAlign="center"
+                  fontSize="20px"
+                  as="h1"
+                  pt="2.5rem"
+                  color="orange"
+                >
+                  {branchData.centername}{" "}
+                </Heading> // Render centername if logoUrl is not available
+              )}
+            </ul>
+          ) : (
+            <p>Loading user data...</p>
+          )}
+        </Box>
+
+        <Box mt="4" mx="3">
           {navLinks.map((nav, index) => (
             <Box key={nav.text}>
               {nav.submenu ? (
@@ -93,9 +107,7 @@ const FranchiseSidenav = () => {
                                 : "transparent"
                             }
                             color={
-                              isActiveLink(item.link)
-                                ? "#1A202C"
-                                : "#797E82"
+                              isActiveLink(item.link) ? "#1A202C" : "#797E82"
                             }
                             borderRadius="10px"
                             py="3"

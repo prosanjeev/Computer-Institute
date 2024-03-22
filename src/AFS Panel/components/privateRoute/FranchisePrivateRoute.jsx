@@ -1,7 +1,7 @@
 // UserPrivateRoute.js
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-import { selectIsLoggedIn } from "../../FranchisePanel/Auth/slice/authSlice";
+import { selectIsLoggedIn } from "../../redux/slice/franchise/authSlice";
 
 const FranchisePrivateRoute = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);

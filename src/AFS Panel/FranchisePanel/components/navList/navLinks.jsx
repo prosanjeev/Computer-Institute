@@ -35,15 +35,15 @@ export const navLinks = [
       submenu: [
         {
           text: "Add Student",
-          link: "/student/add",
+          link: "/add-student",
         },
         {
           text: "View Students",
-          link: "/student/view",
+          link: "#",
         },
         {
           text: "View Students List",
-          link: "/student",
+          link: "/students-list",
         },
       ],
     },
@@ -91,6 +91,11 @@ export const navLinks = [
       icon: CgWebsite,
       text: "Notice Admin",
       link: "/transactions",
+    },
+    {
+      icon: CgWebsite,
+      text: "Authorisation Certificate",
+      link: "/authorisation-certificate",
     },
   ];
 

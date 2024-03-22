@@ -6,7 +6,7 @@ const AdminPrivateRoute = () => {
   if (admin && admin.user.email === "sanjeevcse2k23@gmail.com") {
     return <Outlet />;
   } else {
-    return <Navigate to="/login" />;
+    return <Navigate to="/admin-login" />;
   }
 }
 

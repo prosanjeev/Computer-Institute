@@ -11,11 +11,13 @@ import {
   import { FaBars, FaUserTie } from "react-icons/fa";
 import FranchiseNavWallate from "./FranchiseNavWallate";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
   const FranchiseTopNav = ({ title, onOpen }) => {
     const navigate = useNavigate();
     const handleLogout = () => {
       localStorage.clear('user');
+      toast.success("Logout Successful!")
       navigate('/franchise-login');
   }
     return (
