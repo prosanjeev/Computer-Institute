@@ -83,7 +83,7 @@ const AllBranch = () => {
             {branches.map((branch, index) => (
               <Tr key={branch.id}>
                 <Td>{index + 1}</Td>
-                <Td>{branch.date}</Td>
+                <Td>{new Date(branch.createdAt).toLocaleDateString('en-GB')}</Td>
                 <Td>
                   <Image
                     src={branch.logoUrl}

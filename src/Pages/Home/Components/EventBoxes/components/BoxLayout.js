@@ -23,7 +23,7 @@ function BoxLayout(props) {
       <Box bg='#F5DEB3' border='4px solid #F5DEB3' p="10px" overflow="hidden" position="relative" h='450px'>
         <Box
           position="absolute"
-          animation={`${scrollUp} 15s linear infinite`}
+          animation={`${scrollUp} 20s linear infinite`}
           css={{
             '&:hover': {
               animationPlayState: 'paused',

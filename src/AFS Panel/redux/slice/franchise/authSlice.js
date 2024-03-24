@@ -6,6 +6,8 @@ const initialState = {
   isLoggedIn: localStorage.getItem("isLoggedIn") === "true" || false,
   userId: localStorage.getItem("userId") || null,
   branchData: null,
+  wallet: 0,
+  requestAmount: 0,
   students: [],
 };
 
@@ -15,8 +17,12 @@ export const fetchFranchiseData = () => async (dispatch, getState) => {
     if (state.auth.userId) {
       const docRef = doc(fireDB, "franchiseData", state.auth.userId);
       const docSnap = await getDoc(docRef);
+      const franchiseData = docSnap.data();
+
       if (docSnap.exists()) {
         dispatch(setbranchData(docSnap.data()));
+        dispatch(setWallet(franchiseData.wallet));
+        dispatch(setRequestAmount(franchiseData.requestAmount));
         // Fetch students for the franchise
         const studentsRef = collection(fireDB, "students");
         const franchiseStudentsQuery = query(studentsRef, where("franchiseId", "==", state.auth.userId));
@@ -26,6 +32,7 @@ export const fetchFranchiseData = () => async (dispatch, getState) => {
           students.push({ id: doc.id, ...doc.data() });
         });
         dispatch(setStudents(students));
+
       } else {
         console.log("No franchise data found for user ID:", state.auth.userId);
       }
@@ -36,6 +43,7 @@ export const fetchFranchiseData = () => async (dispatch, getState) => {
     console.error("Error fetching franchise data:", error);
   }
 };
+
 
 export const authSlice = createSlice({
   name: "auth",
@@ -61,10 +69,16 @@ export const authSlice = createSlice({
     setStudents: (state, action) => {
       state.students = action.payload;
     },
+    setWallet(state, action) {
+      state.wallet = action.payload;
+    },
+    setRequestAmount(state, action) {
+      state.requestAmount = action.payload;
+    },
   },
 });
 
-export const { login, logout, setbranchData, setStudents } = authSlice.actions;
+export const { login, logout, setbranchData, setStudents, setWallet, setRequestAmount } = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectUserId = (state) => state.auth.userId;

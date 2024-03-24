@@ -5,13 +5,29 @@ import HeadingWithHr from "../../components/PagesComponents/HeadingWithHr/Headin
 import IconBoxes from "./Components/IconBoxes/IconBoxes";
 import ImageBoxGrid from "./Components/ImageBoxes/ImageBoxGrid";
 import SimpleImageSlider from "./Components/ImageSlider/SimpleImageSlider";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchLatestBranches, selectBranches } from "../../AFS Panel/redux/slice/admin/branchSlice";
+import { selectStudents } from "../../AFS Panel/redux/selectors/franchiseStudentsSelectors";
+import { fetchLatestStudents } from "../../AFS Panel/redux/actions/franchiseStudentsActions";
 
 const Home = () => {
+
+  const latestBranches = useSelector(selectBranches);
+  const latestStudents = useSelector(selectStudents);
+const dispatch = useDispatch();
+
+useEffect(() => {
+  dispatch(fetchLatestBranches());
+  dispatch(fetchLatestStudents());
+}, [dispatch]);
+
+
   return (
     <>
       <SimpleImageSlider/>
       <AboutBox />
-      <EventBox />
+      <EventBox branchData={latestBranches} studentData={latestStudents} />
       <HeadingWithHr heading="Our Programmes"/>
       <ImageBoxGrid />
       <HeadingWithHr heading="SERVICES" text="Take advantage of the latest web & software technologies using our high quality services."/>

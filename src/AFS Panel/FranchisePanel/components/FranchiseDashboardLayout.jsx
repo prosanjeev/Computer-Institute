@@ -31,7 +31,7 @@ const FranchiseDashboardLayout = ({ title, children }) => {
       </Box>
       <SideDrawer isOpen={isOpen} onClose={onClose} />
       <Box flexGrow={1}>
-        <FranchiseTopNav title={title} onOpen={onOpen} />
+        <FranchiseTopNav title={title} onOpen={onOpen} branchData={branchData} />
         <Container
           overflowX="hidden"
           overflowY="auto"

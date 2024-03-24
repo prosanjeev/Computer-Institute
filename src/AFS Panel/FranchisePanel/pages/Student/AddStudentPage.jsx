@@ -79,7 +79,7 @@ const AddStudentPage = () => {
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
-  const [logoFile, setLogoFile] = useState(null); // State to hold logo file
+  const [photoFile, setPhotoFile] = useState(null); // State to hold logo file
   const [signFile, setSignFile] = useState(null); // State to hold signature file
   // const [centerId, setCenterId] = useState(""); // State to hold the centerId
 
@@ -183,15 +183,15 @@ const AddStudentPage = () => {
       await updateDoc(docRef, { value: currentStudentId + 1 });
 
       // Upload logo file to Firebase Storage
-      let logoUrl = "";
-      if (logoFile) {
-        const logoRef = ref(
+      let photoUrl = "";
+      if (photoFile) {
+        const photoRef = ref(
           storage,
-          `students/${values.centername}-${logoFile.name}/photo`
+          `students/${values.studentId}/photo`
         );
-        await uploadBytes(logoRef, logoFile);
+        await uploadBytes(photoRef, photoFile);
         // Get download URL
-        logoUrl = await getDownloadURL(logoRef);
+        photoUrl = await getDownloadURL(photoRef);
       }
 
       // Upload signature file to Firebase Storage
@@ -199,7 +199,7 @@ const AddStudentPage = () => {
       if (signFile) {
         const signatureRef = ref(
           storage,
-          `students/${values.centername}-${signFile.name}/signature`
+          `students/${values.studentId}/signature`
         );
         // await signRef.put(signFile);
         // signUrl = await signRef.getDownloadURL();
@@ -225,7 +225,7 @@ const AddStudentPage = () => {
           village: values.centerplace,
           username: values.username,
           password: values.password,
-          studentPhotoUrl: logoUrl, // Add logo URL to Firestore
+          photoUrl: photoUrl, // Add Photo URL to Firestore
           signUrl: signUrl, // Add signature URL to Firestore
           franchiseId:centerId,
         }
@@ -361,15 +361,15 @@ const AddStudentPage = () => {
                                 </Select>
                               ) : (
                                 <>
-                                  {list.name === "logo" ? (
+                                  {list.name === "studentPhoto" ? (
                                     <input
                                       type="file"
                                       accept="image/*" // Accept only image files
                                       onChange={(e) =>
-                                        setLogoFile(e.target.files[0])
+                                        setPhotoFile(e.target.files[0])
                                       } // Update logo file state
                                     />
-                                  ) : list.name === "signature" ? (
+                                  ) : list.name === "studentSignature" ? (
                                     <input
                                       type="file"
                                       accept="image/*" // Accept only image files

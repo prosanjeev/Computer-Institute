@@ -4,13 +4,13 @@ import RecentlyJoinStudent from "./components/RecentlyJoinStudent";
 import RecentlyJoinCenter from "./components/RecentlyJoinCenter";
 import NewsAndEvents from "./components/NewsAndEvents";
 
-function EventBox() {
+function EventBox({ branchData, studentData }) {
   return (
     <Box as="div" bgColor="brown" p="60px 0" w="100vw">
       <Center >
       <HStack w={{base:"80%", md:'80%'}}  flexWrap="wrap"   >
-        <BoxLayout title='Recently Join Centres' component={ <RecentlyJoinCenter />}/> 
-        <BoxLayout title='Recently Join Student' component={ <RecentlyJoinStudent />} />
+        <BoxLayout title='Recently Join Centres'  component={ <RecentlyJoinCenter branchData={ branchData } />}/> 
+        <BoxLayout title='Recently Join Student' component={ <RecentlyJoinStudent studentData={studentData} />} />
         <BoxLayout title='News & Events' component={ <NewsAndEvents />} />
       </HStack>  
       </Center>

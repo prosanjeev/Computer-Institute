@@ -1,5 +1,6 @@
 import {
     Box,
+    Flex,
     HStack,
     Heading,
     Icon,
@@ -7,13 +8,14 @@ import {
     MenuButton,
     MenuItem,
     MenuList,
+    Text,
   } from "@chakra-ui/react";
   import { FaBars, FaUserTie } from "react-icons/fa";
 import FranchiseNavWallate from "./FranchiseNavWallate";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-  const FranchiseTopNav = ({ title, onOpen }) => {
+  const FranchiseTopNav = ({ title, onOpen, branchData }) => {
     const navigate = useNavigate();
     const handleLogout = () => {
       localStorage.clear('user');
@@ -36,7 +38,7 @@ import { toast } from "react-toastify";
           </Heading>
   
          <HStack gap={6} align='center'>
-            <FranchiseNavWallate/>
+           <Flex gap={3} align='center'> <Text color='white' fontSize='20px'>Wallate</Text> <FranchiseNavWallate branchData={branchData}  /></Flex>
          <Menu>
             <MenuButton >
               <Icon as={FaUserTie} fontSize="32px" color='white'/>

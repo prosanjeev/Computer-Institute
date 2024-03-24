@@ -25,12 +25,12 @@ export const navLinks = [
     {
       icon: IoIosGitBranch,
       text: "Manage Branch",
-      link: "/transactions",
+      link: "/#",
       submenu: [
         {
             icon: IoIosGitBranch,
           text: "Add Center",
-          link: "/student",
+          link: "/add-branch",
         },
         {
           text: "View Center List",
@@ -41,7 +41,7 @@ export const navLinks = [
     {
       icon: CiWallet,
       text: "Branch Wallet",
-      link: "/transactions",
+      link: "/branch-wallet",
     },
     {
       icon: PiStudent,
@@ -50,11 +50,11 @@ export const navLinks = [
       submenu: [
         {
           text: "Add Student",
-          link: "/student/add",
+          link: "/#",
         },
         {
           text: "View Students",
-          link: "/student/view",
+          link: "/#",
         },
         {
           text: "View Students List",
@@ -69,7 +69,7 @@ export const navLinks = [
       submenu: [
         {
           text: "Add Course",
-          link: "/student/add",
+          link: "#",
         },
         {
           text: "Course Category",
@@ -77,7 +77,7 @@ export const navLinks = [
         },
         {
           text: "View Course",
-          link: "/student/view",
+          link: "/#",
         },
       ],
     },

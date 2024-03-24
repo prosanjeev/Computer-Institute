@@ -1,47 +1,28 @@
 import { Box, Center, Img, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 
-const RecentlyJoinCenter = () => {
-
-    const Centers = [
-        {
-          name: "SONI KUMARI",
-          branch: "MS Computer Training Institute",
-          code: "CO102",
-          image: "/student/soni.jpeg",
-        },
-        {
-          name: "HIMANSHU PATEL",         
-          branch: "Computer World",
-          code: "CO142",
-          image: "/student/akash.jpeg",
-        },
-        {
-          name: "Priyanka PATEL",         
-          branch: "SK Computer Classes",
-          code: "CO112",
-          image: "/student/beauti.jpeg",
-        },
-      ];
+const RecentlyJoinCenter = ({ branchData }) => {
+  if (!Array.isArray(branchData)) {
+    return null; // or display a message indicating that the data is invalid
+  }
 
   return (
-    <Box><UnorderedList style={{ listStyle: "none", padding: 0 }}>
-    {Centers.map((center, index) => (
-      <Box key={index} textAlign='center' >
-        <ListItem  >
-          <Center display='flex' flexDirection='column' gap={2} borderBottom='1px dotted black' p={3} >
+    <Box>
+      <UnorderedList style={{ listStyle: "none", padding: 0 }}>
+        {branchData.map((center, index) => (
+          <Box key={index} textAlign='center'>
+            <ListItem>
+              <Center display='flex' flexDirection='column' gap={2} borderBottom='1px dotted black' p={3}>
+                <Text>{center.centername.toUpperCase()}</Text>
+                <Img boxSize='110px' src={center.logoUrl} alt="" />
+                <Text>{center.directorname}</Text>
+                <Text>{center.centerId}</Text>
+              </Center>
+            </ListItem>
+          </Box>
+        ))}
+      </UnorderedList>
+    </Box>
+  );
+};
 
-            <Text> {center.name.toUpperCase()}</Text>
-            <Img boxSize='110px' src={center.image} alt="" />           
-            <Text> {center.branch}</Text>
-            <Text> {center.code}</Text>
-
-          </Center>
-        </ListItem>
-      </Box>
-    ))}
-  </UnorderedList>
-  </Box>
-  )
-}
-
-export default RecentlyJoinCenter
+export default RecentlyJoinCenter;

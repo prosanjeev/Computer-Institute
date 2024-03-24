@@ -46,6 +46,8 @@ import ContactUsQuery from "./AFS Panel/AdminPanel/pages/Query/ContactUsQuery";
 import FranchiseCertificate from "./AFS Panel/FranchisePanel/pages/FranchiseCertificate/FranchiseCertificate";
 import AddStudentPage from "./AFS Panel/FranchisePanel/pages/Student/AddStudentPage";
 import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/StudentListPage";
+import AdminPanel from "./AFS Panel/AdminPanel/pages/AdminPanel";
+import BranchWallet from "./AFS Panel/AdminPanel/pages/Wallet/BranchWallet";
 // import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/AllStudents";
 
 const App = () => {
@@ -89,9 +91,11 @@ const App = () => {
                         <Route path='dashboard' element={<Dashboard />} />
                         {/* <Route path='support' element={<Support />} /> */}
                         <Route path='student' element={<AllStudent />} />
+                        <Route path="add-branch" element={<AddBranch />} />
                         <Route path='branch' element={<AllBranch />} />
                         <Route path='course-category' element={<CourseCategoryPage />} />
                         <Route path='contact-us-query' element={<ContactUsQuery />} />
+                        <Route path='branch-wallet' element={<BranchWallet/>} />
                     </Route>
 
                     <Route path='franchise-login' element={<FranchiseLogin />} />
@@ -111,14 +115,14 @@ const App = () => {
                     <Route path="/signup*" element={<Signup />} />
                     {/* <Route path="/login" element={<Login />} /> */}
                     <Route path="*" element={<> not found</>} />
-                    <Route path="add-branch" element={<AddBranch />} />
                     <Route path="update-branch" element={<UpdateBranch />} />
                     <Route path="branchpage" element={<BranchPage />} />
 
                     {/* <Route path="succ" element={<PasswordResetDone/>} /> */}
                     <Route path="forgot-password" element={<ForgotPassword />} />
+                    <Route path="all-students" element={<AdminPanel/>} />
 
-                </Routes>
+                </Routes>  
             </Router>
 
         </MyState>

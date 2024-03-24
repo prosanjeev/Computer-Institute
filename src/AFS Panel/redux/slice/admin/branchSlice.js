@@ -47,6 +47,22 @@ export const fetchBranches = () => async dispatch => {
   }
 };
 
+export const fetchLatestBranches = () => async (dispatch) => {
+  try {
+    const branchCollection = collection(fireDB, 'franchiseData');
+    const querySnapshot = await getDocs(branchCollection);
+    const branches = [];
+    querySnapshot.forEach((doc) => {
+      branches.push({ id: doc.id, ...doc.data() });
+    });
+    const latestBranches = branches.slice(0, 10); // Get the latest 10 entries
+    dispatch(setBranches(latestBranches));
+  } catch (error) {
+    console.error('Error fetching latest branches: ', error);
+  }
+};
+
+
 export const addNewBranch = (branchData) => async dispatch => {
   try {
     const docRef = await addDoc(collection(fireDB, 'franchiseData'), branchData);

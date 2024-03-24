@@ -18,7 +18,17 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { Field, Form, Formik } from "formik";
 import { object, string, number } from "yup";
 import DashboardLayout from "../../../components/DashboardLayout";
-import { collection, addDoc, updateDoc, getDoc, doc, setDoc, where, query, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  getDoc,
+  doc,
+  setDoc,
+  where,
+  query,
+  getDocs,
+} from "firebase/firestore";
 import data from "../../../../../components/state-wise-cities-data/data";
 import { fireDB, storage } from "../../../../firebase/FirebaseConfig";
 import { PersonalInformation, UserCradesial } from "./data/data";
@@ -57,7 +67,6 @@ const AddBranch = () => {
   const [signFile, setSignFile] = useState(null); // State to hold signature file
   // const [centerId, setCenterId] = useState(""); // State to hold the centerId
 
-
   useEffect(() => {
     setCities(data.cities[selectedState] || []);
     setSelectedCity("");
@@ -77,7 +86,6 @@ const AddBranch = () => {
   }
 
   const CenterInformation = [
-    
     {
       label: "Center Name",
       name: "centername",
@@ -137,67 +145,91 @@ const AddBranch = () => {
   const onSubmit = async (values) => {
     try {
       // Check if the username is available
-    const usernameQuery = query(collection(fireDB, "franchiseData"), where("username", "==", values.username));
-    const usernameQuerySnapshot = await getDocs(usernameQuery);
-    if (!usernameQuerySnapshot.empty) {
-      toast.error("Username already exists");
-      return; // Stop execution if username is not available
-    }
-
-    // Proceed with adding the new center
-      const docRef = doc(fireDB, "franchiseData", "centerId");
-      const docSnap = await getDoc(docRef);
-      let currentCenterId = 0;
-      if (docSnap.exists()) {
-        currentCenterId = docSnap.data().value;
-      } else {
-        // If the centerId document doesn't exist, create it with an initial value of 0
-        await setDoc(docRef, { value: 0 });
+      const usernameQuery = query(
+        collection(fireDB, "franchiseData"),
+        where("username", "==", values.username)
+      );
+      const usernameQuerySnapshot = await getDocs(usernameQuery);
+      if (!usernameQuerySnapshot.empty) {
+        toast.error("Username already exists");
+        return; // Stop execution if username is not available
       }
-  
-      // Increment the centerId
-      const nextCenterId = `MTECH${currentCenterId + 1}`;
-  
-      // Update the centerId in Firestore
-      await updateDoc(docRef, { value: currentCenterId + 1 });
+
+      // // Proceed with adding the new center
+      //   const docRef = doc(fireDB, "franchiseData", "centerId");
+      //   const docSnap = await getDoc(docRef);
+      //   let currentCenterId = 0;
+      //   if (docSnap.exists()) {
+      //     currentCenterId = docSnap.data().value;
+      //   } else {
+      //     // If the centerId document doesn't exist, create it with an initial value of 0
+      //     await setDoc(docRef, { value: 0 });
+      //   }
+
+      //   // Increment the centerId
+      //   const nextCenterId = `MTECH${currentCenterId + 1}`;
+
+      // // Update the centerId in Firestore
+      // await updateDoc(docRef, { value: currentCenterId + 1 });
+
+      // Get a reference to the `franchiseData` collection
+      const franchiseDataRef = collection(fireDB, "franchiseData");
+
+      // Retrieve all documents from the `franchiseData` collection
+      const franchiseDataSnapshot = await getDocs(franchiseDataRef);
+
+      // Calculate the next center ID based on the total number of franchises
+      const baseValue = 100;
+      const totalFranchises = franchiseDataSnapshot.size;
+      const nextCenterId = `MTECH${baseValue + totalFranchises}`; 
+      // Use `nextCenterId` for your further logic
 
       // Upload logo file to Firebase Storage
-      let logoUrl = '';
+      let logoUrl = "";
       if (logoFile) {
-        const logoRef =  ref(storage, `franchise/${values.centername}-${logoFile.name}/logo`);
+        const logoRef = ref(
+          storage,
+          `franchise/${values.centername}/logo`
+        );
         await uploadBytes(logoRef, logoFile);
         // Get download URL
-         logoUrl = await getDownloadURL(logoRef);
+        logoUrl = await getDownloadURL(logoRef);
       }
 
       // Upload signature file to Firebase Storage
-      let signUrl = '';
+      let signUrl = "";
       if (signFile) {
-        const signatureRef = ref(storage, `franchise/${values.centername}-${signFile.name}/signature`);
+        const signatureRef = ref(
+          storage,
+          `franchise/${values.centername}/signature`
+        );
         // await signRef.put(signFile);
         // signUrl = await signRef.getDownloadURL();
         await uploadBytes(signatureRef, signFile);
-         signUrl = await getDownloadURL(signatureRef);
+        signUrl = await getDownloadURL(signatureRef);
       }
-      const franchiseDocRef = await addDoc(collection(fireDB, "franchiseData"), {
-        centerId: nextCenterId, // Use the new centerId
-        createdAt: new Date().toISOString(),
-        centername: values.centername,
-        directorname: values.directorname,
-        gender: values.gender,
-        primaryphone: values.primaryphone,
-        wathsappphone: values.wathsappphone,
-        email: values.email,
-        state: values.state,
-        district: values.district || "",
-        policestation: values.policestation,
-        pincode: values.pincode,
-        centerplace: values.centerplace,
-        username: values.username,
-        password: values.password,
-        logoUrl: logoUrl, // Add logo URL to Firestore
-        signUrl: signUrl, // Add signature URL to Firestore
-      });
+      const franchiseDocRef = await addDoc(
+        collection(fireDB, "franchiseData"),
+        {
+          centerId: nextCenterId, // Use the new centerId
+          createdAt: new Date().toISOString(),
+          centername: values.centername,
+          directorname: values.directorname,
+          gender: values.gender,
+          primaryphone: values.primaryphone,
+          wathsappphone: values.wathsappphone,
+          email: values.email,
+          state: values.state,
+          district: values.district || "",
+          policestation: values.policestation,
+          pincode: values.pincode,
+          centerplace: values.centerplace,
+          username: values.username,
+          password: values.password,
+          logoUrl: logoUrl, // Add logo URL to Firestore
+          signUrl: signUrl, // Add signature URL to Firestore
+        }
+      );
       toast.success("New Center Added ", franchiseDocRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -242,13 +274,13 @@ const AddBranch = () => {
                 primaryphone: "",
                 email: "",
                 selectId: "",
-                documentId: "",               
+                documentId: "",
                 centername: "",
                 officephone: "",
                 policestation: "",
                 pincode: "",
-                centerplace:"",
-                wathsappphone:"",
+                centerplace: "",
+                wathsappphone: "",
                 state: "", // Add this line
                 city: "", // Add this line
                 username: "",
@@ -329,29 +361,33 @@ const AddBranch = () => {
                                 </Select>
                               ) : (
                                 <>
-                                  {list.name === 'logo' ? (
+                                  {list.name === "logo" ? (
                                     <input
                                       type="file"
                                       accept="image/*" // Accept only image files
-                                      onChange={(e) => setLogoFile(e.target.files[0])} // Update logo file state
+                                      onChange={(e) =>
+                                        setLogoFile(e.target.files[0])
+                                      } // Update logo file state
                                     />
-                                  ) : list.name === 'signature' ? (
+                                  ) : list.name === "signature" ? (
                                     <input
                                       type="file"
                                       accept="image/*" // Accept only image files
-                                      onChange={(e) => setSignFile(e.target.files[0])} // Update signature file state
+                                      onChange={(e) =>
+                                        setSignFile(e.target.files[0])
+                                      } // Update signature file state
                                     />
-                                  ): (
-                                <Input
-                                  bgColor="black.5"
-                                  name={list.name}
-                                  type={list.type}
-                                  readOnly={list.readOnly} // Add the readOnly attribute here
-                                  {...field}
-                                />
+                                  ) : (
+                                    <Input
+                                      bgColor="black.5"
+                                      name={list.name}
+                                      type={list.type}
+                                      readOnly={list.readOnly} // Add the readOnly attribute here
+                                      {...field}
+                                    />
+                                  )}
+                                </>
                               )}
-                               </>
-                               )}
                               <FormErrorMessage>{meta.error}</FormErrorMessage>
                             </FormControl>
                           )}
