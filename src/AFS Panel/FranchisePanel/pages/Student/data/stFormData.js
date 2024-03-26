@@ -5,6 +5,12 @@ export const StPersonalInformation = [
       type: "text",
     },
     {
+      label: "Gender",
+      name: "gender",
+      type: "select",
+      options: ["Male", "Female", "Other"],
+    },
+    {
       label: "Father's Name",
       name: "fatherName",
       type: "text",
@@ -15,19 +21,8 @@ export const StPersonalInformation = [
       type: "text",
     },
     {
-      label: "Gender",
-      name: "gender",
-      type: "select",
-      options: ["Male", "Female", "Other"],
-    },
-    {
       label: "Primary Phone",
       name: "primaryPhone",
-      type: "text",
-    },
-    {
-      label: "Secondary Phone",
-      name: "secondaryPhone",
       type: "text",
     },
     {
@@ -40,6 +35,16 @@ export const StPersonalInformation = [
       name: "aadharNumber",
       type: "text",
     },
+    {
+      label: "Date of Birth",
+      name: "dateOfBirth",
+      type: "date",
+    },
+    // {
+    //   label: "Secondary Phone",
+    //   name: "secondaryPhone",
+    //   type: "text",
+    // },
   ];
 
  export  const studentCradesial = [

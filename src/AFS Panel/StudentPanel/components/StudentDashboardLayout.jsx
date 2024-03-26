@@ -1,7 +1,7 @@
 import { Box, Container, Flex, useDisclosure } from "@chakra-ui/react";
-import TopNav from "../../AdminPanel/components/TopNav";
 import StudentSidenav from "./StudentSidenav";
 import StudentSideDrawer from "./StudentSideDrawer";
+import StudentTopNav from "./StudentTopNav";
 
 const StudentDashboardLayout = ({ title, children }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -19,7 +19,8 @@ const StudentDashboardLayout = ({ title, children }) => {
       
       <StudentSideDrawer isOpen={isOpen} onClose={onClose} />
       <Box flexGrow={1}>
-        <TopNav title={title} onOpen={onOpen} />
+        <StudentTopNav title={title} onOpen={onOpen}/>
+       
         <Container
           overflowX="hidden"
           overflowY="auto"

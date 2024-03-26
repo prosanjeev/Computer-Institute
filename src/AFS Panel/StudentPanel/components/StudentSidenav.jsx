@@ -1,14 +1,7 @@
 import { Box, HStack, Heading, Icon, Stack, Text } from "@chakra-ui/react";
-import { RxDashboard } from "react-icons/rx";
-import { FaRegUser } from "react-icons/fa";
-import { CiWallet } from "react-icons/ci";
-import { PiStudent } from "react-icons/pi";
-import { SiCoursera } from "react-icons/si";
-import { TbReportSearch } from "react-icons/tb";
-import { GrCloudComputer } from "react-icons/gr";
-import { CgWebsite } from "react-icons/cg";
 import { BiSupport } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
+import { stSideNavLinks } from "./components/stSideNavLinks";
 
 const StudentSidenav = () => {
   const location = useLocation();
@@ -16,56 +9,6 @@ const StudentSidenav = () => {
   const isActiveLink = (link) => {
     return location.pathname === link;
   };
-
-  const navLinks = [
-    {
-      icon: RxDashboard,
-      text: "Dashboard",
-      link: "/student-dashboard",
-    },
-    {
-      icon: FaRegUser,
-      text: "Profile",
-      link: "/transactions",
-    },
-    
-    {
-      icon: CiWallet,
-      text: "E Books",
-      link: "/transactions",
-    },
-    {
-      icon: PiStudent,
-      text: "Practice Test",
-      link: "/practice-test",
-    },
-    {
-      icon: SiCoursera,
-      text: "Main Test",
-      link: "/transactions",
-    },
-    {
-      icon: TbReportSearch,
-      text: "Report",
-      link: "/transactions",
-    },
-    {
-      icon: GrCloudComputer,
-      text: "Online Exam",
-      link: "/transactions",
-    },
-    {
-      icon: GrCloudComputer,
-      text: "Icard",
-      link: "/transactions",
-    },
-    {
-      icon: CgWebsite,
-      text: "Notice",
-      link: "/transactions",
-    },
-   
-  ];
 
   return (
     <Stack
@@ -86,7 +29,7 @@ const StudentSidenav = () => {
           @M-Tech Computer
         </Heading>
         <Box mt="6" mx="3">
-          {navLinks.map((nav) => (
+          {stSideNavLinks.map((nav) => (
             <Link to={nav.link} key={nav.text}>
               <HStack
                 bg={isActiveLink(nav.link) ? "#F3F3F7" : "transparent"}

@@ -48,6 +48,11 @@ import AddStudentPage from "./AFS Panel/FranchisePanel/pages/Student/AddStudentP
 import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/StudentListPage";
 import AdminPanel from "./AFS Panel/AdminPanel/pages/AdminPanel";
 import BranchWallet from "./AFS Panel/AdminPanel/pages/Wallet/BranchWallet";
+import AddCourseForm from "./AFS Panel/AdminPanel/pages/Course/AddCourse";
+import AddCourse from "./AFS Panel/AdminPanel/pages/Course/AddCourse";
+import AllCourses from "./AFS Panel/AdminPanel/pages/Course/AllCourses";
+import CourseSelectionPage from "./AFS Panel/FranchisePanel/pages/Course/CourseSelectionPage";
+import StudentIDCard from "./AFS Panel/StudentPanel/pages/IDCard/StudentIDCard";
 // import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/AllStudents";
 
 const App = () => {
@@ -121,6 +126,10 @@ const App = () => {
                     {/* <Route path="succ" element={<PasswordResetDone/>} /> */}
                     <Route path="forgot-password" element={<ForgotPassword />} />
                     <Route path="all-students" element={<AdminPanel/>} />
+                    <Route path="add-course" element={<AddCourse/>} />
+                    <Route path="all-courses" element={<AllCourses/>} />
+                    <Route path="course-selection" element={<CourseSelectionPage/>} />
+                    <Route path="id-card" element={<StudentIDCard/>} />
 
                 </Routes>  
             </Router>

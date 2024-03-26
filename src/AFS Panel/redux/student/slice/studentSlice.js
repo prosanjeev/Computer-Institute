@@ -1,0 +1,90 @@
+// studentSlice.js
+import { createSlice } from "@reduxjs/toolkit";
+import { fireDB } from "../../../firebase/FirebaseConfig";
+import { getDoc, doc, getDocs, collection, query, where } from "firebase/firestore";
+
+const initialState = {
+  isLoggedIn: localStorage.getItem("isLoggedIn_student") === "true" || false,
+  userId: localStorage.getItem("userId_student") || null,
+  studentData: null,
+};
+
+export const fetchStudentData = () => async (dispatch, getState) => {
+  const state = getState();
+  try {
+    if (state.student.userId) {
+      const docRef = doc(fireDB, "students", state.student.userId);
+      const docSnap = await getDoc(docRef);
+      const studentData = docSnap.data();
+
+      if (docSnap.exists()) {
+        // Fetch franchise data for centerName
+        const franchiseId = studentData.franchiseId;
+        const franchiseDocRef = doc(fireDB, "franchiseData", franchiseId);
+        const franchiseDocSnap = await getDoc(franchiseDocRef);
+        if (!franchiseDocSnap.exists()) {
+          console.log("No franchise data found for franchiseId:", franchiseId);
+          return;
+        }
+        const franchiseData = franchiseDocSnap.data();
+
+        // Assign centerName to studentData
+        studentData.centerName = franchiseData.centername;
+
+        // Fetch student courses and course names
+        const studentCoursesRef = collection(fireDB, "studentCourses");
+        const studentCoursesQuery = query(studentCoursesRef, where("studentId", "==", state.student.userId));
+        const studentCoursesSnapshot = await getDocs(studentCoursesQuery);
+        const coursePromises = studentCoursesSnapshot.docs.map(async (courseDoc) => {
+          const courseId = courseDoc.data().courseId;
+          const courseDocRef = doc(fireDB, "courses", courseId);
+          const courseDocSnap = await getDoc(courseDocRef);
+          return courseDocSnap.exists() ? courseDocSnap.data().courseName : null;
+        });
+        const courses = await Promise.all(coursePromises);
+
+        // Assign courses to studentData
+        studentData.courses = courses.filter(Boolean);
+
+        dispatch(setStudentData(studentData));
+      } else {
+        console.log("No student data found for user ID:", state.student.userId);
+      }
+    } else {
+      console.log("User ID not found.");
+    }
+  } catch (error) {
+    console.error("Error fetching student data:", error);
+  }
+};
+
+export const studentSlice = createSlice({
+  name: "student",
+  initialState,
+  reducers: {
+    login: (state, action) => {
+      state.isLoggedIn = true;
+      localStorage.setItem("isLoggedIn_student", "true");
+      localStorage.setItem("userId_student", action.payload.userId); // Store userId in localStorage
+      state.userId = action.payload.userId;
+    },
+    logout: (state) => {
+      state.isLoggedIn = false;
+      localStorage.removeItem("isLoggedIn_student");
+      localStorage.removeItem("userId_student"); // Remove userId from localStorage
+      state.userId = null;
+      state.studentData = null; // Clear student data on logout
+    },
+    setStudentData: (state, action) => {
+      state.studentData = action.payload;
+    },
+  },
+});
+
+export const { login, logout, setStudentData } = studentSlice.actions;
+
+export const selectIsLoggedInStudent = (state) => state.student.isLoggedIn;
+export const selectUserIdStudent = (state) => state.student.userId;
+export const selectStudentData = (state) => state.student.studentData;
+
+export default studentSlice.reducer;

@@ -55,10 +55,10 @@ const FranchiseSidenav = ({ branchData }) => {
                   textAlign="center"
                   fontSize="20px"
                   as="h1"
-                  pt="2.5rem"
+                  py="2.5rem"
                   color="orange"
                 >
-                  {branchData.centername}{" "}
+                  {branchData.centername} 
                 </Heading> // Render centername if logoUrl is not available
               )}
             </ul>

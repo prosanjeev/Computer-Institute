@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { Field, Form, Formik } from "formik";
-import { object, string, number } from "yup";
+import { object, string, number, date } from "yup";
 import {
   collection,
   addDoc,
@@ -37,6 +37,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import FranchiseDashboardLayout from "../../components/FranchiseDashboardLayout";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../../redux/slice/franchise/authSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const franchiseValidationSchema = object({
   studentName: string()
@@ -70,6 +71,9 @@ const franchiseValidationSchema = object({
       "Must be exactly 12 digits",
       (val) => val && val.toString().length === 12
     ),
+    dateOfBirth: date()
+    .required('Date of Birth is required')
+    .max(new Date(), 'Date of Birth cannot be in the future'),
   email: string().email().required("Email is Required"),
   state: string(),
   district: string(),
@@ -82,6 +86,8 @@ const AddStudentPage = () => {
   const [photoFile, setPhotoFile] = useState(null); // State to hold logo file
   const [signFile, setSignFile] = useState(null); // State to hold signature file
   // const [centerId, setCenterId] = useState(""); // State to hold the centerId
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setCities(data.cities[selectedState] || []);
@@ -165,7 +171,7 @@ const AddStudentPage = () => {
         return; // Stop execution if username is not available
       }
 
-      // Proceed with adding the new center
+      // Proceed with adding the new student
       const docRef = doc(fireDB, "students", "studentId");
       const docSnap = await getDoc(docRef);
       let currentStudentId = 0;
@@ -175,9 +181,20 @@ const AddStudentPage = () => {
         // If the centerId document doesn't exist, create it with an initial value of 0
         await setDoc(docRef, { value: 0 });
       }
-
+ 
       // Increment the centerId
-      const nextStudentId = `MTECH${currentStudentId + 1}`;
+      // const nextStudentId = `MTECH${currentStudentId + 1}`;
+
+      const studentDataRef = collection(fireDB, "students");
+
+      // Retrieve all documents from the `franchiseData` collection
+      const studentDataSnapshot = await getDocs(studentDataRef);
+
+      // Calculate the next center ID based on the total number of franchises
+      const baseValue = 100;
+      const totalStudents = studentDataSnapshot.size;
+      const nextStudentId = `MTECHSTU${baseValue + totalStudents}`; 
+      // Use `nextCenterId` for your further logic
 
       // Update the centerId in Firestore
       await updateDoc(docRef, { value: currentStudentId + 1 });
@@ -206,18 +223,20 @@ const AddStudentPage = () => {
         await uploadBytes(signatureRef, signFile);
         signUrl = await getDownloadURL(signatureRef);
       }
-      const franchiseDocRef = await addDoc(
+      const  studentRef = await addDoc(
         collection(fireDB, "students"),
         {
           studentId: nextStudentId, // Use the new centerId
           createdAt: new Date().toISOString(),
           studentName: values.studentName,
+          gender: values.gender,
           fatherName: values.fatherName,
           motherName: values.motherName,
-          gender: values.gender,
           primaryphone: values.primaryphone,
-          wathsappphone: values.wathsappphone,
+          // wathsappphone: values.wathsappphone,
           email: values.email,
+          aadharNumber: values.aadharNumber,
+          dateOfBirth: values.dateOfBirth,
           state: values.state,
           district: values.district || "",
           policestation: values.policestation,
@@ -230,7 +249,8 @@ const AddStudentPage = () => {
           franchiseId:centerId,
         }
       );
-      toast.success("New Center Added ", franchiseDocRef.id);
+      toast.success("New Student Added ", studentRef.id);
+      navigate("/course-selection", { state: { franchiseId: centerId, studentId: studentRef.id } });
     } catch (e) {
       console.error("Error adding document: ", e);
     }

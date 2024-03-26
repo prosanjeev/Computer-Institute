@@ -31,6 +31,7 @@ const loginValidationSchema = object({
 });
 
 const FranchiseLogin = ( ) => {
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

@@ -69,7 +69,7 @@ export const navLinks = [
       submenu: [
         {
           text: "Add Course",
-          link: "#",
+          link: "/add-course",
         },
         {
           text: "Course Category",
@@ -77,7 +77,7 @@ export const navLinks = [
         },
         {
           text: "View Course",
-          link: "/#",
+          link: "/all-courses",
         },
       ],
     },
