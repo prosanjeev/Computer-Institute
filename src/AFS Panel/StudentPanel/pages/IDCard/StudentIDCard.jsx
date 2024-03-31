@@ -51,7 +51,7 @@ const dispatch = useDispatch();
         {studentData.courses.join(", ")}
       </Text>
       <Text  position='absolute' top='446px' right='200px' fontSize='30px' fontWeight='600'>
-         {studentData.studentName}
+      {new Date(studentData.dateOfBirth).toLocaleDateString('en-GB')}
       </Text>
       <Text position='absolute' top='540px' left='185px' fontSize='30px' fontWeight='600' color='white'>
         {studentData.studentId}

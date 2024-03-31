@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fireDB } from "../../../firebase/FirebaseConfig";
-import { getDoc, doc, collection, query, where, getDocs } from "firebase/firestore";
+import { getDoc, doc, collection, query, where, getDocs, orderBy } from "firebase/firestore";
 
 const initialState = {
   isLoggedIn: localStorage.getItem("isLoggedIn") === "true" || false,
@@ -19,20 +19,69 @@ export const fetchFranchiseData = () => async (dispatch, getState) => {
       const docSnap = await getDoc(docRef);
       const franchiseData = docSnap.data();
 
+      // Fetch all courses documents
+      const courseDataRef = collection(fireDB, "courses");
+      const courseDataSnapshot = await getDocs(courseDataRef);
+      const studentCourseDataMap = {};
+
+      // Store courses documents in a map for easy access
+      courseDataSnapshot.forEach((doc) => {
+        studentCourseDataMap[doc.id] = doc.data();
+      });
+
       if (docSnap.exists()) {
         dispatch(setbranchData(docSnap.data()));
         dispatch(setWallet(franchiseData.wallet));
         dispatch(setRequestAmount(franchiseData.requestAmount));
+
         // Fetch students for the franchise
         const studentsRef = collection(fireDB, "students");
-        const franchiseStudentsQuery = query(studentsRef, where("franchiseId", "==", state.auth.userId));
+        const franchiseStudentsQuery = query(
+          studentsRef,
+          where("franchiseId", "==", state.auth.userId),
+          orderBy("createdAt", "desc") // Order by createdAt in descending order
+        );
         const snapshot = await getDocs(franchiseStudentsQuery);
         const students = [];
-        snapshot.forEach((doc) => {
-          students.push({ id: doc.id, ...doc.data() });
-        });
-        dispatch(setStudents(students));
 
+        await Promise.all(snapshot.docs.map(async (doc) => {
+          const studentData = doc.data();
+          const studentId = doc.id;
+
+          // Fetch corresponding studentCourses document for the current student
+          const studentCoursesRef = collection(fireDB, "studentCourses");
+          const studentCoursesQuery = query(
+            studentCoursesRef,
+            where("studentId", "==", studentId)
+          );
+          const studentCoursesSnapshot = await getDocs(studentCoursesQuery);
+
+          // Check if there are any studentCourses for the current student
+          if (!studentCoursesSnapshot.empty) {
+            // Retrieve courseId from the first studentCourses document
+            const courseId = studentCoursesSnapshot.docs[0].data().courseId;
+            console.log(courseId);
+            // Check if courseData exists for the retrieved courseId
+            if (courseId in studentCourseDataMap) {
+              const courseData = studentCourseDataMap[courseId];
+
+              // Add courseName to the student object
+              const studentWithCourseName = {
+                id: studentId,
+                ...studentData,
+                courseName: courseData ? courseData.courseName : null
+              };
+              students.push(studentWithCourseName);
+            } else {
+              console.log(`CourseData not found for courseId: ${courseId}`);
+            }
+
+          } else {
+            console.log(`No studentCourses found for studentId: ${studentId}`);
+          }
+        }));
+
+        dispatch(setStudents(students));
       } else {
         console.log("No franchise data found for user ID:", state.auth.userId);
       }
@@ -43,6 +92,7 @@ export const fetchFranchiseData = () => async (dispatch, getState) => {
     console.error("Error fetching franchise data:", error);
   }
 };
+
 
 
 export const authSlice = createSlice({

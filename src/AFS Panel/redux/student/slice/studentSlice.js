@@ -9,49 +9,64 @@ const initialState = {
   studentData: null,
 };
 
-export const fetchStudentData = () => async (dispatch, getState) => {
+export const fetchStudentData = (username) => async (dispatch, getState) => {
   const state = getState();
   try {
-    if (state.student.userId) {
-      const docRef = doc(fireDB, "students", state.student.userId);
-      const docSnap = await getDoc(docRef);
-      const studentData = docSnap.data();
+    let studentId = state.student.userId;
 
-      if (docSnap.exists()) {
-        // Fetch franchise data for centerName
-        const franchiseId = studentData.franchiseId;
-        const franchiseDocRef = doc(fireDB, "franchiseData", franchiseId);
-        const franchiseDocSnap = await getDoc(franchiseDocRef);
-        if (!franchiseDocSnap.exists()) {
-          console.log("No franchise data found for franchiseId:", franchiseId);
-          return;
-        }
-        const franchiseData = franchiseDocSnap.data();
-
-        // Assign centerName to studentData
-        studentData.centerName = franchiseData.centername;
-
-        // Fetch student courses and course names
-        const studentCoursesRef = collection(fireDB, "studentCourses");
-        const studentCoursesQuery = query(studentCoursesRef, where("studentId", "==", state.student.userId));
-        const studentCoursesSnapshot = await getDocs(studentCoursesQuery);
-        const coursePromises = studentCoursesSnapshot.docs.map(async (courseDoc) => {
-          const courseId = courseDoc.data().courseId;
-          const courseDocRef = doc(fireDB, "courses", courseId);
-          const courseDocSnap = await getDoc(courseDocRef);
-          return courseDocSnap.exists() ? courseDocSnap.data().courseName : null;
-        });
-        const courses = await Promise.all(coursePromises);
-
-        // Assign courses to studentData
-        studentData.courses = courses.filter(Boolean);
-
-        dispatch(setStudentData(studentData));
-      } else {
-        console.log("No student data found for user ID:", state.student.userId);
+    if (!studentId && username) {
+      // Fetch student ID using username
+      const studentsRef = collection(fireDB, "students");
+      const usernameQuery = query(studentsRef, where("username", "==", username));
+      const usernameSnapshot = await getDocs(usernameQuery);
+      if (usernameSnapshot.empty) {
+        console.log("No student found with username:", username);
+        return;
       }
+      studentId = usernameSnapshot.docs[0].id;
+    }
+
+    if (!studentId) {
+      console.log("No student ID or username provided.");
+      return;
+    }
+
+    const docRef = doc(fireDB, "students", studentId);
+    const docSnap = await getDoc(docRef);
+    const studentData = docSnap.data();
+
+    if (docSnap.exists()) {
+      // Fetch franchise data for centerName
+      const franchiseId = studentData.franchiseId;
+      const franchiseDocRef = doc(fireDB, "franchiseData", franchiseId);
+      const franchiseDocSnap = await getDoc(franchiseDocRef);
+      if (!franchiseDocSnap.exists()) {
+        console.log("No franchise data found for franchiseId:", franchiseId);
+        return;
+      }
+      const franchiseData = franchiseDocSnap.data();
+
+      // Assign centerName to studentData
+      studentData.centerName = franchiseData.centername;
+
+      // Fetch student courses and course names
+      const studentCoursesRef = collection(fireDB, "studentCourses");
+      const studentCoursesQuery = query(studentCoursesRef, where("studentId", "==", studentId));
+      const studentCoursesSnapshot = await getDocs(studentCoursesQuery);
+      const coursePromises = studentCoursesSnapshot.docs.map(async (courseDoc) => {
+        const courseId = courseDoc.data().courseId;
+        const courseDocRef = doc(fireDB, "courses", courseId);
+        const courseDocSnap = await getDoc(courseDocRef);
+        return courseDocSnap.exists() ? courseDocSnap.data().courseName : null;
+      });
+      const courses = await Promise.all(coursePromises);
+
+      // Assign courses to studentData
+      studentData.courses = courses.filter(Boolean);
+
+      dispatch(setStudentData(studentData));
     } else {
-      console.log("User ID not found.");
+      console.log("No student data found for user ID:", studentId);
     }
   } catch (error) {
     console.error("Error fetching student data:", error);

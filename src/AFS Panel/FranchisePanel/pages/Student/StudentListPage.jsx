@@ -1,13 +1,39 @@
 // StudentListPage.js
-import { Box, Button, Flex, Grid, Heading, Icon, Image, Switch, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from '@chakra-ui/react'
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchFranchiseData,  selectbranchData, selectStudents } from '../../../redux/slice/franchise/authSlice';
-import FranchiseDashboardLayout from '../../components/FranchiseDashboardLayout';
-import { FaEdit, FaRegEdit } from "react-icons/fa";
-
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Heading,
+  Icon,
+  Image,
+  Switch,
+  Table,
+  Tag,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tooltip,
+  Tr,
+  useBreakpointValue,
+} from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchFranchiseData,
+  selectbranchData,
+  selectStudents,
+} from "../../../redux/slice/franchise/authSlice";
+import FranchiseDashboardLayout from "../../components/FranchiseDashboardLayout";
+import { FaAddressCard, FaEdit, FaRegEdit } from "react-icons/fa";
+import { PiCertificateFill, PiChalkboardTeacher } from "react-icons/pi";
+import { TbCertificate2 } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
 const StudentListPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const branchData = useSelector(selectbranchData);
   const students = useSelector(selectStudents);
@@ -21,96 +47,160 @@ const StudentListPage = () => {
   };
   const isDesktop = useBreakpointValue({ base: false, md: true });
 
+  const CustomCard = React.forwardRef(({ children, ...rest }, ref) => (
+    <Box p="1">
+      <Tag ref={ref} {...rest}>
+        {children}
+      </Tag>
+    </Box>
+  ));
+
+  const handleCourseAdmission = (studentId, franchiseId) => {
+    // Navigate to '/course-selection' with studentId and franchiseId passed in state
+    navigate("/course-selection", { state: { studentId, franchiseId } });
+  };
+  const handlePrintCertificate = (regNumber) => {
+    // Navigate to '/course-selection' with studentId and franchiseId passed in state
+    navigate("/student-certificate", { state: { regNumber } });
+  };
+
   return (
-   <FranchiseDashboardLayout title='Students List'>
-     
-    <Flex direction="column" alignItems="center" mx={2}>
-           <Table
-             variant="simple"
-             colorScheme="blue"
-             size={isDesktop ? "md" : "sm"}
-           >
-             <Thead>
-               <Tr bg="orange.400" >
-                 <Th fontSize="lg" fontWeight="bold">
-                   Sr.
-                 </Th>
-                 <Th fontSize="lg" fontWeight="bold">
-                   Date
-                 </Th>
-                 <Th fontSize="lg" fontWeight="bold">
-                   Photo
-                 </Th>
-                 <Th fontSize="lg" fontWeight="bold">
-                 Enr No.
-                 </Th>
-                 <Th fontSize="lg" fontWeight="bold">
-                   Name
-                 </Th>
-                 <Th fontSize="lg" fontWeight="bold">
-                    Father's Name
-                 </Th>
-                 {/* <Th fontSize="lg" fontWeight="bold">
+    <FranchiseDashboardLayout title="Students List">
+      <Flex direction="column" alignItems="center" mx={2}>
+        <Table
+          variant="simple"
+          colorScheme="blue"
+          size={isDesktop ? "md" : "sm"}
+        >
+          <Thead>
+            <Tr bg="orange.400">
+              <Th fontSize="lg" fontWeight="bold">
+                Sr.
+              </Th>
+              <Th fontSize="lg" fontWeight="bold">
+                Date
+              </Th>
+              <Th fontSize="lg" fontWeight="bold">
+                Photo
+              </Th>
+              <Th fontSize="lg" fontWeight="bold">
+                Enr No.
+              </Th>
+              <Th fontSize="lg" fontWeight="bold">
+                Name
+              </Th>
+              <Th fontSize="lg" fontWeight="bold">
+                Father's Name
+              </Th>
+              {/* <Th fontSize="lg" fontWeight="bold">
                  Center
                  </Th> */}
-                 <Th fontSize="lg" fontWeight="bold">
-                 Course
-                 </Th>
-                 <Th fontSize="lg" fontWeight="bold">
-                   Status
-                 </Th>
-                 <Th fontSize="lg" fontWeight="bold">
-                   Details
-                 </Th>
-                 <Th fontSize="lg" fontWeight="bold">
-                   Delete
-                 </Th>
-               </Tr>
-             </Thead>
-             <Tbody>
-               {students.map((student, index) => (
-                 <Tr key={index}>
-                   <Td>{index + 1}</Td>
-                   <Td>{new Date(student.createdAt).toLocaleDateString('en-GB')}</Td>
-                   <Td>
-                     <Image
-                       src={student.photoUrl}
-                       alt={student.studentName}
-                       w="40px"
-                       h="40px"
-                     />
-                   </Td>
-                   <Td>{student.studentId}</Td>
-                   <Td borderLeft='1px solid red' >{student.studentName}</Td>
-                   <Td>{student.fatherName}</Td>
-                   {/* <Td>{student.centername}</Td> */}
-                   <Td>{student.state}</Td>
-                   <Td>
-                     <Switch
-                       isChecked={student.status === "Active"}
-                       onChange={(e) =>
-                         handleStatusChange(
-                          student.id,
-                           e.target.checked ? "Active" : "Inactive"
-                         )
-                       }
-                       colorScheme={student.status === "Active" ? "green" : "red"}
-                     />
-                   </Td>
-                   <Td>
-                     <Icon as={FaRegEdit} size="sm" colorScheme="blue" />
-                   </Td>
-                   <Td>
-                     <Button size="sm" colorScheme="red">
-                       Delete
-                     </Button>
-                   </Td>
-                 </Tr>
-               ))}
-             </Tbody>
-           </Table>
-         </Flex>
-   </FranchiseDashboardLayout>
+              <Th fontSize="lg" fontWeight="bold">
+                Course
+              </Th>
+              <Th fontSize="lg" fontWeight="bold">
+                Status
+              </Th>
+              <Th fontSize="lg" fontWeight="bold">
+                Details
+              </Th>
+              {/* <Th fontSize="lg" fontWeight="bold">
+                Delete
+              </Th> */}
+            </Tr>
+          </Thead>
+          <Tbody>
+            {students.map((student, index) => (
+              <Tr key={index}>
+                <Td>{index + 1}</Td>
+                <Td>
+                  {new Date(student.createdAt).toLocaleDateString("en-GB")}
+                </Td>
+                <Td>
+                  <Image
+                    src={student.photoUrl}
+                    alt={student.studentName}
+                    w="40px"
+                    h="40px"
+                  />
+                </Td>
+                <Td>{student.studentId}</Td>
+                <Td borderLeft="1px solid red">{student.studentName}</Td>
+                <Td>{student.fatherName}</Td>
+                {/* <Td>{student.centername}</Td> */}
+                <Td>{student.courseName}</Td>
+                <Td>
+                  <Switch
+                    isChecked={student.status === "Active"}
+                    onChange={(e) =>
+                      handleStatusChange(
+                        student.id,
+                        e.target.checked ? "Active" : "Inactive"
+                      )
+                    }
+                    colorScheme={student.status === "Active" ? "green" : "red"}
+                  />
+                </Td>
+                <Td>
+                  <Flex flexWrap="wrap">
+                    <Tooltip label="Edit">
+                      <CustomCard>
+                        <Icon as={FaRegEdit} size="sm" colorScheme="blue" />
+                      </CustomCard>
+                    </Tooltip>
+                    <Tooltip label="Course Admission">
+                      <CustomCard
+                        onClick={() =>
+                          handleCourseAdmission(student.id, student.franchiseId)
+                        }
+                      >
+                        <Icon
+                          as={PiChalkboardTeacher}
+                          size="sm"
+                          colorScheme="blue"
+                        />
+                      </CustomCard>
+                    </Tooltip>
+                    <Tooltip label="Icard">
+                      <CustomCard>
+                        <Icon as={FaAddressCard} size="sm" colorScheme="blue" />
+                      </CustomCard>
+                    </Tooltip>
+                    <Tooltip label="Download Certificate">
+                      <CustomCard
+                        onClick={() =>
+                          handlePrintCertificate( student.username)
+                        }
+                      >
+                        <Icon
+                          as={PiCertificateFill}
+                          size="sm"
+                          colorScheme="blue"
+                        />
+                      </CustomCard>
+                    </Tooltip>
+                    <Tooltip label="Download Marksheet">
+                      <CustomCard>
+                        <Icon
+                          as={TbCertificate2}
+                          size="sm"
+                          colorScheme="blue"
+                        />
+                      </CustomCard>
+                    </Tooltip>
+                  </Flex>
+                </Td>
+                {/* <Td>
+                  <Button size="sm" colorScheme="red">
+                    Delete
+                  </Button>
+                </Td> */}
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Flex>
+    </FranchiseDashboardLayout>
   );
 };
 

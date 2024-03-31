@@ -28,11 +28,13 @@ const CourseSelectionPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const courses = useSelector(selectAllCourses);
+  const navigate = useNavigate();
   const location = useLocation();
   const franchiseId = location.state ? location.state.franchiseId : null;
   const studentId = location.state ? location.state.studentId : null;
+
+console.log("koiw", studentId)
 
   useEffect(() => {
     if (studentId) {

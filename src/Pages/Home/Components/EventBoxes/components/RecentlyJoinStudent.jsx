@@ -11,7 +11,7 @@ const RecentlyJoinStudent = ({studentData}) => {
             <Img boxSize='110px' src={student.photoUrl} alt="" />
 
             <Text>Name: {student.studentName.toUpperCase()}</Text>
-            <Text>Course: {student.fatherName.toUpperCase()}</Text>
+            <Text>Course: {student.courseName.toUpperCase()}</Text>
             <Text>Branch: {student.centername.toUpperCase()}</Text>
 
           </Center>

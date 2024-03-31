@@ -16,15 +16,16 @@ import {
   Image,
   Stack,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 function TopHeader() {
   const buttonLists = [
-    { name: "Enquiry Here", link: "/" },
-    { name: "Student Registration", link: "/" },
-    { name: "Student Login", link: "/" },
+    { name: "Enquiry Here", link: "/contact-us" },
+    { name: "Student Registration", link: "/add-student" },
+    { name: "Student Login", link: "/student-login" },
     { name: "Franchise Details", link: "/" },
-    { name: "Apply Franchise", link: "/" },
-    { name: "Franchise Login", link: "/" },
+    { name: "Apply Franchise", link: "/franchise-enquiry" },
+    { name: "Franchise Login", link: "/franchise-login" },
   ];
   const iconLists = [
     { name: FaFacebookF, link: "/" },
@@ -39,13 +40,15 @@ function TopHeader() {
         <Flex w="80%" justify="space-around" mx="auto" flexWrap='wrap' >
           <HStack py={2} flexWrap='wrap' justify={{base:'center', md:'none'}}> 
             {buttonLists.map((btn) => (
+              <Link to={btn.link} key={btn.name}>
               <Button fontSize="14px" 
               bgColor="yellow" 
               size='sm'
               _hover={{ bgColor: 'orange', color: 'white' }}
-              color='black' px={2}  key={btn.name}>
+              color='black' px={2}  >
                 {btn.name}
               </Button>
+              </Link>
             ))}
           </HStack>
           <HStack gap={4} color='white' flexWrap='wrap' my={{base:'8px', md:'none'}}>

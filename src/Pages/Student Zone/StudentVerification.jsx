@@ -1,19 +1,32 @@
-import { Box, Flex } from "@chakra-ui/react";
+import {  Flex } from "@chakra-ui/react";
 import PageTitle from "../../components/PagesComponents/PageTitleSection/PageTitle";
 import VerifivaticationForm from "../../components/PagesComponents/VerifivaticationForm";
 import StudentVerifiedCard from "./components/StudentVerifiedCard";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchStudentData, selectStudentData, selectUserIdStudent } from "../../AFS Panel/redux/student/slice/studentSlice";
+import { useEffect } from "react";
 
 const StudentVerification = () => {
+
+  const dispatch = useDispatch();
+  const studentData = useSelector(selectStudentData);
+
+  // useEffect(() => {
+  //   dispatch(fetchStudentData());
+  // }, [dispatch]);
+
   const handleSubmit = (formData) => {
-    console.log("kire",formData); // This will log the form data sent from the child component
-    // Perform any other actions with the form data here
+    const regNumber = formData.user;
+    console.log("regNumber", regNumber); 
+    dispatch(fetchStudentData(regNumber));
   };
+ 
   return (
     <>
     <PageTitle pagetitle="STUDENT VERIFICATION" />
-    <Flex w='1000px' mx='auto'>
+    <Flex w={{md:'1000px', base:'90vw'}} mx='auto' flexWrap='wrap'>
       <VerifivaticationForm title='STUDENT VERIFICATION' label='Registration No' onSubmitCallback={handleSubmit} />
-      <StudentVerifiedCard/>
+      <StudentVerifiedCard studentData={studentData} />
     </Flex>
     </>
   )

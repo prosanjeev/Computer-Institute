@@ -59,8 +59,8 @@ const Sidenav = () => {
                     bg={isActiveLink(nav.link) ? "#F3F3F7" : "transparent"}
                     color={isActiveLink(nav.link) ? "#1A202C" : "#797E82"}
                     borderRadius="10px"
-                    py="3"
-                    px="4"
+                    py="4"
+                    px="5"
                     _hover={{
                       bg: "#F3F3F7",
                       color: "#171717",
@@ -89,9 +89,7 @@ const Sidenav = () => {
                                 : "transparent"
                             }
                             color={
-                              isActiveLink(item.link)
-                                ? "#1A202C"
-                                : "#797E82"
+                              isActiveLink(item.link) ? "#1A202C" : "#797E82"
                             }
                             borderRadius="10px"
                             py="3"

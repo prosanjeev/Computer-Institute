@@ -13,7 +13,7 @@ const AboutBox = () => {
             </Text>
             <Link to="#">Read More..</Link>
         </Stack>
-      <Img  src="https://hypernetitsolutions.com/img.png" alt="about-image" />
+      <Img h='400px'  src="https://iotmate.co.in/wp-content/uploads/2020/01/feature1.png" alt="about-image" />
     </HStack>
   );
 };

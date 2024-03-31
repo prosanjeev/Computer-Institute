@@ -53,6 +53,8 @@ import AddCourse from "./AFS Panel/AdminPanel/pages/Course/AddCourse";
 import AllCourses from "./AFS Panel/AdminPanel/pages/Course/AllCourses";
 import CourseSelectionPage from "./AFS Panel/FranchisePanel/pages/Course/CourseSelectionPage";
 import StudentIDCard from "./AFS Panel/StudentPanel/pages/IDCard/StudentIDCard";
+import UpdateBranchPage from "./AFS Panel/AdminPanel/pages/Branch/updateBranch/UpdateBranchPage";
+import StudentCertificate from "./AFS Panel/FranchisePanel/studentCertificates/certificate/StudentCertificate";
 // import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/AllStudents";
 
 const App = () => {
@@ -111,7 +113,7 @@ const App = () => {
                         <Route path="authorisation-certificate" element={<FranchiseCertificate />} />
                         <Route path="add-student" element={<AddStudentPage />} />
                         <Route path="students-list" element={<StudentListPage />} />
-                    </Route>
+                    </Route> 
 
                     <Route path='student-dashboard' element={<StudentDashboard />} />
                     {/* <Route path='student-dashboard' element={<StudentDashboard />} /> */}
@@ -120,7 +122,7 @@ const App = () => {
                     <Route path="/signup*" element={<Signup />} />
                     {/* <Route path="/login" element={<Login />} /> */}
                     <Route path="*" element={<> not found</>} />
-                    <Route path="update-branch" element={<UpdateBranch />} />
+                    <Route path="update-branch" element={<UpdateBranch/>} />
                     <Route path="branchpage" element={<BranchPage />} />
 
                     {/* <Route path="succ" element={<PasswordResetDone/>} /> */}
@@ -129,6 +131,7 @@ const App = () => {
                     <Route path="add-course" element={<AddCourse/>} />
                     <Route path="all-courses" element={<AllCourses/>} />
                     <Route path="course-selection" element={<CourseSelectionPage/>} />
+                    <Route path="student-certificate" element={<StudentCertificate/>} />
                     <Route path="id-card" element={<StudentIDCard/>} />
 
                 </Routes>  

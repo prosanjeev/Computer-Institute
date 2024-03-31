@@ -39,7 +39,7 @@ import { useSelector } from "react-redux";
 import { selectUserId } from "../../../redux/slice/franchise/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const franchiseValidationSchema = object({
+const studentValidationSchema = object({
   studentName: string()
     .required("Center Name is Required")
     .max(30, "Student Name must be at most 30 characters"),
@@ -57,13 +57,13 @@ const franchiseValidationSchema = object({
       "Must be exactly 10 digits",
       (val) => val && val.toString().length === 10
     ),
-    secondaryPhone: number()
-    .required("Primary Phone is Required")
-    .test(
-      "len",
-      "Must be exactly 10 digits",
-      (val) => val && val.toString().length === 10
-    ),
+    // secondaryPhone: number()
+    // .required("Primary Phone is Required")
+    // .test(
+    //   "len",
+    //   "Must be exactly 10 digits",
+    //   (val) => val && val.toString().length === 10
+    // ),
   aadharNumber: number()
     .required("Aadhar Number is Required")
     .test(
@@ -171,22 +171,8 @@ const AddStudentPage = () => {
         return; // Stop execution if username is not available
       }
 
-      // Proceed with adding the new student
-      const docRef = doc(fireDB, "students", "studentId");
-      const docSnap = await getDoc(docRef);
-      let currentStudentId = 0;
-      if (docSnap.exists()) {
-        currentStudentId = docSnap.data().value;
-      } else {
-        // If the centerId document doesn't exist, create it with an initial value of 0
-        await setDoc(docRef, { value: 0 });
-      }
- 
-      // Increment the centerId
-      // const nextStudentId = `MTECH${currentStudentId + 1}`;
-
       const studentDataRef = collection(fireDB, "students");
-
+      console.log(studentDataRef);
       // Retrieve all documents from the `franchiseData` collection
       const studentDataSnapshot = await getDocs(studentDataRef);
 
@@ -196,15 +182,12 @@ const AddStudentPage = () => {
       const nextStudentId = `MTECHSTU${baseValue + totalStudents}`; 
       // Use `nextCenterId` for your further logic
 
-      // Update the centerId in Firestore
-      await updateDoc(docRef, { value: currentStudentId + 1 });
-
       // Upload logo file to Firebase Storage
       let photoUrl = "";
       if (photoFile) {
         const photoRef = ref(
           storage,
-          `students/${values.studentId}/photo`
+          `students/${values.username}/photo`
         );
         await uploadBytes(photoRef, photoFile);
         // Get download URL
@@ -216,10 +199,8 @@ const AddStudentPage = () => {
       if (signFile) {
         const signatureRef = ref(
           storage,
-          `students/${values.studentId}/signature`
+          `students/${values.username}/signature`
         );
-        // await signRef.put(signFile);
-        // signUrl = await signRef.getDownloadURL();
         await uploadBytes(signatureRef, signFile);
         signUrl = await getDownloadURL(signatureRef);
       }
@@ -233,7 +214,6 @@ const AddStudentPage = () => {
           fatherName: values.fatherName,
           motherName: values.motherName,
           primaryphone: values.primaryphone,
-          // wathsappphone: values.wathsappphone,
           email: values.email,
           aadharNumber: values.aadharNumber,
           dateOfBirth: values.dateOfBirth,
@@ -307,7 +287,7 @@ const AddStudentPage = () => {
                 password: "",
               }}
               onSubmit={onSubmit}
-              validationSchema={franchiseValidationSchema}
+              validationSchema={studentValidationSchema}
             >
               {({ values, setFieldValue }) => (
                 <Form>

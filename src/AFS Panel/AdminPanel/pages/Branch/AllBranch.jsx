@@ -18,6 +18,7 @@ import {
 import { FaRegEdit } from "react-icons/fa";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useNavigate } from "react-router-dom"; // Import useHistory
 import {
   fetchBranches,
   selectBranches,
@@ -26,7 +27,8 @@ import {
 const AllBranch = () => {
   const branches = useSelector(selectBranches);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate(); // Initialize useHistory hook
+console.log(branches);
   useEffect(() => {
     dispatch(fetchBranches());
   }, [dispatch]);
@@ -36,6 +38,10 @@ const AllBranch = () => {
   };
 
   const isDesktop = useBreakpointValue({ base: false, md: true });
+
+  const handleEditClick = (franchiseId) => {
+    navigate("/update-branch", { state: { franchiseId } }); // Navigate to "/update-branch" with franchiseId
+  };
 
   return (
     <DashboardLayout title="Center List">
@@ -109,7 +115,13 @@ const AllBranch = () => {
                   />
                 </Td>
                 <Td>
-                  <Icon as={FaRegEdit} size="sm" colorScheme="blue" />
+                  <Button
+                    size="sm"
+                    colorScheme="blue"
+                    onClick={() => handleEditClick(branch.id)} // Pass franchiseId to handleEditClick
+                  >
+                    <Icon as={FaRegEdit} size="sm" color="white" /> {/* Update color to white */}
+                  </Button>
                 </Td>
                 <Td>
                   <Button size="sm" colorScheme="red">
