@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Document, Page, View, Text, Image, StyleSheet } from "@react-pdf/renderer";
 import QRCode from "qrcode"; // Import QRCode from 'qrcode'
 
@@ -26,13 +26,25 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   },
-  qrCodeContainer: {
-    width: 200,
-    height: 200,
-  },
+  // qrCodeContainer: {
+  //   width: 100,
+  //   height: 100,
+  // },
   qrCodeImage: {
-    width: "100%",
-    height: "100%",
+    width: "100px",
+    height: "100px",
+    position: 'absolute',
+    top: '25%',
+    left: '10%',
+  },
+  stPhoto: {
+    width: "100px",
+    height: "100px",
+    position: 'absolute',
+    top: '25%',
+    right: '15%',
+    // transform: 'translate(-50%, -50%)',
+   
   },
   section2: {
     textAlign: "center",
@@ -84,14 +96,37 @@ const generateQRCodeDataURL = (value) => {
   return canvas.toDataURL();
 };
 
-const StudentCertificateContent = ({ studentData }) => {
+const StudentCertificateContent = ({ studentData  }) => {
+  const [base64Image, setBase64Image] = useState("");
+
   const BaseUrl = "https://mohallaacademy.com/student-verification/"
   const value =  BaseUrl+studentData.username
   const qrCodeDataURL = generateQRCodeDataURL(value);
-  // console.log("urlphoto",studentData.photoUrl);
-  const photoUrl = studentData.photoUrl
+  console.log("qru",qrCodeDataURL);
+  console.log()
+
+
+  const photoUrl = studentData && studentData.photoUrl;
+  useEffect(() => {
+    const fetchBase64Image = async () => {
+      try {
+        const response = await fetch(photoUrl);
+        const blob = await response.blob();
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          setBase64Image(reader.result);
+        };
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    };
+
+    fetchBase64Image();
+  }, [photoUrl]);
 
   
+
   return (
     <Document>
       <Page size="A4" style={styles.page} orientation="landscape">
@@ -99,9 +134,9 @@ const StudentCertificateContent = ({ studentData }) => {
           <Image src="stCertificate.png" style={styles.image} />
           <View style={styles.section2}>
             <View style={styles.qrCodeContainer}>
-              <Image src={qrCodeDataURL} style={styles.qrCodeImage} />
-              <Image src={photoUrl} style={styles.qrCodeImage} />
             </View>
+              <Image src={qrCodeDataURL} style={styles.qrCodeImage} />
+              <Image src={base64Image} style={styles.stPhoto} />
             <Text style={styles.text2}>{studentData && studentData.studentName}</Text>
             <Text style={styles.text3}></Text>
           </View>

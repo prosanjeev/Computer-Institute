@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Button, Center, Container, Img, Stack, Text } from "@chakra-ui/react";
+import { Button, Center, Img, Stack, Text } from "@chakra-ui/react";
 import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import { useReactToPrint } from "react-to-print";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
 const StudentCertificate = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [pdfDocument, setPdfDocument] = useState(null);
+  const [studentPhotoBase64, setStudentPhotoBase64] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,9 +36,6 @@ const StudentCertificate = () => {
   const componentRef = useRef();
   const regNumber = location.state ? location.state.regNumber : null;
 
-  // useEffect(() => {
-  //   dispatch(fetchStudentData());
-  // }, [dispatch]);
   useEffect(() => {
     dispatch(fetchStudentData(regNumber))
       .then(() => setIsLoading(false))
@@ -47,6 +45,30 @@ const StudentCertificate = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+
+  // Function to convert URL to base64
+  const toDataURL = (url, callback) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.send();
+  };
+
+  // Convert photoUrl to base64
+  useEffect(() => {
+    if (studentData && studentData.photoUrl) {
+      toDataURL(studentData.photoUrl, (dataUrl) => {
+        setStudentPhotoBase64(dataUrl);
+      });
+    }
+  }, [studentData]);
 
   const generateCertificate = () => {
     setIsGenerating(true);
@@ -59,17 +81,19 @@ const StudentCertificate = () => {
 
   return (
     <FranchiseDashboardLayout title="Student Certificate">
-    
       <Stack
         mx="auto"
         w="400px"
         h="400px"
         textAlign="center"
-        border="2px solid gray" borderRadius='20' p={4}
+        border="2px solid gray"
+        borderRadius="20"
+        p={4}
       >
         {/* Overlay dynamic details */}
-        <Img src={studentData && studentData.photoUrl} h="150px" w="150px" mx='auto' />
-        {/* <QRCode value={studentData && studentData.studentName} /> */}
+        {studentPhotoBase64 && (
+          <Img src={studentPhotoBase64} h="150px" w="150px" mx="auto" />
+        )}
         <Text fontSize="18px">
           Name:- {studentData && studentData.studentName}
         </Text>
@@ -77,18 +101,17 @@ const StudentCertificate = () => {
           Father's Name:- {studentData && studentData.fatherName}
         </Text>
         <Text fontSize="18px">
-         Date of Birth:-{" "}
+          Date of Birth:-{" "}
           {studentData &&
             new Date(studentData.dateOfBirth).toLocaleDateString("en-GB")}
         </Text>
         <Text fontSize="18px">
-         Reg. Date:-{" "}
+          Reg. Date:-{" "}
           {studentData &&
             new Date(studentData.createdAt).toLocaleDateString("en-GB")}
         </Text>
         <Text fontSize="18px">
-          Center Name:- {studentData && studentData.courses.join(", ")}    
-
+          Center Name:- {studentData && studentData.courses.join(", ")}
         </Text>
       </Stack>
       <Center>
@@ -99,7 +122,12 @@ const StudentCertificate = () => {
       {/* PDF Viewer to display the generated certificate */}
       {pdfDocument && (
         <PDFViewer width="100%" height="600px" ref={componentRef}>
-          <StudentCertificateContent studentData={studentData}  />
+          {studentData && (
+            <StudentCertificateContent
+              studentData={studentData}
+              photoBase64={studentPhotoBase64}
+            />
+          )}
         </PDFViewer>
       )}
     </FranchiseDashboardLayout>
