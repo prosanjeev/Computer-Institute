@@ -14,33 +14,34 @@ import {
 } from "@chakra-ui/react";
 import FranchiseDashboardLayout from "../../components/FranchiseDashboardLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFranchiseData, selectbranchData } from "../../../redux/slice/franchise/authSlice";
+import { fetchFranchiseDataOnly, selectbranchData } from "../../../redux/franchise/authSlice";
 import { Link } from "react-router-dom";
 
 const FranchiseProfilePage = () => {
   const dispatch = useDispatch();
   const branchData = useSelector(selectbranchData);
-  const [isLoading, setIsLoading] = useState(true);
+ 
 
   useEffect(() => {
-    dispatch(fetchFranchiseData())
-      .then(() => setIsLoading(false))
-      .catch(() => setIsLoading(false));
+    dispatch(fetchFranchiseDataOnly());
   }, [dispatch]);
-  // console.log("branchData:", branchData);
+
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error}</div>;
 
   const {
-    directorname = "",
+    directorName = "",
     gender = "",
-    primaryphone = "",
+    primaryPhone = "",
     email = "",
+    logoUrl = "",
     selectId = "",
     documentId = "",
     centerId = "",
-    centername = "",
+    centerName = "",
     officephone = "",
     policestation = "",
-    pincode = "",
+    pinCode = "",
     centerplace = "",
     wathsappphone = "",
     state = "",
@@ -58,9 +59,9 @@ const FranchiseProfilePage = () => {
     <Container maxW="xl" centerContent>
       <Box p="4" shadow="md" borderRadius="md" bg="white" w="100%">
         <Flex alignItems="center" mb="4">
-          <Avatar name={directorname} size="xl" mr="4" />
+          <Avatar src={logoUrl} name={directorName} size="xl" mr="4" />
           <Stack>
-            <Heading size="lg">{directorname}</Heading>
+            <Heading size="lg">{directorName}</Heading>
             <Text color="gray.600">{email}</Text>
             <Badge colorScheme="green">{gender}</Badge>
           </Stack>
@@ -71,13 +72,13 @@ const FranchiseProfilePage = () => {
             <strong>CenterId:</strong> {centerId}
           </Text>
           <Text>
-            <strong>Reg Date:</strong>  {new Date(createdAt).toLocaleDateString('en-GB')}
+            <strong>Reg1 Date:</strong>  {new Date(createdAt).toLocaleDateString('en-GB')}
           </Text>
           <Text>
-            <strong>Username:</strong> {username}
+            <strong>Username:</strong> {centerName}
           </Text>
           <Text>
-            <strong>Primary Phone:</strong> {primaryphone}
+            <strong>Primary Phone:</strong> {primaryPhone}
           </Text>
           <Text>
             <strong>Email:</strong> {email}
@@ -89,7 +90,7 @@ const FranchiseProfilePage = () => {
             <strong>District:</strong> {district}
           </Text>
           <Text>
-            <strong>Pin code:</strong> {pincode}
+            <strong>Pin code:</strong> {pinCode}
           </Text>
           <Button colorScheme="blue">Edit Profile</Button>
         </Stack>

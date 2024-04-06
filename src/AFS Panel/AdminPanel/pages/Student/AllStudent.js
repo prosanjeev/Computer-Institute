@@ -64,9 +64,9 @@ const AllStudent = () => {
                  <Th fontSize="lg" fontWeight="bold">
                    Details
                  </Th>
-                 <Th fontSize="lg" fontWeight="bold">
+                 {/* <Th fontSize="lg" fontWeight="bold">
                    Delete
-                 </Th>
+                 </Th> */}
                </Tr>
              </Thead>
              <Tbody>
@@ -85,7 +85,7 @@ const AllStudent = () => {
                    <Td>{student.studentId}</Td>
                    <Td borderLeft='1px solid red' >{student.studentName}</Td>
                    <Td>{student.fatherName}</Td>
-                   <Td>{student.centername}</Td>
+                   <Td>{student.centerName}</Td>
                    <Td>{student.state}</Td>
                    <Td>
                      <Switch
@@ -102,11 +102,11 @@ const AllStudent = () => {
                    <Td>
                      <Icon as={FaRegEdit} size="sm" colorScheme="blue" />
                    </Td>
-                   <Td>
+                   {/* <Td>
                      <Button size="sm" colorScheme="red">
                        Delete
                      </Button>
-                   </Td>
+                   </Td> */}
                  </Tr>
                ))}
              </Tbody>

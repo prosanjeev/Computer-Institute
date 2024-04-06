@@ -23,13 +23,15 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import DashboardLayout from "../../components/DashboardLayout";
 import TitleBox from "../../../components/components/TitleBox";
 
-const franchiseValidationSchema = object({
-  centername: string().required("Center Name is Required"),
-  directorname: string().required("Director Name is Required"),
-  gender: string().required("Gender Name is Required"),
-  email: string().email().required("Email is Required"),
-  state: string(),
-  district: string(),
+const courseValidationSchema = object({
+  courseCode: string().required("Course Code is Required"),
+  courseName: string().required("Course Name is Required"),
+  shortName: string().required("Short Name is Required"),
+  categoryName: string().required("Short Name is Required"),
+  duration: string().required("Short Name is Required"),
+  fee: number().required("Short Name is Required"),
+  syllabus: string().required("Short Name is Required"),
+  
 });
 
 const AddCourse = () => {
@@ -168,7 +170,7 @@ const AddCourse = () => {
                 selectId: "",
               }}
               onSubmit={onSubmit}
-            //   validationSchema={franchiseValidationSchema}
+              validationSchema={courseValidationSchema}
             >
               {({ values, setFieldValue }) => (
                 <Form>

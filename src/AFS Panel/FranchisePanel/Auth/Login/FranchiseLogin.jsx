@@ -13,18 +13,17 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";  
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 import { fireDB } from "../../../firebase/FirebaseConfig";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { useDispatch } from "react-redux";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { login } from "../../../redux/slice/franchise/authSlice";
+import { login } from "../../../redux/franchise/authSlice";
 import { toast } from "react-toastify";
 
 const loginValidationSchema = object({
-  username: string().required("Email is Required"),
+  userName: string().required("Email is Required"),
   password: string()
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
@@ -39,7 +38,7 @@ const FranchiseLogin = ( ) => {
 
   const handleLogin = async (initialValues, { setSubmitting }) => {
     try {
-      const q = query(ref, where("username", "==", initialValues.username), where("password", "==", initialValues.password));
+      const q = query(ref, where("userName", "==", initialValues.userName), where("password", "==", initialValues.password));
       const querySnapshot = await getDocs(q);
       if (querySnapshot.size === 1) {
        // console.log("Document Snapshot:", querySnapshot.docs[0].data());
@@ -80,7 +79,7 @@ const FranchiseLogin = ( ) => {
 
           <Formik
             initialValues={{
-              username: "",
+              userName: "",
               password: "",
             }}
             onSubmit={handleLogin}
@@ -89,15 +88,15 @@ const FranchiseLogin = ( ) => {
             {(formikProps) => (
               <Form>
                 <Stack mt={8} spacing={6}>
-                  <FormControl isInvalid={formikProps.errors.username && formikProps.touched.username}>
-                    <FormLabel htmlFor="username">UserName:</FormLabel>
+                  <FormControl isInvalid={formikProps.errors.userName && formikProps.touched.userName}>
+                    <FormLabel htmlFor="userName">UserName:</FormLabel>
                     <Input
-                      id="username"
+                      id="userName"
                       type="text"
                       placeholder="Enter your username"
-                      {...formikProps.getFieldProps("username")}
+                      {...formikProps.getFieldProps("userName")}
                     />
-                    <FormErrorMessage>{formikProps.errors.username}</FormErrorMessage>
+                    <FormErrorMessage>{formikProps.errors.userName}</FormErrorMessage>
                   </FormControl>
 
                   <FormControl isInvalid={formikProps.errors.password && formikProps.touched.password}>
@@ -129,7 +128,19 @@ const FranchiseLogin = ( ) => {
                     >
                       Log In
                     </Button>
+                    <Link to="/">
+                      <Button
+                        mt="3"
+                        w="full"
+                        colorScheme="red"
+                        variant="outline"
+                        type="submit"
+                      >
+                        Cancel
+                      </Button>
+                    </Link>
                   </Box>
+                
                 </Stack>
               </Form>
             )}

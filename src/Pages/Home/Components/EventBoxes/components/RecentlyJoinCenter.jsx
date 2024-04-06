@@ -1,4 +1,11 @@
-import { Box, Center, Img, ListItem, Text, UnorderedList } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Img,
+  ListItem,
+  Text,
+  UnorderedList,
+} from "@chakra-ui/react";
 
 const RecentlyJoinCenter = ({ branchData }) => {
   if (!Array.isArray(branchData)) {
@@ -9,12 +16,26 @@ const RecentlyJoinCenter = ({ branchData }) => {
     <Box>
       <UnorderedList style={{ listStyle: "none", padding: 0 }}>
         {branchData.map((center, index) => (
-          <Box key={index} textAlign='center'>
+          <Box key={index} textAlign="center">
             <ListItem>
-              <Center display='flex' flexDirection='column' gap={2} borderBottom='1px dotted black' p={3}>
-                <Text>{center.centername.toUpperCase()}</Text>
-                <Img boxSize='110px' src={center.logoUrl} alt="" />
-                <Text>{center.directorname}</Text>
+              <Center
+                display="flex"
+                flexDirection="column"
+                gap={2}
+                borderBottom="1px dotted black"
+                p={3}
+              >
+                <Text>
+                  {center.centerName
+                    ? center.centerName.toUpperCase()
+                    : "Unknown"}
+                </Text>
+                <Img boxSize="110px" src={center.logoUrl} alt="" />
+                <Text>
+                  {center.directorName
+                    ? center.directorName.toUpperCase()
+                    : "Unknown"}
+                </Text>
                 <Text>{center.centerId}</Text>
               </Center>
             </ListItem>

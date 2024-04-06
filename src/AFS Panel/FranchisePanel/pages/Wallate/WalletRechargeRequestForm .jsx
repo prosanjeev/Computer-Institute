@@ -21,7 +21,7 @@ import {
   fetchFranchiseData,
   selectUserId,
   selectbranchData,
-} from "../../../redux/slice/franchise/authSlice";
+} from "../../../redux/franchise/authSlice";
 import { updateRequestAmount } from "../../../redux/actions/franchiseWalletActions";
 import { fireDB } from "../../../firebase/FirebaseConfig";
 import { collection, doc,  updateDoc } from "firebase/firestore";

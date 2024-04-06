@@ -5,6 +5,9 @@ import RecentlyJoinCenter from "./components/RecentlyJoinCenter";
 import NewsAndEvents from "./components/NewsAndEvents";
 
 function EventBox({ branchData, studentData }) {
+
+  
+
   return (
     <Box as="div" bgColor="brown" p="60px 0" w="100vw">
       <Center >

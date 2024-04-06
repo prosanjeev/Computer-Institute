@@ -38,7 +38,8 @@ import { toast } from "react-toastify";
           </Heading>
   
          <HStack gap={6} align='center'>
-           <Flex gap={3} align='center'> <Text color='white' fontSize='20px'>Wallate</Text> <FranchiseNavWallate branchData={branchData}  /></Flex>
+           <Flex gap={3} align='center'> <Text color='white' fontSize='20px' display={{base:'none', md:'block'}} >Wallate</Text> 
+           <FranchiseNavWallate branchData={branchData}  /></Flex>
          <Menu>
             <MenuButton >
               <Icon as={FaUserTie} fontSize="32px" color='white'/>

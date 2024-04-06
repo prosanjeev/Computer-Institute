@@ -18,17 +18,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { Field, Form, Formik } from "formik";
 import { object, string, number } from "yup";
 // import DashboardLayout from "../../../components/DashboardLayout";
-import {
-  collection,
-  addDoc,
-  updateDoc,
-  getDoc,
-  doc,
-  setDoc,
-  where,
-  query,
-  getDocs,
-} from "firebase/firestore";
+import { updateDoc, getDoc, doc } from "firebase/firestore";
 import data from "../../../../components/state-wise-cities-data/data";
 import { fireDB } from "../../../firebase/FirebaseConfig";
 import { PersonalInformation, UserCradesial } from "./addBranch/data/data";
@@ -36,35 +26,18 @@ import TitleBox from "../../../components/components/TitleBox";
 import { toast } from "react-toastify";
 import DashboardLayout from "../../components/DashboardLayout";
 import { useLocation, useNavigate } from "react-router-dom";
-
-const franchiseValidationSchema = object({
-  centername: string().required("Center Name is Required"),
-  directorname: string().required("Director Name is Required"),
-  gender: string().required("Gender Name is Required"),
-  primaryphone: number()
-    .required("Primary Phone is Required")
-    .test(
-      "len",
-      "Must be exactly 10 digits",
-      (val) => val && val.toString().length === 10
-    ),
-
-  email: string().email().required("Email is Required"),
-  state: string(),
-  district: string(),
-});
+// import { franchiseValidationSchema } from "./components/schema";
 
 const UpdateBranch = () => {
   const [selectedState, setSelectedState] = useState("");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
-  const [branchData, setBranchData] = useState(null);
+  const [branchData, setBranchData] = useState();
 
   const navigate = useNavigate();
   const location = useLocation();
   const franchiseId = location.state ? location.state.franchiseId : null;
   // console.log(branchData);
-
 
   useEffect(() => {
     // Fetch branch data based on branchId
@@ -77,6 +50,18 @@ const UpdateBranch = () => {
     };
     fetchBranchData();
   }, [franchiseId]);
+
+  useEffect(() => {
+    if (branchData && branchData.district) {
+      setSelectedState([branchData.state]);
+      setCities([branchData.district]);
+    }
+  }, [branchData]);
+
+  useEffect(() => {
+    setCities(data.cities[selectedState] || []);
+    setSelectedCity("");
+  }, [selectedState, selectedCity]);
 
   function handleStateChange(event) {
     const newState = event.target.value;
@@ -94,12 +79,12 @@ const UpdateBranch = () => {
   const CenterInformation = [
     {
       label: "Center Name",
-      name: "centername",
+      name: "centerName",
       type: "text",
     },
     {
       label: "Office Phone",
-      name: "officephone",
+      name: "officePhone",
       type: "text",
     },
     {
@@ -118,22 +103,22 @@ const UpdateBranch = () => {
     },
     {
       label: "Police Station",
-      name: "policestation",
+      name: "policeStation",
       type: "text",
     },
     {
       label: "Pin Code",
-      name: "pincode",
+      name: "pinCode",
       type: "text",
     },
     {
       label: "Center Place",
-      name: "centerplace",
+      name: "centerPlace",
       type: "text",
     },
     {
       label: "Wathsapp No.",
-      name: "wathsappphone",
+      name: "wathsappPhone",
       type: "text",
     },
   ];
@@ -142,20 +127,25 @@ const UpdateBranch = () => {
     try {
       const franchiseDocRef = doc(fireDB, "franchiseData", franchiseId);
       await updateDoc(franchiseDocRef, {
-        centername: values.centername,
-        directorname: values.directorname,
+        directorName: values.directorName,
         gender: values.gender,
-        primaryphone: values.primaryphone,
+        primaryPhone: values.primaryPhone,
         email: values.email,
+        documentType: values.documentType,
+        documentNumber: values.documentNumber,
+        centerName: values.centerName,
+        officePhone: values.officePhone,
         state: values.state,
         district: values.district || "",
-        policestation: values.policestation,
-        pincode: values.pincode,
-        centerplace: values.centerplace,
-        username: values.username,
+        policeStation: values.policeStation,
+        pinCode: values.pinCode,
+        centerPlace: values.centerPlace,
+        wathsappPhone: values.wathsappPhone,
+        userName: values.userName,
         password: values.password,
       });
       toast.success("Center Updated Successfully");
+      navigate("/branch");
     } catch (e) {
       console.error("Error updating document: ", e);
     }
@@ -193,27 +183,30 @@ const UpdateBranch = () => {
             </Box>
 
             <Formik
-             initialValues={{
-              centername: branchData?.centername || "",
-              directorname: branchData?.directorname || "",
-              gender: branchData?.gender || "",
-              primaryphone: branchData?.primaryphone || "",
-              wathsappphone: branchData?.wathsappphone || "",
-              email: branchData?.email || "",
-              state: branchData?.state || "",
-              district: branchData?.district || "",
-              policestation: branchData?.policestation || "",
-              pincode: branchData?.pincode || "",
-              centerplace: branchData?.centerplace || "",
-              username: branchData?.username || "",
-              password: branchData?.password || "",
-            }}
+              initialValues={{
+                centerName: branchData?.centerName || "",
+                directorName: branchData?.directorName || "",
+                gender: branchData?.gender || "",
+                primaryPhone: branchData?.primaryPhone || "",
+                wathsappPhone: branchData?.wathsappPhone || "",
+                officePhone: branchData?.officePhone || "",
+                email: branchData?.email || "",
+                documentType: branchData?.documentType || "",
+                documentNumber: branchData?.documentNumber || "",
+                state: branchData?.state || "",
+                district: branchData?.district || "",
+                policeStation: branchData?.policeStation || "",
+                pinCode: branchData?.pinCode || "",
+                centerPlace: branchData?.centerPlace || "",
+                userName: branchData?.userName || "",
+                password: branchData?.password || "",
+              }}
               onSubmit={onSubmit}
-              validationSchema={franchiseValidationSchema}
+              // validationSchema={franchiseValidationSchema}
+              enableReinitialize={true} // Add this line
             >
               {(formikProps) => (
                 <Form>
-              
                   <Stack mt={10} spacing={6}>
                     <TitleBox title=" Centre Head Information" />
 
@@ -221,9 +214,7 @@ const UpdateBranch = () => {
                       {PersonalInformation.map((list, index) => (
                         <Field name={list.name} key={index}>
                           {({ field, meta }) => (
-                            <FormControl
-                              isInvalid={meta.error && meta.touched}
-                            >
+                            <FormControl isInvalid={meta.error && meta.touched}>
                               <FormLabel htmlFor={list.name}>
                                 {list.label}
                               </FormLabel>
@@ -264,9 +255,7 @@ const UpdateBranch = () => {
                                   {...field}
                                 />
                               )}
-                              <FormErrorMessage>
-                                {meta.error}
-                              </FormErrorMessage>
+                              <FormErrorMessage>{meta.error}</FormErrorMessage>
                             </FormControl>
                           )}
                         </Field>
@@ -332,6 +321,7 @@ const UpdateBranch = () => {
                                 bgColor="black.5"
                                 name={list.name}
                                 type={list.type}
+                                readOnly={list.readOnly} // Use a property from the list item to determine readOnly status
                                 {...field}
                               />
                               <FormErrorMessage>{meta.error}</FormErrorMessage>

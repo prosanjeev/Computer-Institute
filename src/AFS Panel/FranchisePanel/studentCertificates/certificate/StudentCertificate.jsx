@@ -34,7 +34,7 @@ const StudentCertificate = () => {
   const studentData = useSelector(selectStudentData);
   const [isLoading, setIsLoading] = useState(true);
   const componentRef = useRef();
-  const regNumber = location.state ? location.state.regNumber : null;
+  const regNumber = location.state ? location.state.userName : null;
 
   useEffect(() => {
     dispatch(fetchStudentData(regNumber))
@@ -42,9 +42,7 @@ const StudentCertificate = () => {
       .catch(() => setIsLoading(false));
   }, [dispatch]);
 
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
+ 
 
   // Function to convert URL to base64
   const toDataURL = (url, callback) => {
@@ -79,58 +77,12 @@ const StudentCertificate = () => {
     }, 1000); // Wait for the PDFViewer to render the content
   };
 
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   return (
-    <FranchiseDashboardLayout title="Student Certificate">
-      <Stack
-        mx="auto"
-        w="400px"
-        h="400px"
-        textAlign="center"
-        border="2px solid gray"
-        borderRadius="20"
-        p={4}
-      >
-        {/* Overlay dynamic details */}
-        {studentPhotoBase64 && (
-          <Img src={studentPhotoBase64} h="150px" w="150px" mx="auto" />
-        )}
-        <Text fontSize="18px">
-          Name:- {studentData && studentData.studentName}
-        </Text>
-        <Text fontSize="18px">
-          Father's Name:- {studentData && studentData.fatherName}
-        </Text>
-        <Text fontSize="18px">
-          Date of Birth:-{" "}
-          {studentData &&
-            new Date(studentData.dateOfBirth).toLocaleDateString("en-GB")}
-        </Text>
-        <Text fontSize="18px">
-          Reg. Date:-{" "}
-          {studentData &&
-            new Date(studentData.createdAt).toLocaleDateString("en-GB")}
-        </Text>
-        <Text fontSize="18px">
-          Center Name:- {studentData && studentData.courses.join(", ")}
-        </Text>
-      </Stack>
-      <Center>
-        <Button onClick={generateCertificate} isLoading={isGenerating} my={5}>
-          Generate and Print Certificate
-        </Button>
-      </Center>
-      {/* PDF Viewer to display the generated certificate */}
-      {pdfDocument && (
-        <PDFViewer width="100%" height="600px" ref={componentRef}>
-          {studentData && (
-            <StudentCertificateContent
-              studentData={studentData}
-              photoBase64={studentPhotoBase64}
-            />
-          )}
-        </PDFViewer>
-      )}
-    </FranchiseDashboardLayout>
+   <>
+   </>
   );
 };
 

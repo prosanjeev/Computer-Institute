@@ -99,8 +99,8 @@ console.log(branches);
                   />
                 </Td>
                 <Td>{branch.centerId}</Td>
-                <Td borderLeft='1px solid red' >{branch.directorname}</Td>
-                <Td>{branch.centername}</Td>
+                <Td borderLeft='1px solid red' >{branch.directorName}</Td>
+                <Td>{branch.centerName}</Td>
                 <Td>{branch.state}</Td>
                 <Td>
                   <Switch
@@ -112,7 +112,7 @@ console.log(branches);
                       )
                     }
                     colorScheme={branch.status === "Active" ? "green" : "red"}
-                  />
+                  /> 
                 </Td>
                 <Td>
                   <Button

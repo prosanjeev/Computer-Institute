@@ -16,18 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { Field, Form, Formik } from "formik";
-import { object, string, number, date } from "yup";
-import {
-  collection,
-  addDoc,
-  updateDoc,
-  getDoc,
-  doc,
-  setDoc,
-  where,
-  query,
-  getDocs,
-} from "firebase/firestore";
+import { collection, addDoc, where, query, getDocs } from "firebase/firestore";
 import data from "../../../../components/state-wise-cities-data/data";
 import { fireDB, storage } from "../../../firebase/FirebaseConfig";
 import { StPersonalInformation, studentCradesial } from "./data/stFormData";
@@ -36,48 +25,9 @@ import { toast } from "react-toastify";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import FranchiseDashboardLayout from "../../components/FranchiseDashboardLayout";
 import { useSelector } from "react-redux";
-import { selectUserId } from "../../../redux/slice/franchise/authSlice";
+import { selectUserId } from "../../../redux/franchise/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-
-const studentValidationSchema = object({
-  studentName: string()
-    .required("Center Name is Required")
-    .max(30, "Student Name must be at most 30 characters"),
-  fatherName: string()
-    .required("Father's Name is Required")
-    .max(30, "Student Name must be at most 30 characters"),
-  motherName: string()
-    .required("Mother's Name is Required")
-    .max(30, "Student Name must be at most 30 characters"),
-  gender: string().required("Gender Name is Required"),
-  primaryPhone: number()
-    .required("Primary Phone is Required")
-    .test(
-      "len",
-      "Must be exactly 10 digits",
-      (val) => val && val.toString().length === 10
-    ),
-    // secondaryPhone: number()
-    // .required("Primary Phone is Required")
-    // .test(
-    //   "len",
-    //   "Must be exactly 10 digits",
-    //   (val) => val && val.toString().length === 10
-    // ),
-  aadharNumber: number()
-    .required("Aadhar Number is Required")
-    .test(
-      "len",
-      "Must be exactly 12 digits",
-      (val) => val && val.toString().length === 12
-    ),
-    dateOfBirth: date()
-    .required('Date of Birth is required')
-    .max(new Date(), 'Date of Birth cannot be in the future'),
-  email: string().email().required("Email is Required"),
-  state: string(),
-  district: string(),
-});
+import { studentValidationSchema } from "./schema/studentSchema";
 
 const AddStudentPage = () => {
   const [selectedState, setSelectedState] = useState("");
@@ -95,7 +45,7 @@ const AddStudentPage = () => {
   }, [selectedState, selectedCity]);
 
   const centerId = useSelector(selectUserId);
-  console.log(centerId) 
+  console.log(centerId);
 
   function handleStateChange(event) {
     const newState = event.target.value;
@@ -127,7 +77,12 @@ const AddStudentPage = () => {
     },
     {
       label: "Police Station",
-      name: "policestation",
+      name: "policeStation",
+      type: "text",
+    },
+    {
+      label: "Pin Code",
+      name: "pinCode",
       type: "text",
     },
     {
@@ -136,13 +91,8 @@ const AddStudentPage = () => {
       type: "text",
     },
     {
-      label: "Pin Code",
-      name: "pincode",
-      type: "text",
-    },
-    {
       label: "Village",
-      name: "centerplace",
+      name: "village",
       type: "text",
     },
 
@@ -163,7 +113,7 @@ const AddStudentPage = () => {
       // Check if the username is available
       const usernameQuery = query(
         collection(fireDB, "students"),
-        where("username", "==", values.username)
+        where("userName", "==", values.userName)
       );
       const usernameQuerySnapshot = await getDocs(usernameQuery);
       if (!usernameQuerySnapshot.empty) {
@@ -179,16 +129,13 @@ const AddStudentPage = () => {
       // Calculate the next center ID based on the total number of franchises
       const baseValue = 100;
       const totalStudents = studentDataSnapshot.size;
-      const nextStudentId = `MTECHSTU${baseValue + totalStudents}`; 
+      const nextStudentId = `MTECHSTU${baseValue + totalStudents}`;
       // Use `nextCenterId` for your further logic
 
       // Upload logo file to Firebase Storage
       let photoUrl = "";
       if (photoFile) {
-        const photoRef = ref(
-          storage,
-          `students/${values.username}/photo`
-        );
+        const photoRef = ref(storage, `students/${values.userName}/photo`);
         await uploadBytes(photoRef, photoFile);
         // Get download URL
         photoUrl = await getDownloadURL(photoRef);
@@ -199,38 +146,39 @@ const AddStudentPage = () => {
       if (signFile) {
         const signatureRef = ref(
           storage,
-          `students/${values.username}/signature`
+          `students/${values.userName}/signature`
         );
         await uploadBytes(signatureRef, signFile);
         signUrl = await getDownloadURL(signatureRef);
       }
-      const  studentRef = await addDoc(
-        collection(fireDB, "students"),
-        {
-          studentId: nextStudentId, // Use the new centerId
-          createdAt: new Date().toISOString(),
-          studentName: values.studentName,
-          gender: values.gender,
-          fatherName: values.fatherName,
-          motherName: values.motherName,
-          primaryphone: values.primaryphone,
-          email: values.email,
-          aadharNumber: values.aadharNumber,
-          dateOfBirth: values.dateOfBirth,
-          state: values.state,
-          district: values.district || "",
-          policestation: values.policestation,
-          pincode: values.pincode,
-          village: values.centerplace,
-          username: values.username,
-          password: values.password,
-          photoUrl: photoUrl, // Add Photo URL to Firestore
-          signUrl: signUrl, // Add signature URL to Firestore
-          franchiseId:centerId,
-        }
-      );
+
+      const studentRef = await addDoc(collection(fireDB, "students"), {
+        studentId: nextStudentId, // Use the new centerId
+        createdAt: new Date().toISOString(),
+        studentName: values.studentName,
+        gender: values.gender,
+        fatherName: values.fatherName,
+        motherName: values.motherName,
+        primaryPhone: values.primaryPhone,
+        email: values.email,
+        aadharNumber: values.aadharNumber,
+        dateOfBirth: values.dateOfBirth,
+        state: values.state,
+        district: values.district || "",
+        policeStation: values.policeStation,
+        postOffice: values.postOffice,
+        pinCode: values.pinCode,
+        village: values.village,
+        userName: values.userName,
+        password: values.password,
+        photoUrl: photoUrl, // Add Photo URL to Firestore
+        signUrl: signUrl, // Add signature URL to Firestore
+        franchiseId: centerId,
+      });
       toast.success("New Student Added ", studentRef.id);
-      navigate("/course-selection", { state: { franchiseId: centerId, studentId: studentRef.id } });
+      navigate("/course-selection", {
+        state: { franchiseId: centerId, studentId: studentRef.id },
+      });
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -269,21 +217,23 @@ const AddStudentPage = () => {
 
             <Formik
               initialValues={{
-                directorname: "",
+                studentName: "",
                 gender: "",
-                primaryphone: "",
+                fatherName: "",
+                motherName: "",
+                primaryPhone: "",
                 email: "",
-                selectId: "",
-                documentId: "",
-                centername: "",
-                officephone: "",
-                policestation: "",
-                pincode: "",
-                centerplace: "",
-                wathsappphone: "",
-                state: "", // Add this line
-                city: "", // Add this line
-                username: "",
+                aadharNumber: "",
+                dateOfBirth: "",
+                state: "",
+                district: "",
+                policeStation: "",
+                pinCode: "",
+                postOffice: "",
+                village: "",
+                studentPhoto: null,
+                studentSignature: null,
+                userName: "",
                 password: "",
               }}
               onSubmit={onSubmit}
@@ -365,17 +315,25 @@ const AddStudentPage = () => {
                                     <input
                                       type="file"
                                       accept="image/*" // Accept only image files
-                                      onChange={(e) =>
-                                        setPhotoFile(e.target.files[0])
-                                      } // Update logo file state
+                                      onChange={(e) => {
+                                        setFieldValue(
+                                          "studentPhoto",
+                                          e.currentTarget.files[0]
+                                        );
+                                        setPhotoFile(e.target.files[0]);
+                                      }} // Update logo file state
                                     />
                                   ) : list.name === "studentSignature" ? (
                                     <input
                                       type="file"
                                       accept="image/*" // Accept only image files
-                                      onChange={(e) =>
-                                        setSignFile(e.target.files[0])
-                                      } // Update signature file state
+                                      onChange={(e) => {
+                                        setFieldValue(
+                                          "studentSignature",
+                                          e.currentTarget.files[0]
+                                        );
+                                        setSignFile(e.target.files[0]);
+                                      }} // Update signature file state
                                     />
                                   ) : (
                                     <Input

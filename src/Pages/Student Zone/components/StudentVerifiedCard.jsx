@@ -11,16 +11,22 @@ import {
 import { toast } from "react-toastify";
 
 const StudentVerifiedCard = ({ studentData }) => {
+  console.log("Abc", studentData);
 
-  if(!studentData){
-    toast.error("Student Not Registerd")
-    return
+  if (!studentData) {
+    toast.error("Student Not Registered");
+    return null;
   }
 
   return (
     <Container>
-      <Center minH="60vh">
-        <Card p={{base:"1", md:"5"}} borderRadius="16px" w="456px" border="2px solid #d4cfcf">
+      <Center minH={{ md: "60vh", base: "300px" }}>
+        <Card
+          p={{ base: "1", md: "5" }}
+          borderRadius="16px"
+          w="456px"
+          border="2px solid #d4cfcf"
+        >
           <Box
             borderWidth="1px"
             borderRadius="lg"
@@ -44,8 +50,18 @@ const StudentVerifiedCard = ({ studentData }) => {
                     </Text>
                     <Text>Gender: {studentData.gender}</Text>
                     <Text>Father's Name: {studentData.fatherName}</Text>
-                    <Text>Date of Birth:  {new Date(studentData.dateOfBirth).toLocaleDateString('en-GB')}</Text>
-                    <Text>Reg. DATE: {new Date(studentData.createdAt).toLocaleDateString('en-GB')}</Text>
+                    <Text>
+                      Date of Birth:{" "}
+                      {new Date(studentData.dateOfBirth).toLocaleDateString(
+                        "en-GB"
+                      )}
+                    </Text>
+                    <Text>
+                      Reg. DATE:{" "}
+                      {new Date(studentData.createdAt).toLocaleDateString(
+                        "en-GB"
+                      )}
+                    </Text>
                     <Text>COURSE: {studentData.courses.join(", ")}</Text>
                   </Box>
 

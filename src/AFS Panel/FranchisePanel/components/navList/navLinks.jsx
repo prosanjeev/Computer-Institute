@@ -50,47 +50,47 @@ export const navLinks = [
     {
       icon: SiCoursera,
       text: "Courses",
-      link: "/transactions",
+      link: "#",
       submenu: [
         {
           text: "Add Course",
-          link: "/student/add",
+          link: "#",
         },
         {
           text: "View Course",
-          link: "/student/view",
+          link: "#",
         },
       ],
     },
     {
       icon: TbReportSearch,
       text: "Report",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: FaUserTie,
       text: "Staff",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: GrCloudComputer,
       text: "Online Exam",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: GrCloudComputer,
       text: "Products",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: VscCommentUnresolved ,
       text: "Manage Queries",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: CgWebsite,
       text: "Notice Admin",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: CgWebsite,

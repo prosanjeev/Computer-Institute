@@ -8,7 +8,7 @@ import {
   updateStudent as updateStudentAction,
   deleteStudent as deleteStudentAction,
 } from "../slice/admin/franchiseStudentsSlice";
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, getDoc, query, orderBy, limit, where } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, query, orderBy, limit, where } from "firebase/firestore";
 import { fireDB } from "../../firebase/FirebaseConfig";
 
 // franchiseStudentsActions.js
@@ -57,12 +57,12 @@ export const fetchStudents = () => async (dispatch) => {
       // Check if franchiseData exists for the current student
       if (franchiseId in franchiseDataMap) {
         const franchiseData = franchiseDataMap[franchiseId];
-        const studentWithCenterName = {
+        const studentWithcenterName = {
           id: doc.id,
           ...studentData,
-          centername: franchiseData.centername,
+          centerName: franchiseData.centerName,
         };
-        students.push(studentWithCenterName);
+        students.push(studentWithcenterName);
       } else {
         console.log(`FranchiseData not found for franchiseId: ${franchiseId}`);
       }
@@ -112,10 +112,10 @@ export const fetchLatestStudents = () => async (dispatch) => {
       // Check if franchiseData exists for the current student
       if (franchiseId in franchiseDataMap) {
         const franchiseData = franchiseDataMap[franchiseId];
-        const studentWithCenterName = {
+        const studentWithcenterName = {
           id: doc.id,
           ...studentData,
-          centername: franchiseData.centername,
+          centerName: franchiseData.centerName,
         };
 
         // Fetch corresponding studentCourses document for the current student
@@ -132,7 +132,7 @@ export const fetchLatestStudents = () => async (dispatch) => {
           if (courseId in studentCourseDataMap) {
             const courseData = studentCourseDataMap[courseId];
             // Add courseName to the student object
-            studentWithCenterName.courseName = courseData.courseName;
+            studentWithcenterName.courseName = courseData.courseName;
           } else {
             console.log(`CourseData not found for courseId: ${courseId}`);
           }
@@ -141,7 +141,7 @@ export const fetchLatestStudents = () => async (dispatch) => {
         }
 
         // Push the modified student object into the students array
-        students.push(studentWithCenterName);
+        students.push(studentWithcenterName);
       } else {
         console.log(`FranchiseData not found for franchiseId: ${franchiseId}`);
       }

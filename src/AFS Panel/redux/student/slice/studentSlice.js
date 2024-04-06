@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fireDB } from "../../../firebase/FirebaseConfig";
 import { getDoc, doc, getDocs, collection, query, where } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const initialState = {
   isLoggedIn: localStorage.getItem("isLoggedIn_student") === "true" || false,
@@ -9,18 +10,18 @@ const initialState = {
   studentData: null,
 };
 
-export const fetchStudentData = (username) => async (dispatch, getState) => {
+export const fetchStudentData = (userName) => async (dispatch, getState) => {
   const state = getState();
   try {
     let studentId = state.student.userId;
 
-    if (!studentId && username) {
+    if (!studentId && userName) {
       // Fetch student ID using username
       const studentsRef = collection(fireDB, "students");
-      const usernameQuery = query(studentsRef, where("username", "==", username));
+      const usernameQuery = query(studentsRef, where("userName", "==", userName));
       const usernameSnapshot = await getDocs(usernameQuery);
       if (usernameSnapshot.empty) {
-        console.log("No student found with username:", username);
+        toast.error("No student  with this userName:", userName);
         return;
       }
       studentId = usernameSnapshot.docs[0].id;
@@ -47,7 +48,8 @@ export const fetchStudentData = (username) => async (dispatch, getState) => {
       const franchiseData = franchiseDocSnap.data();
 
       // Assign centerName to studentData
-      studentData.centerName = franchiseData.centername;
+      studentData.centerName = franchiseData.centerName;
+      studentData.centerPhotoUrl = franchiseData.logoUrl;
 
       // Fetch student courses and course names
       const studentCoursesRef = collection(fireDB, "studentCourses");

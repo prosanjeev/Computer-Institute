@@ -50,8 +50,9 @@ export const StPersonalInformation = [
  export  const studentCradesial = [
     {
       label: "UserName",
-      name: "username",
+      name: "userName",
       type: "text",
+      readOnly: true,
     },
     {
       label: "Password",

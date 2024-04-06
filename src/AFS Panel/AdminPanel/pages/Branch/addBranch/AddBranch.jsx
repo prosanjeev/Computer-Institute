@@ -16,48 +16,15 @@ import {
 } from "@chakra-ui/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { Field, Form, Formik } from "formik";
-import { object, string, number } from "yup";
 import DashboardLayout from "../../../components/DashboardLayout";
-import {
-  collection,
-  addDoc,
-  updateDoc,
-  getDoc,
-  doc,
-  setDoc,
-  where,
-  query,
-  getDocs,
-} from "firebase/firestore";
+import { collection, addDoc, where, query, getDocs } from "firebase/firestore";
 import data from "../../../../../components/state-wise-cities-data/data";
 import { fireDB, storage } from "../../../../firebase/FirebaseConfig";
 import { PersonalInformation, UserCradesial } from "./data/data";
 import TitleBox from "../../../../components/components/TitleBox";
 import { toast } from "react-toastify";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-
-const franchiseValidationSchema = object({
-  centername: string().required("Center Name is Required"),
-  directorname: string().required("Director Name is Required"),
-  gender: string().required("Gender Name is Required"),
-  primaryphone: number()
-    .required("Primary Phone is Required")
-    .test(
-      "len",
-      "Must be exactly 10 digits",
-      (val) => val && val.toString().length === 10
-    ),
-  wathsappphone: number()
-    .required("Primary Phone is Required")
-    .test(
-      "len",
-      "Must be exactly 10 digits",
-      (val) => val && val.toString().length === 10
-    ),
-  email: string().email().required("Email is Required"),
-  state: string(),
-  district: string(),
-});
+import { franchiseValidationSchema } from "../components/schema";
 
 const AddBranch = () => {
   const [selectedState, setSelectedState] = useState("");
@@ -88,12 +55,12 @@ const AddBranch = () => {
   const CenterInformation = [
     {
       label: "Center Name",
-      name: "centername",
+      name: "centerName",
       type: "text",
     },
     {
       label: "Office Phone",
-      name: "officephone",
+      name: "officePhone",
       type: "text",
     },
     {
@@ -112,22 +79,22 @@ const AddBranch = () => {
     },
     {
       label: "Police Station",
-      name: "policestation",
+      name: "policeStation",
       type: "text",
     },
     {
       label: "Pin Code",
-      name: "pincode",
+      name: "pinCode",
       type: "text",
     },
     {
       label: "Center Place",
-      name: "centerplace",
+      name: "centerPlace",
       type: "text",
     },
     {
       label: "Wathsapp No.",
-      name: "wathsappphone",
+      name: "wathsappPhone",
       type: "text",
     },
     {
@@ -147,7 +114,7 @@ const AddBranch = () => {
       // Check if the username is available
       const usernameQuery = query(
         collection(fireDB, "franchiseData"),
-        where("username", "==", values.username)
+        where("userName", "==", values.userName)
       );
       const usernameQuerySnapshot = await getDocs(usernameQuery);
       if (!usernameQuerySnapshot.empty) {
@@ -181,16 +148,13 @@ const AddBranch = () => {
       // Calculate the next center ID based on the total number of franchises
       const baseValue = 100;
       const totalFranchises = franchiseDataSnapshot.size;
-      const nextCenterId = `MTECH${baseValue + totalFranchises}`; 
+      const nextCenterId = `MTECH${baseValue + totalFranchises}`;
       // Use `nextCenterId` for your further logic
 
       // Upload logo file to Firebase Storage
       let logoUrl = "";
       if (logoFile) {
-        const logoRef = ref(
-          storage,
-          `franchise/${values.centername}/logo`
-        );
+        const logoRef = ref(storage, `franchise/${values.centerName}/logo`);
         await uploadBytes(logoRef, logoFile);
         // Get download URL
         logoUrl = await getDownloadURL(logoRef);
@@ -201,7 +165,7 @@ const AddBranch = () => {
       if (signFile) {
         const signatureRef = ref(
           storage,
-          `franchise/${values.centername}/signature`
+          `franchise/${values.centerName}/signature`
         );
         // await signRef.put(signFile);
         // signUrl = await signRef.getDownloadURL();
@@ -213,18 +177,21 @@ const AddBranch = () => {
         {
           centerId: nextCenterId, // Use the new centerId
           createdAt: new Date().toISOString(),
-          centername: values.centername,
-          directorname: values.directorname,
+          directorName: values.directorName,
           gender: values.gender,
-          primaryphone: values.primaryphone,
-          wathsappphone: values.wathsappphone,
+          primaryPhone: values.primaryPhone,
           email: values.email,
+          documentType: values.documentType,
+          documentNumber: values.documentNumber,
+          centerName: values.centerName,
+          officePhone: values.officePhone,
           state: values.state,
           district: values.district || "",
-          policestation: values.policestation,
-          pincode: values.pincode,
-          centerplace: values.centerplace,
-          username: values.username,
+          policeStation: values.policeStation,
+          pinCode: values.pinCode,
+          centerPlace: values.centerPlace,
+          wathsappPhone: values.wathsappPhone,
+          userName: values.userName,
           password: values.password,
           logoUrl: logoUrl, // Add logo URL to Firestore
           signUrl: signUrl, // Add signature URL to Firestore
@@ -269,22 +236,24 @@ const AddBranch = () => {
 
             <Formik
               initialValues={{
-                directorname: "",
+                directorName: "",
                 gender: "",
-                primaryphone: "",
+                primaryPhone: "",
                 email: "",
-                selectId: "",
-                documentId: "",
-                centername: "",
-                officephone: "",
-                policestation: "",
-                pincode: "",
-                centerplace: "",
-                wathsappphone: "",
+                documentType: "",
+                documentNumber: "",
+                centerName: "",
+                officePhone: "",
+                policeStation: "",
+                pinCode: "",
+                centerPlace: "",
+                wathsappPhone: "",
                 state: "", // Add this line
-                city: "", // Add this line
-                username: "",
+                district: "", // Add this line
+                userName: "",
                 password: "",
+                logo: null,
+                signature: null,
               }}
               onSubmit={onSubmit}
               validationSchema={franchiseValidationSchema}
@@ -365,17 +334,25 @@ const AddBranch = () => {
                                     <input
                                       type="file"
                                       accept="image/*" // Accept only image files
-                                      onChange={(e) =>
-                                        setLogoFile(e.target.files[0])
-                                      } // Update logo file state
+                                      onChange={(e) => {
+                                        setFieldValue(
+                                          "logo",
+                                          e.currentTarget.files[0]
+                                        );
+                                        setLogoFile(e.target.files[0]);
+                                      }} // Update logo file state
                                     />
                                   ) : list.name === "signature" ? (
                                     <input
                                       type="file"
                                       accept="image/*" // Accept only image files
-                                      onChange={(e) =>
-                                        setSignFile(e.target.files[0])
-                                      } // Update signature file state
+                                      onChange={(e) => {
+                                        setFieldValue(
+                                          "signature",
+                                          e.currentTarget.files[0]
+                                        );
+                                        setSignFile(e.target.files[0]);
+                                      }} // Update signature file state
                                     />
                                   ) : (
                                     <Input

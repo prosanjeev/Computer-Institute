@@ -20,12 +20,12 @@ export const navLinks = [
     {
       icon: FaRegUser,
       text: "Profile",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: IoIosGitBranch,
       text: "Manage Branch",
-      link: "/#",
+      link: "#",
       submenu: [
         {
             icon: IoIosGitBranch,
@@ -50,11 +50,11 @@ export const navLinks = [
       submenu: [
         {
           text: "Add Student",
-          link: "/#",
+          link: "#",
         },
         {
           text: "View Students",
-          link: "/#",
+          link: "#",
         },
         {
           text: "View Students List",
@@ -65,7 +65,7 @@ export const navLinks = [
     {
       icon: SiCoursera,
       text: "Courses",
-      link: "/transactions",
+      link: "#",
       submenu: [
         {
           text: "Add Course",
@@ -84,22 +84,22 @@ export const navLinks = [
     {
       icon: TbReportSearch,
       text: "Report",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: FaUserTie,
       text: "Staff",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: GrCloudComputer,
       text: "Online Exam",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: CgWebsite,
       text: "Manage Website",
-      link: "/transactions",
+      link: "#",
     },
     {
       icon: VscCommentUnresolved ,
@@ -109,6 +109,6 @@ export const navLinks = [
     {
       icon: MdOutlineNotificationsActive,
       text: "Send Notification ",
-      link: "/transactions",
+      link: "#",
     },
   ];

@@ -43,7 +43,7 @@ import ForgotPassword from "./AFS Panel/components/adminAndCenterAuth/ForgotPass
 import UpdateBranch from "./AFS Panel/AdminPanel/pages/Branch/UpdateBranch";
 import BranchPage from "./AFS Panel/AdminPanel/pages/Branch/Branch";
 import ContactUsQuery from "./AFS Panel/AdminPanel/pages/Query/ContactUsQuery";
-import FranchiseCertificate from "./AFS Panel/FranchisePanel/pages/FranchiseCertificate/FranchiseCertificate";
+import FranchiseCertificate from "./AFS Panel/FranchisePanel/pages/FranchiseCertificate/old/FranchiseCertificate";
 import AddStudentPage from "./AFS Panel/FranchisePanel/pages/Student/AddStudentPage";
 import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/StudentListPage";
 import AdminPanel from "./AFS Panel/AdminPanel/pages/AdminPanel";
@@ -55,6 +55,13 @@ import CourseSelectionPage from "./AFS Panel/FranchisePanel/pages/Course/CourseS
 import StudentIDCard from "./AFS Panel/StudentPanel/pages/IDCard/StudentIDCard";
 import UpdateBranchPage from "./AFS Panel/AdminPanel/pages/Branch/updateBranch/UpdateBranchPage";
 import StudentCertificate from "./AFS Panel/FranchisePanel/studentCertificates/certificate/StudentCertificate";
+import UpdateStudentPage from "./AFS Panel/FranchisePanel/pages/Student/UpdateStudentPage";
+import ChakraCertificate from "./AFS Panel/FranchisePanel/pages/FranchiseCertificate/ChakraCertificate";
+import PrintCenterCertificate from "./AFS Panel/FranchisePanel/pages/FranchiseCertificate/PrintCenterCertificate";
+import PrintMarksheet from "./AFS Panel/FranchisePanel/studentCertificates/markseet/PrintMarksheet";
+import UpdateCourse from "./AFS Panel/AdminPanel/pages/Course/UpdateCourse";
+import PrintStudentCertificate from "./AFS Panel/FranchisePanel/studentCertificates/certificate/PrintStudentCertificate";
+import QrVerification from "./Pages/verification/QrVerification";
 // import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/AllStudents";
 
 const App = () => {
@@ -110,8 +117,10 @@ const App = () => {
                         <Route path='franchise-dashboard' element={<FranchiseDashboard />} />
                         <Route path='wallet-recharge' element={<WalletRechargeRequestForm />} />
                         <Route path='franchise-profile' element={<FranchiseProfilePage />} />
-                        <Route path="authorisation-certificate" element={<FranchiseCertificate />} />
+                        {/* <Route path="authorisation-certificate" element={<FranchiseCertificate />} /> */}
+                        <Route path="authorisation-certificate" element={<PrintCenterCertificate/>} />
                         <Route path="add-student" element={<AddStudentPage />} />
+                        <Route path="update-student" element={<UpdateStudentPage />} />
                         <Route path="students-list" element={<StudentListPage />} />
                     </Route> 
 
@@ -130,10 +139,14 @@ const App = () => {
                     <Route path="all-students" element={<AdminPanel/>} />
                     <Route path="add-course" element={<AddCourse/>} />
                     <Route path="all-courses" element={<AllCourses/>} />
+                    <Route path="update-course" element={<UpdateCourse/>} />
                     <Route path="course-selection" element={<CourseSelectionPage/>} />
-                    <Route path="student-certificate" element={<StudentCertificate/>} />
+                    <Route path="student-certificate" element={<PrintStudentCertificate/>} />
+                    <Route path="student-marksheet" element={<PrintMarksheet/>} />
                     <Route path="id-card" element={<StudentIDCard/>} />
-
+                    <Route path="student-certificate-verification/:regNumber" element={<QrVerification/>} />
+                    {/* <Route path="chakra-certificate" element={<ChakraCertificate/>} /> */}
+                        
                 </Routes>  
             </Router>
 

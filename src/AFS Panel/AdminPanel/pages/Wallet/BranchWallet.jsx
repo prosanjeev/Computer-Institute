@@ -114,8 +114,8 @@ const BranchWallet = () => {
             {requests.map((request, index) => (
               <Tr key={request.id}>
                 <Td>{index + 1}</Td>
-                <Td>{request.centername}</Td>
-                <Td>{request.directorname}</Td>
+                <Td>{request.centerName}</Td>
+                <Td>{request.directorName}</Td>
                 <Td>₹{request.requestAmount}</Td>
                 <Td>
                   <Button

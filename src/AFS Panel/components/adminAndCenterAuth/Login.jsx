@@ -146,6 +146,17 @@ import {
                       >
                         Log In
                       </Button>
+                      <Link to="/">
+                      <Button
+                        mt="3"
+                        w="full"
+                        colorScheme="red"
+                        variant="outline"
+                        type="submit"
+                      >
+                        Cancel
+                      </Button>
+                    </Link>
                     </Box>
                   </Stack>
                 </Form>

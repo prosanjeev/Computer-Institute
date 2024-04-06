@@ -1,10 +1,10 @@
 import { Box, Container, Flex, useDisclosure } from "@chakra-ui/react";
-import SideDrawer from "../../AdminPanel/components/SideDrawer";
 import FranchiseSidenav from "./FranchiseSidenav";
 import FranchiseTopNav from "./FranchiseTopNav";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFranchiseData, selectbranchData } from "../../redux/slice/franchise/authSlice";
+import { fetchFranchiseData, selectbranchData } from "../../redux/franchise/authSlice";
+import FranchiseSideDrawer from "./FranchiseSideDrawer";
 
 const FranchiseDashboardLayout = ({ title, children }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -29,7 +29,7 @@ const FranchiseDashboardLayout = ({ title, children }) => {
     
        <FranchiseSidenav branchData={branchData}/>
       </Box>
-      <SideDrawer isOpen={isOpen} onClose={onClose} />
+      <FranchiseSideDrawer isOpen={isOpen} onClose={onClose} />
       <Box flexGrow={1}>
         <FranchiseTopNav title={title} onOpen={onOpen} branchData={branchData} />
         <Container

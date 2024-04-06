@@ -18,10 +18,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBranches, selectBranches } from "../../../redux/slice/admin/branchSlice";
 import { useEffect } from "react";
-import { selectAllCourses } from "../../../redux/selectors/coursesSelectors";
-import { fetchCourses } from "../../../redux/actions/coursesActions";
+import { selectAllCourses, selectStudentsSize } from "../../../redux/course/coursesSelectors";
+import { fetchCourses } from "../../../redux/course/coursesActions";
 import { selectStudents } from "../../../redux/selectors/franchiseStudentsSelectors";
 import { fetchStudents } from "../../../redux/actions/franchiseStudentsActions";
+import { selectStudentCoursesSize  } from "../../../redux/selectors/enrollmentSelectors";
 
 const iconMapping = {
   Branch: FaCodeBranch,
@@ -44,6 +45,7 @@ const Dashboard = () => {
   const branches = useSelector(selectBranches);
   const students = useSelector(selectStudents);
   const courses = useSelector(selectAllCourses);
+  const studentCoursesSize = useSelector(selectStudentCoursesSize);
 
   useEffect(() => {
     dispatch(fetchBranches());
@@ -73,7 +75,7 @@ const Dashboard = () => {
     },
     {
       name: "Admission",
-      info: "1290",
+      info: studentCoursesSize,
       icon: iconMapping["Admission"],
     },
     {

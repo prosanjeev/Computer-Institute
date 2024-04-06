@@ -23,10 +23,10 @@ const InputValidationSchema = object({
     .required("it is required"),
 });
 
-const VerifivaticationForm = ({ title, label, onSubmitCallback  }) => {
+const VerifivaticationForm = ({ title, label, onSubmitCallback }) => {
   return (
     <Container>
-      <Center minH="60vh">
+      <Center minH={{ md: "60vh", base: "450px" }}>
         <Card p={6} borderRadius="16px" w="456px" border="2px solid #d4cfcf">
           <Text textStyle="h1">{title} </Text>
           <Text mt={4} textStyle="p2" color="black.60">

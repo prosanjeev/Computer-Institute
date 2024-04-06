@@ -46,7 +46,7 @@ const FranchiseSidenav = ({ branchData }) => {
                 <Img
                   src={branchData.logoUrl}
                   alt="Center Logo"
-                  h="100px"
+                  h={{md:"100px", base:'70px'}}
                   pb={4}
                   style={{ margin: "auto" }}
                 /> // Center the logo horizontally
@@ -63,7 +63,7 @@ const FranchiseSidenav = ({ branchData }) => {
               )}
             </ul>
           ) : (
-            <p>Loading user data...</p>
+            <Text color='white'>Loading user data...</Text>
           )}
         </Box>
 

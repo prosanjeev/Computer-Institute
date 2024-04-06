@@ -1,23 +1,20 @@
 // CourseSelectionPage.jsx
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { fireDB } from './firebase'; // Firebase instance
-import { selectAllCourses } from "../../../redux/selectors/coursesSelectors";
+import { selectAllCourses } from "../../../redux/course/coursesSelectors";
 import { fireDB } from "../../../firebase/FirebaseConfig";
-import { fetchCourses } from "../../../redux/actions/coursesActions";
+import { fetchCourses } from "../../../redux/course/coursesActions";
 import FranchiseDashboardLayout from "../../components/FranchiseDashboardLayout";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import {
-  Box,
   Button,
   Card,
   Center,
   FormControl,
   FormLabel,
-  Heading,
   Select,
-  SimpleGrid,
   Spinner,
 } from "@chakra-ui/react";
 import { toast } from "react-toastify";
@@ -90,10 +87,11 @@ const handleCourseSelect = async () => {
       });
       setIsLoading(false);
       toast.success("Successfully added course");
+      navigate("/students-list")
+
     }
   };
   
-
   const handleDurationChange = (e) => {
     const duration = e.target.value;
     setSelectedDuration(duration);

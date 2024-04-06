@@ -3,39 +3,46 @@ import {
   Box,
   Button,
   Flex,
-  Grid,
-  Heading,
   Icon,
   Image,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Switch,
   Table,
   Tag,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tooltip,
   Tr,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchFranchiseData,
   selectbranchData,
   selectStudents,
-} from "../../../redux/slice/franchise/authSlice";
+} from "../../../redux/franchise/authSlice";
 import FranchiseDashboardLayout from "../../components/FranchiseDashboardLayout";
-import { FaAddressCard, FaEdit, FaRegEdit } from "react-icons/fa";
+import { FaAddressCard, FaRegEdit } from "react-icons/fa";
 import { PiCertificateFill, PiChalkboardTeacher } from "react-icons/pi";
 import { TbCertificate2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { fireDB, storage } from "../../../firebase/FirebaseConfig";
+import { doc, updateDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const StudentListPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const branchData = useSelector(selectbranchData);
   const students = useSelector(selectStudents);
 
   useEffect(() => {
@@ -49,19 +56,104 @@ const StudentListPage = () => {
 
   const CustomCard = React.forwardRef(({ children, ...rest }, ref) => (
     <Box p="1">
-      <Tag ref={ref} {...rest}>
+      <Tag ref={ref} {...rest} cursor='pointer'>
         {children}
       </Tag>
-    </Box>
+    </Box> 
   ));
-
+  const handleEditClick = (studentId) => {
+    navigate("/update-student", { state: { studentId } }); // Navigate to "/update-branch" with franchiseId
+  };
   const handleCourseAdmission = (studentId, franchiseId) => {
     // Navigate to '/course-selection' with studentId and franchiseId passed in state
     navigate("/course-selection", { state: { studentId, franchiseId } });
   };
-  const handlePrintCertificate = (regNumber) => {
+  const handlePrintCertificate = (userName) => {
     // Navigate to '/course-selection' with studentId and franchiseId passed in state
-    navigate("/student-certificate", { state: { regNumber } });
+    navigate("/student-certificate", { state: { userName } });
+  };
+  const handlePrintMarksheet = (userName) => {
+    // Navigate to '/course-selection' with studentId and franchiseId passed in state
+    navigate("/student-marksheet", { state: { userName } });
+  };
+
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [newPhotoFile, setNewPhotoFile] = useState(null);
+
+  // const openModal = () => setIsModalOpen(true);
+  // const closeModal = () => setIsModalOpen(false);
+
+  const handlePhotoSubmit = async (studentId, newPhotoFile) => {
+    try {
+      // Upload new photo file to Firebase Storage
+      const photoRef = ref(storage, `students/${studentId}/photo`);
+      await uploadBytes(photoRef, newPhotoFile);
+
+      // Get download URL of the new photo
+      const newPhotoUrl = await getDownloadURL(photoRef);
+
+      // Update the photoUrl field in Firestore
+      const studentRef = doc(fireDB, "students", studentId);
+      await updateDoc(studentRef, { photoUrl: newPhotoUrl });
+
+      toast.success("Photo updated successfully");
+    } catch (error) {
+      console.error("Error updating photo: ", error);
+      toast.error("Failed to update photo");
+    }
+  };
+
+  const handlePhotoChange = async (studentId, e) => {
+    const newPhotoFile = e.target.files[0];
+
+    // Check if the file size is less than 60kb
+    if (newPhotoFile.size > 60 * 1024) {
+      toast.error("Please select a photo less than 60kb in size.");
+      return;
+    }
+
+    // Read the file as a data URL
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const dataUrl = event.target.result;
+
+      // Create a new image element to get the dimensions
+      const img = document.createElement("img");
+      img.onload = async () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Resize the image if necessary
+        if (newPhotoFile.size > 60 * 1024) {
+          const scaleFactor = (60 * 1024) / newPhotoFile.size;
+          canvas.width *= scaleFactor;
+          canvas.height *= scaleFactor;
+        }
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const resizedDataUrl = canvas.toDataURL("image/jpeg");
+
+        // Convert the data URL back to a Blob
+        const byteString = atob(resizedDataUrl.split(",")[1]);
+        const mimeString = resizedDataUrl
+          .split(",")[0]
+          .split(":")[1]
+          .split(";")[0];
+        let ab = new ArrayBuffer(byteString.length);
+        let ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        const resizedFile = new Blob([ab], { type: mimeString });
+
+        // Upload the resized file to Firebase Storage
+        handlePhotoSubmit(studentId, resizedFile);
+      };
+      img.src = dataUrl;
+    };
+    reader.readAsDataURL(newPhotoFile);
   };
 
   return (
@@ -122,13 +214,25 @@ const StudentListPage = () => {
                     alt={student.studentName}
                     w="40px"
                     h="40px"
+                    border="2px solid"
+                    borderRadius="10px"
+                    cursor="pointer"
+                    onClick={(e) => {
+                      const fileInput = document.createElement("input");
+                      fileInput.type = "file";
+                      fileInput.accept = "image/*";
+                      fileInput.addEventListener("change", (e) =>
+                        handlePhotoChange(student.id, e)
+                      );
+                      fileInput.click();
+                    }}
                   />
                 </Td>
                 <Td>{student.studentId}</Td>
                 <Td borderLeft="1px solid red">{student.studentName}</Td>
                 <Td>{student.fatherName}</Td>
                 {/* <Td>{student.centername}</Td> */}
-                <Td>{student.courseName}</Td>
+                <Td> {student.courseName ? student.courseName : "Unknown"}</Td>
                 <Td>
                   <Switch
                     isChecked={student.status === "Active"}
@@ -144,7 +248,7 @@ const StudentListPage = () => {
                 <Td>
                   <Flex flexWrap="wrap">
                     <Tooltip label="Edit">
-                      <CustomCard>
+                      <CustomCard onClick={() => handleEditClick(student.id)}>
                         <Icon as={FaRegEdit} size="sm" colorScheme="blue" />
                       </CustomCard>
                     </Tooltip>
@@ -168,9 +272,7 @@ const StudentListPage = () => {
                     </Tooltip>
                     <Tooltip label="Download Certificate">
                       <CustomCard
-                        onClick={() =>
-                          handlePrintCertificate( student.username)
-                        }
+                        onClick={() => handlePrintCertificate(student.userName)}
                       >
                         <Icon
                           as={PiCertificateFill}
@@ -180,7 +282,9 @@ const StudentListPage = () => {
                       </CustomCard>
                     </Tooltip>
                     <Tooltip label="Download Marksheet">
-                      <CustomCard>
+                      <CustomCard
+                        onClick={() => handlePrintMarksheet(student.userName)}
+                      >
                         <Icon
                           as={TbCertificate2}
                           size="sm"
@@ -199,6 +303,35 @@ const StudentListPage = () => {
             ))}
           </Tbody>
         </Table>
+        {/* <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Change Photo</ModalHeader>
+            <ModalBody>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={closeModal}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="green"
+                onClick={() => {
+                  // Handle photo update logic here
+                  // For example, you can upload the new photo to Firebase Storage
+                  // and update the photoUrl in the database
+                  closeModal();
+                }}
+              >
+                Save
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal> */}
       </Flex>
     </FranchiseDashboardLayout>
   );
