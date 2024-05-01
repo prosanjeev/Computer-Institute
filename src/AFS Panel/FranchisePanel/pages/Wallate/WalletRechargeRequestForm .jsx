@@ -92,8 +92,8 @@ const WalletRechargeRequestForm = () => {
           </Button>
         </form>
       </Container>
-      <Flex w="30vw" gap={10} mt={20} mx="auto" fontSize="20px" border='1px solid gray' p={10} justify='center' borderRadius='10px'>
-        <Card h={40} w="auto" p={10}>
+      <Flex w={{md:"30vw", base:'90vw'}} gap={10} mt={20} mx="auto" fontSize="20px" flexWrap='wrap' border='1px solid gray' p={10} justify='center' borderRadius='10px'>
+        <Card h={40} w="auto" p={8}>
           <Stack align="center">
             <Text fontSize="24px"> Wallet:</Text>
             <Text fontSize="30px" fontWeight="600">

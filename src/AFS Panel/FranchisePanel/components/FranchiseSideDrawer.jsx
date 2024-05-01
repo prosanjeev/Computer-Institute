@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import FranchiseSidenav from "./FranchiseSidenav";
 
-const FranchiseSideDrawer = ({ isOpen, onClose }) => {
+const FranchiseSideDrawer = ({ isOpen, onClose, branchData }) => {
   return (
     <>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
@@ -20,7 +20,7 @@ const FranchiseSideDrawer = ({ isOpen, onClose }) => {
             border="2px solid red"
           />
           <DrawerBody>
-            <FranchiseSidenav />
+            <FranchiseSidenav branchData={branchData} />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

@@ -2,17 +2,18 @@ import { IoIosPhonePortrait } from "react-icons/io";
 import { FaWhatsapp } from "react-icons/fa";
 import { LuMapPin } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
+import { c_address, c_email, c_phone } from "../../../info/Info";
 
 export const lists = [
     {
       icon: IoIosPhonePortrait,
       title: "CALL US:",
-      text: "9876543210",
+      text: c_phone,
     },
     {
       icon: MdOutlineMail,
       title: "MAIL US:",
-      text: "help@mtech.in",
+      text: c_email,
     },
     {
       icon: FaWhatsapp,
@@ -22,6 +23,6 @@ export const lists = [
     {
       icon: LuMapPin,
       title: "VISIT US:",
-      text: "PATNA CITY, PATNA, BIHAR (BR), India (IN), Pin Code:- 812348",
+      text: c_address,
     },
   ];

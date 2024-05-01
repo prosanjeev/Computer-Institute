@@ -9,7 +9,6 @@ import {
   InputLeftElement,
   Stack,
   Text,
-  InputRightElement,
   Textarea,
   Button,
   Grid,
@@ -19,9 +18,7 @@ import {
 } from "@chakra-ui/react";
 import HeadingWithHr from "../../components/PagesComponents/HeadingWithHr/HeadingWithHr";
 import PageTitle from "../../components/PagesComponents/PageTitleSection/PageTitle";
-
 import { MdOutlineMail } from "react-icons/md";
-
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineSubtitles } from "react-icons/md";
 import { Field, Form, Formik } from "formik";
@@ -31,7 +28,9 @@ import { fireDB } from "../../AFS Panel/firebase/FirebaseConfig";
 import { lists } from "./components/data";
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("Name is required").min(5, "Name must be at least 5 characters"),
+  name: Yup.string()
+    .required("Name is required")
+    .min(5, "Name must be at least 5 characters"),
   phone: Yup.number()
     .required("Primary Phone is Required")
     .test(
@@ -69,8 +68,6 @@ const ContactUs = () => {
     }
   };
 
-  
-
   return (
     <>
       <Box>
@@ -92,8 +89,19 @@ const ContactUs = () => {
       </Box>
 
       {/* ----------------------- */}
-      <Flex w={{lg:"1200px", base:"100vw"}} mx="auto" justifyContent="space-around" mb="80px" flexDirection={{base:'column', lg:"row"}}>
-        <Stack fontWeight="700" w={{lg:"500px", base:"100%"}} spacing={6} p={6}>
+      <Flex
+        w={{ lg: "1200px", base: "100vw" }}
+        mx="auto"
+        justifyContent="space-around"
+        mb="80px"
+        flexDirection={{ base: "column", lg: "row" }}
+      >
+        <Stack
+          fontWeight="700"
+          w={{ lg: "500px", base: "100%" }}
+          spacing={6}
+          p={6}
+        >
           {lists.map((list) => (
             <HStack key={list.title} align="start" spacing={6}>
               <Icon
@@ -105,7 +113,11 @@ const ContactUs = () => {
               />
               <Stack spacing={1}>
                 <Text fontSize="18px">{list.title}</Text>
-                <Text fontSize="16px" fontWeight={400} w={{lg:"300px", base:"240px"}}>
+                <Text
+                  fontSize="16px"
+                  fontWeight={400}
+                  w={{ lg: "300px", base: "240px" }}
+                >
                   {list.text}
                 </Text>
               </Stack>
@@ -126,8 +138,14 @@ const ContactUs = () => {
         >
           {({ isSubmitting }) => (
             <Form>
-              <Divider display={{md:'none'}} />
-              <Grid templateColumns={{md:"repeat(2, 1fr)", base:"span 1"}} gap={5} width={{lg:"600px", base:'80%'}} mx='auto' mt={{lg:'0', base:'5'}}>
+              <Divider display={{ md: "none" }} />
+              <Grid
+                templateColumns={{ md: "repeat(2, 1fr)", base: "span 1" }}
+                gap={5}
+                width={{ lg: "600px", base: "80%" }}
+                mx="auto"
+                mt={{ lg: "0", base: "5" }}
+              >
                 <Field name="name">
                   {({ field, meta }) => (
                     <FormControl isInvalid={meta.error && meta.touched}>
@@ -164,7 +182,7 @@ const ContactUs = () => {
                   {({ field, meta }) => (
                     <FormControl
                       isInvalid={meta.error && meta.touched}
-                      gridColumn={{md:"span 2", base:"span 1"}}
+                      gridColumn={{ md: "span 2", base: "span 1" }}
                     >
                       <InputGroup>
                         <InputLeftElement pointerEvents="none">
@@ -184,7 +202,7 @@ const ContactUs = () => {
                   {({ field, meta }) => (
                     <FormControl
                       isInvalid={meta.error && meta.touched}
-                      gridColumn={{md:"span 2", base:"span 1"}}
+                      gridColumn={{ md: "span 2", base: "span 1" }}
                     >
                       <InputGroup>
                         <InputLeftElement pointerEvents="none">
@@ -204,7 +222,7 @@ const ContactUs = () => {
                   {({ field, meta }) => (
                     <FormControl
                       isInvalid={meta.error && meta.touched}
-                      gridColumn={{md:"span 2", base:"span 1"}}
+                      gridColumn={{ md: "span 2", base: "span 1" }}
                     >
                       <InputGroup>
                         <Textarea
@@ -222,7 +240,7 @@ const ContactUs = () => {
                 <Button
                   type="submit"
                   colorScheme="blue"
-                  gridColumn={{md:"span 2", base:"span 1"}}
+                  gridColumn={{ md: "span 2", base: "span 1" }}
                   isLoading={isSubmitting}
                 >
                   Submit

@@ -16,7 +16,7 @@ import {
   FaFileSignature,
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBranches, selectBranches } from "../../../redux/slice/admin/branchSlice";
+import { fetchBranches, selectBranches } from "../../../redux/admin/branchSlice";
 import { useEffect } from "react";
 import { selectAllCourses, selectStudentsSize } from "../../../redux/course/coursesSelectors";
 import { fetchCourses } from "../../../redux/course/coursesActions";
@@ -52,9 +52,6 @@ const Dashboard = () => {
     dispatch(fetchStudents());
     dispatch(fetchCourses());
   }, [dispatch]);
-
-
-  
  
 
   const dashboardData = [

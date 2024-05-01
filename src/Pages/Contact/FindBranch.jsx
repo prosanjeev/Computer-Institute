@@ -187,9 +187,9 @@ const FindBranch = () => {
                           <Tr key={franchise.id}>
                             <Td>{index + 1}</Td>
                             <Td>{franchise.centerId}</Td>
-                            <Td>{franchise.centername}</Td>
-                            <Td>{franchise.directorname}</Td>
-                            <Td>{franchise.centerplace}, {franchise.policestation}</Td>
+                            <Td>{franchise.centerName}</Td>
+                            <Td>{franchise.directorName}</Td>
+                            <Td>{franchise.centerPlace}, {franchise.policestation}</Td>
                           </Tr>
                         ))}
                       </Tbody>

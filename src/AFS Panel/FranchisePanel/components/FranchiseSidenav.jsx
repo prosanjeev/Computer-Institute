@@ -36,7 +36,7 @@ const FranchiseSidenav = ({ branchData }) => {
         base: "full",
         lg: "16rem",
       }}
-      h="100vh"
+      h={{md:"100vh", base:''}}
     >
       <Box>
         <Box w="100%" borderBottom="1px solid gray" mt={4}>

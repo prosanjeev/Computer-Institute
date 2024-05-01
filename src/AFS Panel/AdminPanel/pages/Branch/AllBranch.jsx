@@ -16,19 +16,20 @@ import {
   Td,
 } from "@chakra-ui/react";
 import { FaRegEdit } from "react-icons/fa";
+import { RiImageEditLine } from "react-icons/ri";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useNavigate } from "react-router-dom"; // Import useHistory
 import {
   fetchBranches,
   selectBranches,
-} from "../../../redux/slice/admin/branchSlice";
+} from "../../../redux/admin/branchSlice";
 
 const AllBranch = () => {
   const branches = useSelector(selectBranches);
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize useHistory hook
-console.log(branches);
+  console.log(branches);
   useEffect(() => {
     dispatch(fetchBranches());
   }, [dispatch]);
@@ -52,7 +53,7 @@ console.log(branches);
           size={isDesktop ? "md" : "sm"}
         >
           <Thead>
-            <Tr bg="orange.400" >
+            <Tr bg="orange.400">
               <Th fontSize="lg" fontWeight="bold">
                 Sr.
               </Th>
@@ -89,7 +90,9 @@ console.log(branches);
             {branches.map((branch, index) => (
               <Tr key={branch.id}>
                 <Td>{index + 1}</Td>
-                <Td>{new Date(branch.createdAt).toLocaleDateString('en-GB')}</Td>
+                <Td>
+                  {new Date(branch.createdAt).toLocaleDateString("en-GB")}
+                </Td>
                 <Td>
                   <Image
                     src={branch.logoUrl}
@@ -99,7 +102,7 @@ console.log(branches);
                   />
                 </Td>
                 <Td>{branch.centerId}</Td>
-                <Td borderLeft='1px solid red' >{branch.directorName}</Td>
+                <Td borderLeft="1px solid red">{branch.directorName}</Td>
                 <Td>{branch.centerName}</Td>
                 <Td>{branch.state}</Td>
                 <Td>
@@ -112,16 +115,27 @@ console.log(branches);
                       )
                     }
                     colorScheme={branch.status === "Active" ? "green" : "red"}
-                  /> 
+                  />
                 </Td>
                 <Td>
-                  <Button
-                    size="sm"
-                    colorScheme="blue"
-                    onClick={() => handleEditClick(branch.id)} // Pass franchiseId to handleEditClick
-                  >
-                    <Icon as={FaRegEdit} size="sm" color="white" /> {/* Update color to white */}
-                  </Button>
+                  <Flex gap={1}>
+                    <Button
+                      size="sm"
+                      colorScheme="blue"
+                      onClick={() => handleEditClick(branch.id)} // Pass franchiseId to handleEditClick
+                    >
+                      <Icon as={FaRegEdit} size="sm" color="white" />{" "}
+                      {/* Update color to white */}
+                    </Button>
+                    <Button
+                      size="sm"
+                      colorScheme="blue"
+                      onClick={() => handleEditClick(branch.id)} // Pass franchiseId to handleEditClick
+                    >
+                      <Icon as={RiImageEditLine} size="sm" color="white" />{" "}
+                      {/* Update color to white */}
+                    </Button>
+                  </Flex>
                 </Td>
                 <Td>
                   <Button size="sm" colorScheme="red">

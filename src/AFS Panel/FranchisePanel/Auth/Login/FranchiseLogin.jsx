@@ -12,7 +12,7 @@ import {
   Input,
   Stack,
   Text,
-} from "@chakra-ui/react";  
+} from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 import { fireDB } from "../../../firebase/FirebaseConfig";
@@ -29,38 +29,40 @@ const loginValidationSchema = object({
     .required("Password is required"),
 });
 
-const FranchiseLogin = ( ) => {
-  
+const FranchiseLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const ref = collection(fireDB, 'franchiseData');
+  const ref = collection(fireDB, "franchiseData");
 
   const handleLogin = async (initialValues, { setSubmitting }) => {
     try {
-      const q = query(ref, where("userName", "==", initialValues.userName), where("password", "==", initialValues.password));
+      const q = query(
+        ref,
+        where("userName", "==", initialValues.userName),
+        where("password", "==", initialValues.password)
+      );
       const querySnapshot = await getDocs(q);
       if (querySnapshot.size === 1) {
-       // console.log("Document Snapshot:", querySnapshot.docs[0].data());
+        // console.log("Document Snapshot:", querySnapshot.docs[0].data());
 
-        console.log("show",querySnapshot)
+        // console.log("show",querySnapshot)
         // const centerId = querySnapshot.docs[0].data().centerId;
         const userId = querySnapshot.docs[0].id; // Assuming the userId is the Firestore document ID
         // console.log("uid", userId)
         dispatch(login({ userId }));
-        navigate('/franchise-dashboard')
+        navigate("/franchise-dashboard");
         localStorage.setItem("isLoggedIn", "true");
-        toast.success("Login successful!")
+        toast.success("Login successful!");
         // console.log("Login successful!");
       } else {
-        console.log("Login failed: User not found or incorrect password.");
+        toast.error("Login failed: User not found or incorrect password.");
       }
     } catch (error) {
       console.error("Error logging in:", error);
     }
     setSubmitting(false);
   };
-  
 
   return (
     <Container>
@@ -88,7 +90,12 @@ const FranchiseLogin = ( ) => {
             {(formikProps) => (
               <Form>
                 <Stack mt={8} spacing={6}>
-                  <FormControl isInvalid={formikProps.errors.userName && formikProps.touched.userName}>
+                  <FormControl
+                    isInvalid={
+                      formikProps.errors.userName &&
+                      formikProps.touched.userName
+                    }
+                  >
                     <FormLabel htmlFor="userName">UserName:</FormLabel>
                     <Input
                       id="userName"
@@ -96,10 +103,17 @@ const FranchiseLogin = ( ) => {
                       placeholder="Enter your username"
                       {...formikProps.getFieldProps("userName")}
                     />
-                    <FormErrorMessage>{formikProps.errors.userName}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {formikProps.errors.userName}
+                    </FormErrorMessage>
                   </FormControl>
 
-                  <FormControl isInvalid={formikProps.errors.password && formikProps.touched.password}>
+                  <FormControl
+                    isInvalid={
+                      formikProps.errors.password &&
+                      formikProps.touched.password
+                    }
+                  >
                     <FormLabel htmlFor="password">Password:</FormLabel>
                     <Input
                       id="password"
@@ -107,7 +121,9 @@ const FranchiseLogin = ( ) => {
                       placeholder="Enter your password"
                       {...formikProps.getFieldProps("password")}
                     />
-                    <FormErrorMessage>{formikProps.errors.password}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {formikProps.errors.password}
+                    </FormErrorMessage>
                   </FormControl>
 
                   <HStack justifyContent="space-between">
@@ -140,7 +156,6 @@ const FranchiseLogin = ( ) => {
                       </Button>
                     </Link>
                   </Box>
-                
                 </Stack>
               </Form>
             )}

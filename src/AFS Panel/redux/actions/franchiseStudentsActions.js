@@ -7,7 +7,7 @@ import {
   addStudent as addStudentAction,
   updateStudent as updateStudentAction,
   deleteStudent as deleteStudentAction,
-} from "../slice/admin/franchiseStudentsSlice";
+} from "../admin/franchiseStudentsSlice";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, query, orderBy, limit, where } from "firebase/firestore";
 import { fireDB } from "../../firebase/FirebaseConfig";
 

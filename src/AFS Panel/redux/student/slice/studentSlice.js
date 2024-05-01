@@ -59,7 +59,7 @@ export const fetchStudentData = (userName) => async (dispatch, getState) => {
         const courseId = courseDoc.data().courseId;
         const courseDocRef = doc(fireDB, "courses", courseId);
         const courseDocSnap = await getDoc(courseDocRef);
-        return courseDocSnap.exists() ? courseDocSnap.data().courseName : null;
+        return courseDocSnap.exists() ? courseDocSnap.data().courseName : "Course not selected";
       });
       const courses = await Promise.all(coursePromises);
 

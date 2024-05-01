@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useParams, useNavigate } from "react-router-dom";
 import QRCode from "qrcode.react";
+import { BASE_URL } from "../../../..";
 
 const MarksheetContent = ({ studentData }) => {
   const [formData, setFormData] = useState({
@@ -53,8 +54,9 @@ const MarksheetContent = ({ studentData }) => {
   function setQRData() {
     // var url = Object.values(studentData && studentData.userName);
     const url = studentData ? studentData.userName : "";
-    const value = "http://localhost:3000/marksheet-verification/"
+    const value = `${BASE_URL}/marksheet-verification/`
     setQdata(`${value}${url}`);
+    // setQdata(`https://www.youtube.com`);  //https://computer-institute.netlify.app/
   }
   // Check if studentData exists before accessing its properties
   // const centerName = studentData && studentData.centerName ? studentData.centerName : "";
@@ -105,7 +107,7 @@ const MarksheetContent = ({ studentData }) => {
                 mb={-4}
               />
             </Flex>
-            <Text textAlign="center" mb={8}>
+            {/* <Text textAlign="center" mb={8}>
               {formData.services}
               <br />
               {formData.address}
@@ -113,8 +115,8 @@ const MarksheetContent = ({ studentData }) => {
               Ph. : {formData.phone}
               <br />
               E-mail: {formData.email}, Website: {formData.website}
-            </Text>
-            <Flex justify="between" mb={8}>
+            </Text> */}
+            {/* <Flex justify="between" mb={8}>
               <Box>
                 <Text>PAN NO. {formData.pan}</Text>
                 <Text>UAN: {formData.uan}</Text>
@@ -124,7 +126,7 @@ const MarksheetContent = ({ studentData }) => {
                 <Text>Ref. No.: {formData.ref_no}</Text>
                 <Text>Date: {formData.date_of_issue}</Text>
               </Box>
-            </Flex>
+            </Flex> */}
             <Box
               bg="gray.50"
               textAlign="end"

@@ -109,6 +109,6 @@ export const navLinks = [
     {
       icon: MdOutlineNotificationsActive,
       text: "Send Notification ",
-      link: "#",
+      link: "/user-notice",
     },
   ];

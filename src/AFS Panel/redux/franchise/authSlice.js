@@ -43,6 +43,7 @@ export const fetchFranchiseData = () => async (dispatch, getState) => {
         );
         const snapshot = await getDocs(franchiseStudentsQuery);
         const students = [];
+        console.log("std", students)
 
         await Promise.all(snapshot.docs.map(async (doc) => {
           const studentData = doc.data();
@@ -56,30 +57,45 @@ export const fetchFranchiseData = () => async (dispatch, getState) => {
           );
           const studentCoursesSnapshot = await getDocs(studentCoursesQuery);
 
-          // Check if there are any studentCourses for the current student
-          if (!studentCoursesSnapshot.empty) {
-            // Retrieve courseId from the first studentCourses document
-            const courseId = studentCoursesSnapshot.docs[0].data().courseId;
-            console.log(courseId);
-            // Check if courseData exists for the retrieved courseId
-            if (courseId in studentCourseDataMap) {
-              const courseData = studentCourseDataMap[courseId];
+          //   // Check if there are any studentCourses for the current student
+          //   if (!studentCoursesSnapshot.empty) {
+          //     // Retrieve courseId from the first studentCourses document
+          //     const courseId = studentCoursesSnapshot.docs[0].data().courseId;
+          //     console.log(courseId);
+          //     // Check if courseData exists for the retrieved courseId
+          //     if (courseId in studentCourseDataMap) {
+          //       const courseData = studentCourseDataMap[courseId];
 
-              // Add courseName to the student object
-              const studentWithCourseName = {
-                id: studentId,
-                ...studentData,
-                courseName: courseData ? courseData.courseName : "null"
-              };
-              students.push(studentWithCourseName);
-            } else {
-              console.log(`CourseData not found for courseId: ${courseId}`);
-            }
+          //       // Add courseName to the student object
+          //       const studentWithCourseName = {
+          //         id: studentId,
+          //         ...studentData,
+          //         courseName: courseData ? courseData.courseName : "null"
+          //       };
+          //       students.push(studentWithCourseName);
+          //     } else {
+          //       console.log(`CourseData not found for courseId: ${courseId}`);
+          //     }
 
-          } else {
-            console.log(`No studentCourses found for studentId: ${studentId}`);
-          }
+          //   } else {
+          //     console.log(`No studentCourses found for studentId: ${studentId}`);
+          //   }
+          // }));
+
+          // Retrieve courseId from the first studentCourses document
+          const courseId = studentCoursesSnapshot.empty ? null : studentCoursesSnapshot.docs[0].data().courseId;
+          console.log(courseId);
+
+          // Add courseName to the student object
+          const courseData = courseId ? studentCourseDataMap[courseId] : null;
+          const studentWithCourseName = {
+            id: studentId,
+            ...studentData,
+            courseName: courseData ? courseData.courseName : "Course not Selected"
+          };
+          students.push(studentWithCourseName);
         }));
+
 
         dispatch(setStudents(students));
       } else {
@@ -93,20 +109,34 @@ export const fetchFranchiseData = () => async (dispatch, getState) => {
   }
 };
 
-export const fetchFranchiseDataOnly = () => async (dispatch, getState) => {
+export const fetchFranchiseDataOnly = (centerId = null) => async (dispatch, getState) => {
   const state = getState();
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+  if (!isLoggedIn) {
+    console.log("User is not logged in.");
+    return;
+  }
+
   try {
-    if (state.auth.userId) {
-      const docRef = doc(fireDB, "franchiseData", state.auth.userId);
+    let userId = state.auth.userId;
+
+    // Use centerId if provided
+    if (centerId) {
+      userId = centerId;
+    }
+
+    if (userId) {
+      const docRef = doc(fireDB, "franchiseData", userId);
       const docSnap = await getDoc(docRef);
-      const franchiseData = docSnap.data();
 
       if (docSnap.exists()) {
-        dispatch(setbranchData(docSnap.data()));
+        const franchiseData = docSnap.data();
+        dispatch(setbranchData(franchiseData));
         dispatch(setWallet(franchiseData.wallet));
         dispatch(setRequestAmount(franchiseData.requestAmount));
       } else {
-        console.log("No franchise data found for user ID:", state.auth.userId);
+        console.log("No franchise data found for user ID:", userId);
       }
     } else {
       console.log("User ID not found.");

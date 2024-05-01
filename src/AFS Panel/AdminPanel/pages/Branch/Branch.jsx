@@ -1,7 +1,7 @@
 // BranchPage.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBranches, selectBranches } from '../../../redux/slice/admin/branchSlice';
+import { fetchBranches, selectBranches } from '../../../redux/admin/branchSlice';
 
 const BranchPage = () => {
   const branches = useSelector(selectBranches);

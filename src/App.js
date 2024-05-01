@@ -1,15 +1,15 @@
 import { Route, BrowserRouter as Router, Routes, } from "react-router-dom"
 import React from 'react';
-import MainLayout from './MainLayout'
+import MainLayout from './components/layout/MainLayout'
 import AboutCompany from './Pages/About/AboutCompany'
 import Home from './Pages/Home/Home'
 import ChairmanMessage from './Pages/About/ChairmanMessage';
 import OurVisionAndMission from './Pages/About/OurVisionAndMission';
 import OurGoal from './Pages/About/OurGoal';
-import BasicCourses from './Pages/Courses/BasicCourses';
-import DiplomaCourses from './Pages/Courses/DiplomaCourses';
-import LanguageCourses from './Pages/Courses/LanguageCourses';
-import ProfessionalCourses from './Pages/Courses/ProfessionalCourses';
+import BasicCourses from './Pages/courses/BasicCourses';
+import DiplomaCourses from './Pages/courses/DiplomaCourses';
+import LanguageCourses from './Pages/courses/LanguageCourses';
+import ProfessionalCourses from './Pages/courses/ProfessionalCourses';
 import StudentRegistration from './Pages/Student Zone/StudentRegistration';
 import StudentVerification from './Pages/Student Zone/StudentVerification';
 // import StudentLogin from './Pages/Student Zone/StudentLogin';
@@ -62,6 +62,9 @@ import PrintMarksheet from "./AFS Panel/FranchisePanel/studentCertificates/marks
 import UpdateCourse from "./AFS Panel/AdminPanel/pages/Course/UpdateCourse";
 import PrintStudentCertificate from "./AFS Panel/FranchisePanel/studentCertificates/certificate/PrintStudentCertificate";
 import QrVerification from "./Pages/verification/QrVerification";
+import NotificationForUser from "./AFS Panel/AdminPanel/pages/notification/NotificationForUser";
+import PrintIdCard from "./AFS Panel/FranchisePanel/studentCertificates/idCard/PrintIdCard";
+import SerivicesGrid from "./Pages/services/SerivicesGrid";
 // import StudentListPage from "./AFS Panel/FranchisePanel/pages/Student/AllStudents";
 
 const App = () => {
@@ -94,6 +97,8 @@ const App = () => {
                         <Route path='photos' element={<Photos />} />
                         <Route path='videos' element={<Videos />} />
 
+                        <Route path="services" element={<SerivicesGrid />} />
+
                         <Route path='contact-us' element={<ContactUs />} />
                         <Route path='find-branch' element={<FindBranch />} />
                         <Route path='our-team' element={<OurTeam />} />
@@ -109,7 +114,7 @@ const App = () => {
                         <Route path='branch' element={<AllBranch />} />
                         <Route path='course-category' element={<CourseCategoryPage />} />
                         <Route path='contact-us-query' element={<ContactUsQuery />} />
-                        <Route path='branch-wallet' element={<BranchWallet/>} />
+                        <Route path='branch-wallet' element={<BranchWallet />} />
                     </Route>
 
                     <Route path='franchise-login' element={<FranchiseLogin />} />
@@ -118,36 +123,39 @@ const App = () => {
                         <Route path='wallet-recharge' element={<WalletRechargeRequestForm />} />
                         <Route path='franchise-profile' element={<FranchiseProfilePage />} />
                         {/* <Route path="authorisation-certificate" element={<FranchiseCertificate />} /> */}
-                        <Route path="authorisation-certificate" element={<PrintCenterCertificate/>} />
+                        <Route path="authorisation-certificate" element={<PrintCenterCertificate />} />
                         <Route path="add-student" element={<AddStudentPage />} />
                         <Route path="update-student" element={<UpdateStudentPage />} />
                         <Route path="students-list" element={<StudentListPage />} />
-                    </Route> 
+                        <Route path="course-selection" element={<CourseSelectionPage />} />
+                        <Route path="student-certificate" element={<PrintStudentCertificate />} />
+                        <Route path="student-marksheet" element={<PrintMarksheet />} />
+                    </Route>
 
                     <Route path='student-dashboard' element={<StudentDashboard />} />
                     {/* <Route path='student-dashboard' element={<StudentDashboard />} /> */}
                     <Route path='practice-test' element={<PracticeTest />} />
 
-                    <Route path="/signup*" element={<Signup />} />
+                    {/* <Route path="/signup*" element={<Signup />} /> */}
                     {/* <Route path="/login" element={<Login />} /> */}
                     <Route path="*" element={<> not found</>} />
-                    <Route path="update-branch" element={<UpdateBranch/>} />
+                    <Route path="update-branch" element={<UpdateBranch />} />
                     <Route path="branchpage" element={<BranchPage />} />
 
                     {/* <Route path="succ" element={<PasswordResetDone/>} /> */}
                     <Route path="forgot-password" element={<ForgotPassword />} />
-                    <Route path="all-students" element={<AdminPanel/>} />
-                    <Route path="add-course" element={<AddCourse/>} />
-                    <Route path="all-courses" element={<AllCourses/>} />
-                    <Route path="update-course" element={<UpdateCourse/>} />
-                    <Route path="course-selection" element={<CourseSelectionPage/>} />
-                    <Route path="student-certificate" element={<PrintStudentCertificate/>} />
-                    <Route path="student-marksheet" element={<PrintMarksheet/>} />
-                    <Route path="id-card" element={<StudentIDCard/>} />
-                    <Route path="student-certificate-verification/:regNumber" element={<QrVerification/>} />
+                    <Route path="all-students" element={<AdminPanel />} />
+                    <Route path="add-course" element={<AddCourse />} />
+                    <Route path="all-courses" element={<AllCourses />} />
+                    <Route path="update-course" element={<UpdateCourse />} />
+
+                    <Route path="id-card" element={<StudentIDCard />} />
+                    <Route path="idcard" element={<PrintIdCard />} />
+                    <Route path="student-certificate-verification/:regNumber" element={<QrVerification />} />
+                    <Route path="user-notice" element={<NotificationForUser />} />
                     {/* <Route path="chakra-certificate" element={<ChakraCertificate/>} /> */}
-                        
-                </Routes>  
+
+                </Routes>
             </Router>
 
         </MyState>

@@ -8,7 +8,7 @@ import store from './AFS Panel/redux/store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
+export const BASE_URL="https://computer-institute.netlify.app"
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

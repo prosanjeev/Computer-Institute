@@ -1,7 +1,7 @@
 // branchSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { collection, addDoc, updateDoc, deleteDoc, getDocs } from 'firebase/firestore';
-import {fireDB} from '../../../firebase/FirebaseConfig';
+import {fireDB} from '../../firebase/FirebaseConfig';
 
 const initialState = {
   branches: [],

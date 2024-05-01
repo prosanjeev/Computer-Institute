@@ -1,27 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Button, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { fetchFranchiseData, selectbranchData } from "../../../redux/franchise/authSlice";
+import {
+  fetchFranchiseDataOnly,
+  selectbranchData,
+} from "../../../redux/franchise/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ChakraCertificate from "./ChakraCertificate";
 
-function PrintCenterCertificate({ onClick, visitorData }) {
+function PrintCenterCertificate() {
   const componentRef = useRef();
   const navigate = useNavigate();
-
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [pdfDocument, setPdfDocument] = useState(null);
   const dispatch = useDispatch();
   const branchData = useSelector(selectbranchData);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(fetchFranchiseData())
-      .then(() => setIsLoading(false))
-      .catch(() => setIsLoading(false));
+    dispatch(fetchFranchiseDataOnly());
   }, [dispatch]);
-
 
   const printRecord = () => {
     console.log("Print record..");
@@ -38,7 +34,6 @@ function PrintCenterCertificate({ onClick, visitorData }) {
 
   return (
     <>
-      <div className="printcontainer">
         <Flex>
           <div style={{ maxWidth: "70px" }}>
             <Button
@@ -66,7 +61,6 @@ function PrintCenterCertificate({ onClick, visitorData }) {
 
         <div
           ref={componentRef}
-          style={{ marginLeft: "20px", marginRight: "20px", marginTop: "0px" }}
         >
           <div>
             <ChakraCertificate branchData={branchData} />
@@ -75,10 +69,8 @@ function PrintCenterCertificate({ onClick, visitorData }) {
         <Flex justify="end">
           <div onClick={printRecord}></div>
         </Flex>
-      </div>
     </>
   );
 }
 
 export default PrintCenterCertificate;
-

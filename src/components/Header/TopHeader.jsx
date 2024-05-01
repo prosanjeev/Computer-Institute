@@ -17,6 +17,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { c_phone } from "../../info/Info";
 
 function TopHeader() {
   const buttonLists = [
@@ -54,7 +55,7 @@ function TopHeader() {
           <HStack gap={4} color='white' flexWrap='wrap' my={{base:'8px', md:'none'}}>
             <Flex align="center" gap={1}>
               <IoIosCall />
-              9876543210
+              {c_phone}
             </Flex>
             {iconLists.map((icon)=>(
                <Center height="15px" key='icon.name'>

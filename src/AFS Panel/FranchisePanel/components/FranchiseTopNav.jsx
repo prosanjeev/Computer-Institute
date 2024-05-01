@@ -23,21 +23,21 @@ import { toast } from "react-toastify";
       navigate('/franchise-login');
   }
     return (
-      <Box px="4" bg="#2A3542" >
-        <HStack maxW="80rem" h="16" justify="space-between" mx="auto">
+      <Box px={{md:"4", base:'2'}} bg="#2A3542" >
+        <HStack maxW={{md:"80rem", base:'100vw'}} h="16" justify="space-between" mx="auto">
           <Icon
             as={FaBars}
-            onClick={onOpen}
+            onClick={onOpen} color='white' boxSize='25px'
             display={{
               base: "block",
               lg: "none",
             }}
           />
-          <Heading fontWeight="medium" fontSize="28px" color='white'>
+          <Heading fontWeight="medium" fontSize={{md:"28px", base:'20px'}} color='white'>
             {title}
           </Heading>
   
-         <HStack gap={6} align='center'>
+         <HStack gap={{md:"6", base:'2'}} align='center'>
            <Flex gap={3} align='center'> <Text color='white' fontSize='20px' display={{base:'none', md:'block'}} >Wallate</Text> 
            <FranchiseNavWallate branchData={branchData}  /></Flex>
          <Menu>
